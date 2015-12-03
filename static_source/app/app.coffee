@@ -14,6 +14,7 @@ app = angular
     'appServices'
     'route-segment'
     'view-segment'
+    'angular-bpmn'
   ])
 
 angular.module('app')

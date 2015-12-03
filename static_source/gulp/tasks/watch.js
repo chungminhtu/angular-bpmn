@@ -17,5 +17,8 @@ gulp.task('watch', function() {
     gulp.watch(config.build_templates.watch, function() {
         gulp.run('build_templates');
     });
+    gulp.watch(config.theme_less.watch, function() {
+        gulp.run(['default_theme_less','minimal_theme_less']);
+    });
     gulp.watch(config.webserver.watch, ['webserver_reload']);
 });

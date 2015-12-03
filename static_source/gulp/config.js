@@ -67,5 +67,39 @@ module.exports = {
             'static_source/tmp/templates/**/*'
         ],
         dest: 'static_source/js'
+    },
+    build_engine_js: {
+        filename: 'angular-bpmn.js',
+        source: [
+            source + "/app/app_engine.coffee",
+            source + "/app/directives/**/*.coffee",
+            source + "/app/services/**/*.coffee",
+            "!" + source + "/app/services/prevent_selection.coffee",
+            "!" + source + "/app/services/scheme_service.coffee"
+        ],
+        dest: './'
+    },
+    build_engine_css: {
+        filename: 'angular-bpmn.css',
+        source: [
+            source + '/less/app.less'
+        ],
+        dest: './'
+    },
+    theme_less: {
+        filename: 'style.css',
+        watch: source + '/themes/**/*.less',
+        default: {
+            source: [
+                source + '/themes/default/**/*.less'
+            ],
+            dest: source + '/themes/default'
+        },
+        minimal: {
+            source: [
+                source + '/themes/minimal/**/*.less'
+            ],
+            dest: source + '/themes/minimal'
+        }
     }
 };

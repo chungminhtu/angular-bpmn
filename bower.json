@@ -1,10 +1,11 @@
 {
-  "name": "angular app skeleton",
-  "authors": [
-    "alex <filippov.a@e154.ru>"
-  ],
+  "name": "angular bpmn",
+  "authors": "",
   "description": "",
-  "main": "",
+  "main": [
+    "angular-bpmn.js",
+    "angular-bpmn.css"
+  ],
   "moduleType": [],
   "license": "MIT",
   "homepage": "",
