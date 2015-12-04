@@ -15,6 +15,7 @@ module.exports = {
     build_coffee_js: {
         filename: 'app.min.js',
         source: [
+            source + "/app/app_bpmn.coffee",
             source + "/app/app.coffee",
             source + "/app/services/**/*.coffee",
             source + "/app/directives/**/*.coffee",
@@ -37,7 +38,8 @@ module.exports = {
         source: [
             source + '/less/bootstrap.less',
             source + '/less/bootstrap-theme.less',
-            source + '/less/app.less'
+            source + '/less/app.less',
+            source + '/less/app_bpmn.less'
         ],
         dest: source + '/css',
         watch: source + '/less/**/*.less'
@@ -71,7 +73,7 @@ module.exports = {
     build_engine_js: {
         filename: 'angular-bpmn.js',
         source: [
-            source + "/app/app_engine.coffee",
+            source + "/app/app_bpmn.coffee",
             source + "/app/directives/**/*.coffee",
             source + "/app/services/**/*.coffee",
             "!" + source + "/app/services/prevent_selection.coffee",
@@ -82,7 +84,7 @@ module.exports = {
     build_engine_css: {
         filename: 'angular-bpmn.css',
         source: [
-            source + '/less/app.less'
+            source + '/less/app_bpmn.less'
         ],
         dest: './'
     },

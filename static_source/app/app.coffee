@@ -21,12 +21,19 @@ angular.module('app')
   .config ['$routeProvider', '$locationProvider', '$routeSegmentProvider'
   ($routeProvider, $locationProvider, $routeSegmentProvider) ->
     $routeSegmentProvider
-      .when '/',              'home'
+      .when '/',              'base'
 
+      .segment 'base',
+        templateUrl: '/templates/base.html'
+        controller: 'baseCtrl'
+        controllerAs: 'base'
+
+      .within()
       .segment 'home',
         default: true
         templateUrl: '/templates/home.html'
-        controller: 'homeCtrl as home'
+        controller: 'homeCtrl'
+        controllerAs: 'home'
 
     $locationProvider.html5Mode
       enabled: true

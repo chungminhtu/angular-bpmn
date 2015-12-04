@@ -1,10 +1,12 @@
 'use strict'
 
 angular
-  .module('appControllers')
-  .controller 'homeCtrl', ['$scope'
-  ($scope) ->
-    vm = this
+.module('appControllers')
+.controller 'homeCtrl', ['$scope', 'bpmnMock'
+  ($scope, bpmnMock) ->
 
-    console.log 'home ctrl'
-  ]
+    vm = this
+    vm.scheme = bpmnMock.schema1
+
+    vm
+]
