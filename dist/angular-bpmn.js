@@ -93,6 +93,66 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
 });
 
 'use strict';
+angular.module('angular-bpmn').directive('bpmnObject', [
+  '$log', '$timeout', '$templateCache', '$compile', '$templateRequest', function($log, $timeout, $templateCache, $compile, $templateRequest) {
+    return {
+      restrict: 'A',
+      controller: [
+        "$scope", "$element", function($scope, $element) {
+          var appedndToElement, container, getTemplate, updateStyle;
+          container = $($element);
+          appedndToElement = (function(_this) {
+            return function(element) {
+              return container.empty().append($compile(element)($scope));
+            };
+          })(this);
+          getTemplate = function() {
+            var template, templateUrl;
+            template = $scope.settings.template($scope.object.type.name);
+            container.addClass($scope.object.type.name);
+            container.css({
+              width: template.size.width,
+              height: template.size.height
+            });
+            templateUrl = template.templateUrl;
+            if ((templateUrl != null) && templateUrl !== '') {
+              templateUrl = $scope.settings.theme.root_path + '/' + $scope.settings.engine.theme + '/' + templateUrl;
+              template = $templateCache.get(templateUrl);
+              if (template != null) {
+                return template.then(function(template) {
+                  return appedndToElement(template.data);
+                });
+              } else {
+                $log.warn('template not found in cache, ', templateUrl);
+                this.elementPromise = $templateRequest(templateUrl);
+                return this.elementPromise.then(function(result) {
+                  $templateCache.put(templateUrl, result);
+                  return appedndToElement(result);
+                });
+              }
+            } else {
+              return $compile(template.template)($scope);
+            }
+          };
+          updateStyle = function() {
+            var style;
+            style = {
+              top: $scope.object.position.top,
+              left: $scope.object.position.left
+            };
+            container.css(style);
+            return $scope.instance.repaintEverything();
+          };
+          getTemplate();
+          return updateStyle();
+        }
+      ],
+      link: function($scope, element, attrs) {}
+    };
+  }
+]);
+
+'use strict';
 angular.module('angular-bpmn').factory('bpmnScheme', [
   '$rootScope', '$log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', function($rootScope, $log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest) {
     var bpmnScheme;
@@ -119,7 +179,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.wrap_class = 'bpmn-wrapper';
 
-      bpmnScheme.prototype.template = '<div ng-repeat="object in scheme.objects" class="draggable">{{object.type}}</div>';
+      bpmnScheme.prototype.template = '<div ng-repeat="object in scheme.objects" bpmn-object class="draggable etc" ng-class="[object.status]"</div>';
 
       function bpmnScheme(container, settings, scheme) {
         var wrapper;
@@ -136,10 +196,13 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         this.loadStyle();
         this.cache = [];
         this.loadTemplates();
+        this.instance = jsPlumb.getInstance($.extend(true, this.settings.instance, {
+          Container: container
+        }));
+        this.scope.instance = this.instance;
         this.container.append($compile(this.template)(this.scope));
         this.container.addClass('bpmn');
         this.setStatus();
-        this.instance = jsPlumb.getInstance(this.settings.instance);
       }
 
       bpmnScheme.prototype.setStatus = function() {
@@ -162,7 +225,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         if (settings == null) {
           settings = {};
         }
-        this.settings = $.extend(true, bpmnSettings, settings);
+        this.settings = $.extend(true, bpmnSettings, angular.copy(settings));
         return this.scope.settings = this.settings;
       };
 
@@ -245,7 +308,8 @@ angular.module('angular-bpmn').service('bpmnSettings', function() {
           foldback: 0.8
         }
       ]
-    ]
+    ],
+    Container: 'container'
   };
   draggableSettings = {
     filter: '.ui-resizable-handle',
