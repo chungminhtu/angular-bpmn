@@ -2,11 +2,14 @@
 
 angular
 .module('appControllers')
-.controller 'homeCtrl', ['$scope', 'bpmnMock'
-  ($scope, bpmnMock) ->
+.controller 'homeCtrl', ['$scope', 'bpmnMock', 'bpmnScheme', '$log'
+  ($scope, bpmnMock, bpmnScheme, $log) ->
 
     vm = this
-    vm.scheme = bpmnMock.schema1
+
+    scheme = bpmnMock.scheme1
+    instance = new bpmnScheme($('#simply-scheme'))
+    instance.setScheme(scheme)
 
     vm
 ]

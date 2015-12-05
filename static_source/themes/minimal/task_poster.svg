@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg id="svg14322" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="780.5022" width="428.26169" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <defs id="defs14324">
+  <clipPath id="clipPath4839" clipPathUnits="userSpaceOnUse">
+   <path id="path4841" d="m0,0,101.57,0,0,65.676h-101.57v-65.676z"/>
+  </clipPath>
+ </defs>
+ <metadata id="metadata14327">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <text id="text3053" y="33.23967" x="1.2500061" font-size="15px">
+  <tspan id="tspan3055" font-size="43.74990082px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-stretch="normal" font-variant="normal" y="33.23967" x="1.2500061 33.144173 58.436897 84.734016 107.31409 128.61258 152.4527 178.74979" font-weight="normal" font-style="normal" fill="#595959">Действия</tspan>
+ </text>
+ <path id="path4575" d="m252.675,108.03967,16.26875,0,0-16.268754-16.26875,0,0,16.268754z" fill-rule="evenodd" fill="#FFF"/>
+ <path id="path4577" stroke-linejoin="round" d="m252.675,108.03967,16.26875,0,0-16.268754-16.26875,0,0,16.268754z" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-width="0.90000004" fill="none"/>
+ <path id="path4579" stroke-linejoin="round" d="m260.8125,95.839666,0,8.125004" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-width="0.90000004" fill="none"/>
+ <path id="path4581" stroke-linejoin="round" d="m256.75,99.902166,8.1375,0" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-width="0.90000004" fill="none"/>
+ <text id="text4583" y="88.36467" x="124.775" font-size="15px">
+  <tspan id="tspan4585" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="88.36467" x="124.775 131.73929 138.41656 146.22919 152.90646 159.99261" font-weight="bold" fill="#000000">Задача</tspan>
+ </text>
+ <text id="text4587" y="88.36467" x="170.4375" font-size="15px">
+  <tspan id="tspan4589" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="88.36467" x="170.4375" font-weight="normal" fill="#000000">–</tspan>
+ </text>
+ <text id="text4591" y="88.36467" x="178.78748" font-size="15px">
+  <tspan id="tspan4593" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="88.36467" x="178.78748 185.62335 192.84998 199.99725 206.98593 214.13318 221.01782 227.43283 231.19873 238.16299 244.57803 251.46268 258.17667 263.84082" font-weight="normal" fill="#000000">единица работы</tspan>
+ </text>
+ <text id="text4595" y="88.36467" x="272.41248" font-size="15px">
+  <tspan id="tspan4597" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="88.36467" x="272.41248" font-weight="normal" fill="#000000">.</tspan>
+ </text>
+ <text id="text4599" y="88.36467" x="280.76248" font-size="15px">
+  <tspan id="tspan4601" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="88.36467" x="280.76248 287.54965 293.76309 300.80054 307.94778 311.71365 317.3898 323.80481 331.03143 337.44647 344.08118 350.49619" font-weight="normal" fill="#000000">Если задача</tspan>
+ </text>
+ <text id="text4603" y="103.36467" x="124.775" font-size="15px">
+  <tspan id="tspan4605" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="103.36467" x="124.775 131.59888 138.31287 146.83966 153.67551 160.31024 167.14609 174.13477 180.54977 184.31567 190.52908 197.67633 206.20312 212.65451 219.3685 226.40598 233.11996" font-weight="normal" fill="#000000">помечена символом</tspan>
+ </text>
+ <text id="text4607" y="103.36467" x="241.64999" font-size="15px">
+  <tspan id="tspan4609" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="103.36467" x="241.64999" font-weight="normal" fill="#000000">,</tspan>
+ </text>
+ <text id="text4611" y="118.36464" x="124.775" font-size="15px">
+  <tspan id="tspan4613" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="118.36464" x="124.775 130.43915 137.15314 140.91901 146.59512 153.01013 160.23679 166.65179 173.28653 179.70154 183.46741 190.0166 196.46799 203.50546 210.05466 216.89053 222.55469 228.7681 235.31729 239.08316 245.90707 252.62106 259.84769 266.6716 273.63589 280.34988 287.23453 294.0704 300.28381 306.49722 313.21124 321.73801 325.50388 332.65112 336.41699 344.94379 351.65781 360.86844 367.70425 373.36844" font-weight="normal" fill="#000000">то задача является подпроцессом и может</tspan>
+ </text>
+ <text id="text4615" y="135.61464" x="124.775" font-size="15px">
+  <tspan id="tspan4617" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="135.61464" x="124.775 131.65964 140.22278 145.88693 152.21024 155.9761 163.20273 170.0386 175.70276 182.11777 189.15524 196.30249 201.97861 209.12585 216.09015 222.80414 229.25555 235.67056 242.65924" font-weight="normal" fill="#000000">быть детализирована</tspan>
+ </text>
+ <text id="text4619" y="135.61464" x="249.07498" font-size="15px">
+  <tspan id="tspan4621" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="135.61464" x="249.07498" font-weight="normal" fill="#000000">.</tspan>
+ </text>
+ <text id="text4635" y="200.78966" x="125.4875" font-size="15px">
+  <tspan id="tspan4637" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="200.78966" x="125.4875 133.61115 140.92322 147.60049 155.0101 161.04639 167.72366 174.54758 182.07318 189.58685" font-weight="bold" fill="#000000">Транзакция</tspan>
+ </text>
+ <text id="text4639" y="200.78966" x="200.34998" font-size="15px">
+  <tspan id="tspan4641" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="200.78966" x="200.34998" font-weight="normal" fill="#000000">–</tspan>
+ </text>
+ <text id="text4643" y="200.78966" x="208.71249" font-size="15px">
+  <tspan id="tspan4645" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="200.78966" x="208.71249 215.70117 222.11618 229.00082 235.71481 242.67911 246.44498 253.48245 260.19644 265.61032 272.75757 279.39227 286.22815 292.44156 298.89294 306.04019 309.80606 316.01947 322.47086 329.02008 334.6962 341.11121 348.09995 355.08859 363.65176 370.01175" font-weight="normal" fill="#000000">набор логически связанных</tspan>
+ </text>
+ <text id="text4647" y="215.78966" x="125.4875" font-size="15px">
+  <tspan id="tspan4649" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="215.78966" x="125.4875 132.71414 139.54999 146.69724 152.91068 158.57483 165.02618 172.17346" font-weight="normal" fill="#000000">действий</tspan>
+ </text>
+ <text id="text4651" y="215.78966" x="179.32498" font-size="15px">
+  <tspan id="tspan4653" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="215.78966" x="179.32498 183.91489" font-weight="normal" fill="#000000">.</tspan>
+ </text>
+ <text id="text4655" y="215.78966" x="187.67499" font-size="15px">
+  <tspan id="tspan4657" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="215.78966" x="187.67499 196.31165 203.34912 209.89832 213.66418 219.32834 226.29263 232.70764 239.69635 245.37247 251.78748 258.23886 265.1235 272.27075 279.41803 283.1839 291.71066 298.42468 307.63525 314.47113 320.13528 323.90115 330.7858 339.34894 345.01309 351.3364" font-weight="normal" fill="#000000">Для транзакции может быть</tspan>
+ </text>
+ <text id="text4659" y="230.78966" x="125.4875" font-size="15px">
+  <tspan id="tspan4661" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="230.78966" x="125.4875 132.20148 139.02539 145.98965 152.82553 160.05215 166.88803 173.92548 180.76135 187.75003 191.5159 198.33978 205.30408 212.01807 217.68222 224.39624 230.8476 237.56161 244.59906 248.36493 254.81635 263.37946 270.20334 276.91736 283.9548 290.94348 297.77933 304.76804 311.91528" font-weight="normal" fill="#000000">определен протокол выполнения</tspan>
+ </text>
+ <text id="text4663" y="230.78966" x="318.46249" font-size="15px">
+  <tspan id="tspan4665" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="230.78966" x="318.46249" font-weight="normal" fill="#000000">.</tspan>
+ </text>
+ <text id="text4681" y="290.67719" x="126.63749" font-size="15px">
+  <tspan id="tspan4683" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="290.67719" x="126.63749 134.28534 141.40829 148.69604 158.02274 164.10782 171.62146 179.13513 186.54474 195.87143 203.38507 207.15094 214.45065 221.57364 229.38626 236.68597 243.99805 251.121 258.64661 265.87326 272.32462" font-weight="bold" fill="#000000">Событийный подпроцесс</tspan>
+ </text>
+ <text id="text4685" y="290.67719" x="282.54999" font-size="15px">
+  <tspan id="tspan4687" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="290.67719" x="282.54999 289.37387 296.08789 304.61465 311.45053 321.10031 327.51535 334.3512 340.01535 346.22876 352.77798 356.54385 362.99527 369.98392 376.19736 381.86148 388.82578 395.97305" font-weight="normal" fill="#000000">помещается внутри</tspan>
+ </text>
+ <text id="text4689" y="305.67719" x="126.63749" font-size="15px">
+  <tspan id="tspan4691" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="305.67719" x="126.63749 133.86414 140.82843 147.04184 152.45569 159.16971 164.58356 171.29755 175.06342 181.88733 188.85162 195.56561 202.45026 209.2861 215.49951 221.71295" font-weight="normal" fill="#000000">другого процесса</tspan>
+ </text>
+ <text id="text4693" y="305.67719" x="228.13748" font-size="15px">
+  <tspan id="tspan4695" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="305.67719" x="228.13748 232.72739" font-weight="normal" fill="#000000">.</tspan>
+ </text>
+ <text id="text4697" y="305.67719" x="236.48749" font-size="15px">
+  <tspan id="tspan4699" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="305.67719" x="236.48749 244.91022 251.8989 255.66476 262.65344 269.06848 275.70319 282.85043 289.83914 296.25415 303.09 308.75415 312.52002 318.97141 327.53455 334.35843 341.07245 348.10989 355.0986 361.6478 367.31198 373.63528 379.84866" font-weight="normal" fill="#000000">Он начинает выполняться</tspan>
+ </text>
+ <text id="text4701" y="305.67719" x="386.39999" font-size="15px">
+  <tspan id="tspan4703" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="305.67719" x="386.39999 390.9899" font-weight="normal" fill="#000000">,</tspan>
+ </text>
+ <text id="text4705" y="305.67719" x="394.75003" font-size="15px">
+  <tspan id="tspan4707" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="305.67719" x="394.75003 401.58585 407.79929 414.83676 421.98404" font-weight="normal" fill="#000000">если</tspan>
+ </text>
+ <text id="text4709" y="320.67715" x="126.63749" font-size="15px">
+  <tspan id="tspan4711" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="320.67715" x="126.63749 133.78476 140.77344 147.92068 154.80533 161.95258 169.09985 176.06415 182.27756 189.1134 194.77756 200.991 207.54019 211.30606 218.14194 223.55579 230.26978 234.03564 241.02435 247.43936 254.07407 260.48911 267.52655 273.84985 280.83853 287.55255 294.3884 298.15427 304.36768 311.0817 317.96631 326.52948 332.1936 339.34088" font-weight="normal" fill="#000000">инициируется его начальное событие</tspan>
+ </text>
+ <text id="text4713" y="320.67715" x="346.1875" font-size="15px">
+  <tspan id="tspan4715" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="320.67715" x="346.1875 350.77744" font-weight="normal" fill="#000000">.</tspan>
+ </text>
+ <text id="text4717" y="320.67715" x="354.53751" font-size="15px">
+  <tspan id="tspan4719" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="320.67715" x="354.53751 361.89835 368.61234 375.49698 384.06015 389.72427 396.87155 404.01877 411.00748 419.57059 426.71786" font-weight="normal" fill="#000000">Событийный</tspan>
+ </text>
+ <text id="text4721" y="335.67715" x="126.63749" font-size="15px">
+  <tspan id="tspan4723" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="335.67715" x="126.63749 133.46136 140.17538 147.40201 154.22592 161.19019 167.90421 174.78885 181.62469 187.8381 194.05154 197.81741 206.34418 213.0582 222.2688 229.10464 234.7688 238.53467 245.35855 252.32285 259.15872 266.12299 274.68613 281.13751 287.55255 293.21671 299.54001 303.30588 310.27017 316.98416 324.21082 331.35806 337.02219 343.85806 350.89554 357.21884 363.43228 369.88364 377.03091 384.17819" font-weight="normal" fill="#000000">подпроцесс может прерывать родительский</tspan>
+ </text>
+ <text id="text4725" y="350.67715" x="126.63749" font-size="15px">
+  <tspan id="tspan4727" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="350.67715" x="126.63749 133.46136 140.17538 147.40201 154.22592 161.19019 167.90421 174.78885 181.62469 187.8381 194.05154 197.81741 204.96466 212.00214 219.14938 222.91525 229.36664 237.92978 244.75366 251.46768 258.50513 265.4938 272.043 277.70715 284.03049 290.2439 296.79312 300.55899 307.38287 313.79788 320.76218 327.17719 334.21466 341.25214 348.08798 355.12546 361.44876 368.43747 375.15146 378.91733 385.13077 388.89664 395.88528 403.03256" font-weight="normal" fill="#000000">подпроцесс или выполняться параллельно с ним</tspan>
+ </text>
+ <text id="text4729" y="350.67715" x="411.56253" font-size="15px">
+  <tspan id="tspan4731" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="350.67715" x="411.56253" font-weight="normal" fill="#000000">.</tspan>
+ </text>
+ <text id="text4745" y="402.23965" x="126.3" font-size="15px">
+  <tspan id="tspan4747" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="402.23965" x="126.3 133.7645 143.09119 149.1275 158.45419 165.26575 171.94302 181.49475 191.76733 198.99399 206.22061 209.98648 217.7991 225.02576 232.5394 238.99078 245.07587 251.88745 259.40109" font-weight="bold" fill="#000000">Вызывающее действие</tspan>
+ </text>
+ <text id="text4749" y="402.23965" x="270.38748" font-size="15px">
+  <tspan id="tspan4751" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="402.23965" x="270.38748 276.93671 283.38809 290.42554 296.97476 303.81061 309.47476 315.68817 322.2374 326.00327 331.66742 338.38141 345.01611 351.4675 358.18149 365.32877 369.09464 375.54605 381.90604 388.62009 395.84671 402.26175" font-weight="normal" fill="#000000">является точкой входа</tspan>
+ </text>
+ <text id="text4753" y="417.23965" x="126.3" font-size="15px">
+  <tspan id="tspan4755" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="417.23965" x="126.3 133.52664 140.56409 147.11331 150.87918 156.29303 163.33047 170.04449 176.92914 183.34415 190.38162 196.70493 203.6936 210.40759 214.17346 220.88745 227.71136 234.67566 241.51151 248.73816 255.57401 262.61148 269.44733 276.436 283.42468 290.13867 295.55255 302.26654 306.03241 312.85632 319.57031 326.79694 333.62082 340.58514 347.29913 354.18381 361.01962 367.23306 373.4465" font-weight="normal" fill="#000000">для глобально определенного подпроцесса</tspan>
+ </text>
+ <text id="text4757" y="417.23965" x="379.86252" font-size="15px">
+  <tspan id="tspan4759" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="417.23965" x="379.86252 384.45242" font-weight="normal" fill="#000000">,</tspan>
+ </text>
+ <text id="text4761" y="432.23965" x="126.3" font-size="15px">
+  <tspan id="tspan4763" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="432.23965" x="126.3 132.75137 139.46536 145.12952 151.84351 158.8078 167.37094 174.51822 178.28409 185.10797 191.82196 198.27335 203.9375 210.65149 217.61578 224.60446 231.31848 235.08435 242.2316 248.44501 255.26889 261.98291 269.02039 275.34366 281.01981 287.23322 294.06909 299.73325 305.94666 312.49585 316.26172 322.7131 326.47897 333.70563 340.12064 347.10931 354.09799 360.81198 369.33878" font-weight="normal" fill="#000000">который повторно используется в данном</tspan>
+ </text>
+ <text id="text4765" y="447.23965" x="126.3" font-size="15px">
+  <tspan id="tspan4767" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="447.23965" x="126.3 133.12387 140.08817 146.80215 153.6868 160.52267 166.73608 172.94949" font-weight="normal" fill="#000000">процессе</tspan>
+ </text>
+ <text id="text4769" y="447.23965" x="179.78748" font-size="15px">
+  <tspan id="tspan4771" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="447.23965" x="179.78748" font-weight="normal" fill="#000000">.</tspan>
+ </text>
+ <text id="text4773" y="518.76465" x="215.98749" font-size="15px">
+  <tspan id="tspan4775" font-size="17.49959946px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="518.76465" x="215.98749 227.36078 237.87909 248.0986 261.15488 266.42691 274.87781 284.2261 295.16382 304.51212" font-weight="bold" fill="#737373">Типы задач</tspan>
+ </text>
+ <text id="text4777" y="536.40216" x="216.92499" font-size="15px">
+  <tspan id="tspan4779" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="536.40216" x="216.92499 224.66418 231.81143 238.63531 242.40118 249.1152 255.93909 262.90338 269.73923 276.96588 283.80173 290.8392 297.3884 304.22427 309.88843 313.6543 320.47818 327.44247 334.58972 341.55402 348.26804 355.49466 361.7081 365.47397 372.70059 379.53647 386.68375 392.89713 398.56131 405.01266 412.15994" font-weight="normal" fill="#000000">Тип определяет природу действия</tspan>
+ </text>
+ <text id="text4781" y="536.40216" x="418.71249" font-size="15px">
+  <tspan id="tspan4783" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="536.40216" x="418.71249 423.3024" font-weight="normal" fill="#000000">,</tspan>
+ </text>
+ <text id="text4785" y="551.40216" x="216.92499" font-size="15px">
+  <tspan id="tspan4787" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="551.40216" x="216.92499 223.37637 230.09036 235.75452 242.46851 249.4328 256.14682 262.98267 266.74854 273.63318 279.84659 287.07324 293.90909 299.57324 303.33911 309.7905 318.35364 325.17752 331.89151 338.92899 345.91766 352.75351 359.74222" font-weight="normal" fill="#000000">которое будет выполнено</tspan>
+ </text>
+ <text id="text4789" y="551.40216" x="366.46249" font-size="15px">
+  <tspan id="tspan4791" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="551.40216" x="366.46249" font-weight="normal" fill="#000000">:</tspan>
+ </text>
+ <text id="text4793" y="589.88965" x="251.28748" font-size="15px">
+  <tspan id="tspan4795" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="589.88965" x="251.28748 257.84875 264.26376 271.49042 277.90543 284.54016 290.95517 294.72104 301.43503 307.09918 313.92307 320.88736 327.3024 333.75375 340.20514 347.35242 351.11832 357.3317 364.04568 370.75974 377.64438 387.29416 394.13004 401.11868 408.26596" font-weight="normal" fill="#000000">Задача отправки сообщения</tspan>
+ </text>
+ <path id="path4797" d="m219.35,594.02717,21.085,0,0-15.4625-21.085,0,0,15.4625z" fill-rule="evenodd" fill="#000"/>
+ <path id="path4799" stroke-linejoin="round" d="m219.35,594.02717,21.085,0,0-15.4625-21.085,0,0,15.4625z" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-width="1.5" fill="none"/>
+ <path id="path4801" stroke-linejoin="round" d="m219.5375,578.78967,10.3625,7.6,10.3625-7.6" stroke="#FFF" stroke-linecap="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-width="1.5" fill="none"/>
+ <path id="path4803" d="m219.35,623.90217,21.085,0,0-15.4625-21.085,0,0,15.4625z" fill-rule="evenodd" fill="#FFF"/>
+ <path id="path4805" stroke-linejoin="round" d="m219.35,623.90217,21.085,0,0-15.4625-21.085,0,0,15.4625z" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-width="1.5" fill="none"/>
+ <path id="path4807" stroke-linejoin="round" d="m219.35,608.43967,10.55,7.7375,10.5375-7.7375" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-width="1.5" fill="none"/>
+ <text id="text4809" y="620.71466" x="251.28748" font-size="15px">
+  <tspan id="tspan4811" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="620.71466" x="251.28748 257.84875 264.26376 271.49042 277.90543 284.54016 290.95517 294.72104 301.54492 308.25894 315.29639 321.5098 328.1445 334.98038 341.96906 349.1163 355.66556 359.43143 365.64481 372.35886 379.07285 385.95749 395.60727 402.44315 409.43179 416.57907" font-weight="normal" fill="#000000">Задача получения сообщения</tspan>
+ </text>
+ <path id="path4813" d="m218.8125,657.36467,21.6375,0,0-7.0375s-2.1-3.5125-6.3625-4.6375h-8.3125c-3.975,1.2-7.0375,5.1625-7.0375,5.1625l0.075,6.5125z" fill-rule="evenodd" fill="#f4f6f7"/>
+ <path id="path4815" stroke-linejoin="miter" d="m218.8125,657.36467,21.6375,0,0-7.0375s-2.1-3.5125-6.3625-4.6375h-8.3125c-3.975,1.2-7.0375,5.1625-7.0375,5.1625l0.075,6.5125z" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <path id="path4817" stroke-linejoin="miter" d="m223.525,653.53967,0,3.45" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <path id="path4819" stroke-linejoin="miter" d="m236.025,653.61467,0,3.6" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <path id="path4821" d="m234.8375,640.96467c0-2.6875-2.1875-4.8625-4.875-4.8625s-4.8625,2.175-4.8625,4.8625,2.175,4.875,4.8625,4.875,4.875-2.1875,4.875-4.875z" fill-rule="evenodd" fill="#020202"/>
+ <path id="path4823" stroke-linejoin="miter" d="m234.8375,640.96467c0-2.6875-2.1875-4.8625-4.875-4.8625s-4.8625,2.175-4.8625,4.8625,2.175,4.875,4.8625,4.875,4.875-2.1875,4.875-4.875z" stroke="#020202" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <path id="path4825" d="m225.5125,642.01467s2.525-2.175,4.825-1.625c2.3,0.5625,4.1625-0.6125,4.1625-0.6125,0.2125,1.5125,0.0375,3.3625-1.3125,5.0125,0,0,0.975,0.675,0.975,1.35s0.1125,1.675-0.9,2.6875-4.95,1.125-6.0625,0c-1.125-1.125-1.125-1.6375-1.125-2.3875s0.525-1.125,1.125-1.725c-0.975-0.525-2.25-2.1375-1.6875-2.7z" fill-rule="evenodd" fill="#f0eff0"/>
+ <path id="path4827" stroke-linejoin="miter" d="m225.5125,642.01467s2.525-2.175,4.825-1.625c2.3,0.5625,4.1625-0.6125,4.1625-0.6125,0.2125,1.5125,0.0375,3.3625-1.3125,5.0125,0,0,0.975,0.675,0.975,1.35s0.1125,1.675-0.9,2.6875-4.95,1.125-6.0625,0c-1.125-1.125-1.125-1.6375-1.125-2.3875s0.525-1.125,1.125-1.725c-0.975-0.525-2.25-2.1375-1.6875-2.7z" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <text id="text4829" y="651.71466" x="251.28748" font-size="15px">
+  <tspan id="tspan4831" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="651.71466" x="251.28748 259.22198 265.93597 272.97345 279.29675 284.97287 291.68686 298.13824 304.55328 310.21741 317.05328 324.09073 330.41403 336.62747 343.07886 349.49387 356.04312 359.80899 365.48508 371.90012 379.12674 385.54178 392.17648" font-weight="normal" fill="#000000">Пользовательская задача</tspan>
+ </text>
+ <g id="g4833" transform="matrix(0.3959375,0,0,-0.2549375,216.4625,687.01467)">
+  <g id="g4835" transform="scale(0.7089,1.0963)">
+   <g id="g4837" clip-path="url(#clipPath4839)">
+    <g id="g4843" transform="matrix(100.76,0,0,66.455,0,-0.77867)">
+     <image id="image4845" width="1" xlink:href="data:image/png;base64,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" transform="matrix(1,0,0,-1,0,1)" height="1"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <text id="text4847" y="682.91467" x="251.28748" font-size="15px">
+  <tspan id="tspan4849" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="682.91467" x="251.28748 259.4603 266.29617 272.71118 279.16257 284.82672 291.54071 300.06747 306.48251 312.14667 319.29391 324.97003 332.11731 339.0816 345.79559 352.24698 358.66202 365.65067 372.63937 379.05441 385.60361 389.36948 395.04556 401.4606 408.68723 415.10226 421.73697" font-weight="normal" fill="#000000">Неавтоматизированная задача</tspan>
+ </text>
+ <path id="path4851" d="m219.625,705.43967,20.5075,0,0-3.69187-20.5075,0,0,3.69187z" fill-rule="evenodd" fill="#b3b1b3"/>
+ <path id="path4853" stroke-linejoin="miter" d="m219.625,705.43967,20.5075,0,0-3.69187-20.5075,0,0,3.69187z" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <path id="path4855" d="m219.625,716.62717,20.5075,0,0-11.30812-20.5075,0,0,11.30812z" fill-rule="evenodd" fill="#FFF"/>
+ <path id="path4857" stroke-linejoin="miter" d="m219.625,716.62717,20.5075,0,0-11.30812-20.5075,0,0,11.30812z" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <path id="path4859" stroke-linejoin="miter" d="m219.7375,711.00217,20.5125,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <path id="path4861" stroke-linejoin="miter" d="m225.075,705.43967,0,11.1875" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <text id="text4863" y="713.90216" x="251.28748" font-size="15px">
+  <tspan id="tspan4865" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="713.90216" x="251.28748 257.84875 264.26376 271.49042 277.90543 284.54016" font-weight="normal" fill="#000000">Задача</tspan>
+ </text>
+ <text id="text4867" y="713.90216" x="290.96249" font-size="15px">
+  <tspan id="tspan4869" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="713.90216" x="290.96249" font-weight="normal" fill="#000000">-</tspan>
+ </text>
+ <text id="text4871" y="713.90216" x="295.54999" font-size="15px">
+  <tspan id="tspan4873" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="713.90216" x="295.54999 302.43463 309.58188 315.258 322.2467 329.08255" font-weight="normal" fill="#000000">бизнес</tspan>
+ </text>
+ <text id="text4875" y="713.90216" x="335.29999" font-size="15px">
+  <tspan id="tspan4877" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="713.90216" x="335.29999" font-weight="normal" fill="#000000">-</tspan>
+ </text>
+ <text id="text4879" y="713.90216" x="339.88748" font-size="15px">
+  <tspan id="tspan4881" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="713.90216" x="339.88748 346.71136 353.67569 360.09073 366.54208 373.68936 380.72684" font-weight="normal" fill="#000000">правило</tspan>
+ </text>
+ <path id="path4883" d="m230.85,733.31467,1.7875-1.775,1.6625,1.6625-1.7875,1.775,0.6625,1.575,2.5125,0,0,2.35-2.5125,0-0.6625,1.5875,1.7875,1.775-1.6625,1.6625-1.7875-1.775-1.575,0.65,0,2.525-2.35,0,0-2.525-1.5875-0.65-1.775,1.775-1.6625-1.6625,1.775-1.775-0.65-1.575-2.5125,0,0-2.35,2.5125,0,0.65-1.5875-1.775-1.775,1.6625-1.6625,1.775,1.775,1.5875-0.65,0-2.525,2.35,0,0,2.525,1.575,0.65z" fill-rule="evenodd" fill="#FFF"/>
+ <path id="path4885" stroke-linejoin="miter" d="m230.85,733.31467,1.7875-1.775,1.6625,1.6625-1.7875,1.775,0.6625,1.575,2.5125,0,0,2.35-2.5125,0-0.6625,1.5875,1.7875,1.775-1.6625,1.6625-1.7875-1.775-1.575,0.65,0,2.525-2.35,0,0-2.525-1.5875-0.65-1.775,1.775-1.6625-1.6625,1.775-1.775-0.65-1.575-2.5125,0,0-2.35,2.5125,0,0.65-1.5875-1.775-1.775,1.6625-1.6625,1.775,1.775,1.5875-0.65,0-2.525,2.35,0,0,2.525,1.575,0.65z" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <path id="path4887" stroke-linejoin="miter" d="m230.675,737.72717c0-1.425-1.15-2.575-2.575-2.575s-2.575,1.15-2.575,2.575,1.15,2.5875,2.575,2.5875,2.575-1.1625,2.575-2.5875z" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <path id="path4889" d="m235.025,737.47717,1.775-1.775,1.6625,1.6625-1.775,1.775,0.65,1.5875,2.5125,0,0,2.35-2.5125,0-0.65,1.575,1.775,1.7875-1.6625,1.6625-1.775-1.7875-1.5875,0.6625,0,2.5125-2.35,0,0-2.5125-1.575-0.6625-1.7875,1.7875-1.65-1.6625,1.775-1.7875-0.6625-1.575-2.5125,0,0-2.35,2.5125,0,0.6625-1.575-1.7875-1.7875,1.6625-1.6625,1.7875,1.775,1.575-0.65,0-2.5125,2.35,0,0,2.5125,1.5875,0.65z" fill-rule="evenodd" fill="#FFF"/>
+ <path id="path4891" stroke-linejoin="miter" d="m235.025,737.47717,1.775-1.775,1.6625,1.6625-1.775,1.775,0.65,1.5875,2.5125,0,0,2.35-2.5125,0-0.65,1.575,1.775,1.7875-1.6625,1.6625-1.775-1.7875-1.5875,0.6625,0,2.5125-2.35,0,0-2.5125-1.575-0.6625-1.7875,1.7875-1.65-1.6625,1.775-1.7875-0.6625-1.575-2.5125,0,0-2.35,2.5125,0,0.6625-1.575-1.7875-1.7875,1.6625-1.6625,1.7875,1.775,1.575-0.65,0-2.5125,2.35,0,0,2.5125,1.5875,0.65z" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <path id="path4893" stroke-linejoin="miter" d="m234.85,741.90217c0-1.425-1.1625-2.5875-2.5875-2.5875s-2.575,1.1625-2.575,2.5875,1.15,2.575,2.575,2.575,2.5875-1.15,2.5875-2.575z" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <text id="text4895" y="744.91467" x="251.28748" font-size="15px">
+  <tspan id="tspan4897" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="744.91467" x="251.28748 257.84875 264.26376 271.49042 277.90543 284.54016" font-weight="normal" fill="#000000">Задача</tspan>
+ </text>
+ <text id="text4899" y="744.91467" x="290.96249" font-size="15px">
+  <tspan id="tspan4901" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="744.91467" x="290.96249" font-weight="normal" fill="#000000">-</tspan>
+ </text>
+ <text id="text4903" y="744.91467" x="295.54999" font-size="15px">
+  <tspan id="tspan4905" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="744.91467" x="295.54999 301.7634 308.59927 315.56357 322.01495 329.1622" font-weight="normal" fill="#000000">сервис</tspan>
+ </text>
+ <path id="path4907" d="m226.4,763.21467,11.775,0s-4.7375,2.3-4.7375,4.5375c0,2.225,3.5875,4.875,3.5875,7.4375,0,2.575-3.3875,4.125-3.3875,4.125h-12.2375s4.05-2.1625,4.05-4.05c0-1.9-3.7125-5.4875-3.7125-7.5125s4.6625-4.5375,4.6625-4.5375z" fill-rule="evenodd" fill="#FFF"/>
+ <path id="path4909" stroke-linejoin="miter" d="m226.4,763.21467,11.775,0s-4.7375,2.3-4.7375,4.5375c0,2.225,3.5875,4.875,3.5875,7.4375,0,2.575-3.3875,4.125-3.3875,4.125h-12.2375s4.05-2.1625,4.05-4.05c0-1.9-3.7125-5.4875-3.7125-7.5125s4.6625-4.5375,4.6625-4.5375z" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="0.9375" fill="none"/>
+ <path id="path4911" stroke-linejoin="miter" d="m224.1,766.66467,7.9875,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="1.40625" fill="none"/>
+ <path id="path4913" stroke-linejoin="miter" d="m224.3,769.85217,7.9875,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="1.40625" fill="none"/>
+ <path id="path4915" stroke-linejoin="miter" d="m226.3375,773.22717,7.975,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="1.40625" fill="none"/>
+ <path id="path4917" stroke-linejoin="miter" d="m226.5375,776.61467,7.975,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="1.40625" fill="none"/>
+ <text id="text4919" y="775.33966" x="251.33749" font-size="15px">
+  <tspan id="tspan4921" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="775.33966" x="251.33749 257.89874 264.31378 271.54041 277.95544 284.59015" font-weight="normal" fill="#000000">Задача</tspan>
+ </text>
+ <text id="text4923" y="775.33966" x="291" font-size="15px">
+  <tspan id="tspan4925" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="775.33966" x="291" font-weight="normal" fill="#000000">-</tspan>
+ </text>
+ <text id="text4927" y="775.33966" x="295.59998" font-size="15px">
+  <tspan id="tspan4929" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="775.33966" x="295.59998 301.81342 308.69806 315.53391 322.52258 328.93762 335.90189 343.04916" font-weight="normal" fill="#000000">сценарий</tspan>
+ </text>
+ <text id="text4931" y="536.08966" x="0.43750611" font-size="15px">
+  <tspan id="tspan4933" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="536.08966" x="0.43750611 9.7273006 16.14234 23.106634 29.557989 36.393867 43.358162 47.124031 53.83802 59.502144 66.466438 72.881477 82.092049 88.507088 95.342964 101.00709 104.77296 111.59687 118.31086 124.76225 131.59808 138.82474 145.66058 152.64926 159.79651 166.63239" font-weight="normal" fill="#000000">Маркер отражает поведение</tspan>
+ </text>
+ <text id="text4935" y="551.08966" x="0.43750611" font-size="15px">
+  <tspan id="tspan4937" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="551.08966" x="0.43750611 7.6641297 14.500006 21.647284 27.860662 33.524849 39.976204 47.123482 53.672676 57.438545 63.8899 70.603951 74.36982 80.821175 87.785469 94.621346 103.14808 109.69733 113.4632 119.91456 128.47769 135.30157 142.01559 149.05304 156.04172 162.87759 169.86627 177.01352" font-weight="normal" fill="#000000">действия во время выполнения</tspan>
+ </text>
+ <text id="text4939" y="551.08966" x="183.5625" font-size="15px">
+  <tspan id="tspan4941" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="551.08966" x="183.5625" font-weight="normal" fill="#000000">:</tspan>
+ </text>
+ <text id="text4943" y="518.76465" x="-0.087518319" font-size="15px">
+  <tspan id="tspan4945" font-size="17.49959946px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="518.76465" x="-0.087518319 13.524969 22.873297 33.109871 42.663399 52.780281 63.016914 76.073189 81.345222 92.282906 102.39979 112.9181 121.94962 130.46881 140.00522 150.52353" font-weight="bold" fill="#737373">Маркеры действий</tspan>
+ </text>
+ <path id="path4947" d="m2.4462499,595.90217,19.6525001,0,0-19.6525-19.6525001,0,0,19.6525z" fill-rule="evenodd" fill="#FFF"/>
+ <path id="path4949" stroke-linejoin="round" d="m2.4462499,595.90217,19.6525001,0,0-19.6525-19.6525001,0,0,19.6525z" stroke="#000" stroke-linecap="round" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="1.5" fill="none"/>
+ <path id="path4951" stroke-linejoin="round" d="m12.2725,581.16467,0,9.825" stroke="#000" stroke-linecap="round" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="1.5" fill="none"/>
+ <path id="path4953" stroke-linejoin="round" d="m7.3599999,586.07717,9.8262501,0" stroke="#000" stroke-linecap="round" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="1.5" fill="none"/>
+ <text id="text4955" y="589.82715" x="34.613716" font-size="15px">
+  <tspan id="tspan4957" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="589.82715" x="34.613716 43.903572 50.31855 57.282845 63.734261 70.570076 77.53437 81.30024 88.124153 94.838142 102.06477 108.88868 115.85297 122.56696 129.4516 136.28745 142.50089 148.71429" font-weight="normal" fill="#000000">Маркер подпроцесса</tspan>
+ </text>
+ <path id="path4959" stroke-linejoin="round" d="m7.4887499,624.02717c-2.64125,0-4.78375-3.425-4.78375-7.65,0-5.2875,4.28375-9.5625,9.5675001-9.5625,5.28375,0,9.5675,4.275,9.5675,9.5625s-4.28375,9.5625-9.5675,9.5625" stroke="#000" stroke-linecap="round" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="1.5" fill="none"/>
+ <path id="path4961" stroke-linejoin="round" d="m7.4887499,620.20217,0,4.7875-4.78375,0" stroke="#000" stroke-linecap="round" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="1.5" fill="none"/>
+ <text id="text4963" y="620.65216" x="34.613716" font-size="15px">
+  <tspan id="tspan4965" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="620.65216" x="34.613716 43.903572 50.31855 57.282845 63.734261 70.570076 77.53437 81.30024 88.184883 95.332161 101.78352 108.82099" font-weight="normal" fill="#000000">Маркер цикла</tspan>
+ </text>
+ <path id="path4967" stroke-linejoin="miter" d="m5.1862499,646.10217,0,17" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="3.89999986" fill="none"/>
+ <path id="path4969" stroke-linejoin="miter" d="m12.2725,646.10217,0,17" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="3.89999986" fill="none"/>
+ <path id="path4971" stroke-linejoin="miter" d="m19.35875,646.10217,0,17" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="3.89999986" fill="none"/>
+ <text id="text4973" y="644.16467" x="34.613716" font-size="15px">
+  <tspan id="tspan4975" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="644.16467" x="34.613716 43.903572 50.31855 57.282845 63.734261 70.570076 77.53437 81.30024 88.124153 94.539192 101.50343 107.91846 114.95594 121.99339 128.82925 135.8667 142.19003 149.17871 157.74185 164.10187" font-weight="normal" fill="#000000">Маркер параллельных</tspan>
+ </text>
+ <text id="text4977" y="656.66467" x="34.613716" font-size="15px">
+  <tspan id="tspan4979" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="656.66467" x="34.613716 43.140511 50.129219 56.843208 66.05378 72.889656 79.103096 84.76722 91.218636 98.054451 105.04316 112.03181 120.59498 126.95499 130.72086 136.9343 143.38568 149.0618 155.89764 164.42444 171.24832 178.28577 184.83499 191.79929 198.51328 204.96466" font-weight="normal" fill="#000000">множественных экземпляров</tspan>
+ </text>
+ <text id="text4981" y="669.16467" x="34.613716" font-size="15px">
+  <tspan id="tspan4983" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="669.16467" x="34.613716" font-weight="normal" fill="#000000">(</tspan>
+ </text>
+ <text id="text4985" y="669.16467" x="39.203743" font-size="15px">
+  <tspan id="tspan4987" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="669.16467" x="39.203743 48.493538" font-weight="normal" fill="#000000">МЭ</tspan>
+ </text>
+ <text id="text4989" y="669.16467" x="55.830025" font-size="15px">
+  <tspan id="tspan4991" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="669.16467" x="55.830025" font-weight="normal" fill="#000000">)</tspan>
+ </text>
+ <path id="path4993" stroke-linejoin="miter" d="m22.595,695.30217-20.6450001,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="3.89999986" fill="none"/>
+ <path id="path4995" stroke-linejoin="miter" d="m22.595,702.78967-20.6450001,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="3.89999986" fill="none"/>
+ <path id="path4997" stroke-linejoin="miter" d="m22.595,710.26467-20.6450001,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="3.89999986" fill="none"/>
+ <text id="text4999" y="694.83966" x="34.613716" font-size="15px">
+  <tspan id="tspan5001" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="694.83966" x="34.613716 43.903572 50.31855 57.282845 63.734261 70.570076" font-weight="normal" fill="#000000">Маркер</tspan>
+ </text>
+ <text id="text5003" y="694.83966" x="81.299995" font-size="15px">
+  <tspan id="tspan5005" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="694.83966" x="81.299995 88.123909 94.837898 101.05128 108.08875 114.92463 122.15125 128.86526 135.31665 141.73166 147.39581 154.23166 161.26913 167.59244 174.58112 183.14426 189.50427" font-weight="normal" fill="#000000">последовательных</tspan>
+ </text>
+ <text id="text5007" y="707.33966" x="34.613716" font-size="15px">
+  <tspan id="tspan5009" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="707.33966" x="34.613716 43.140511 50.129219 56.843208 66.05378 72.889656 79.103096 84.76722 91.218636 98.054451 105.04316 112.03181 120.59498 126.95499 130.72086 136.9343 143.38568 149.0618 155.89764 164.42444 171.24832 178.28577 184.83499 191.79929 198.51328 204.96466" font-weight="normal" fill="#000000">множественных экземпляров</tspan>
+ </text>
+ <text id="text5011" y="719.83966" x="34.613716" font-size="15px">
+  <tspan id="tspan5013" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="719.83966" x="34.613716" font-weight="normal" fill="#000000">(</tspan>
+ </text>
+ <text id="text5015" y="719.83966" x="39.203743" font-size="15px">
+  <tspan id="tspan5017" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="719.83966" x="39.203743 48.493538" font-weight="normal" fill="#000000">МЭ</tspan>
+ </text>
+ <text id="text5019" y="719.83966" x="55.830025" font-size="15px">
+  <tspan id="tspan5021" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="719.83966" x="55.830025" font-weight="normal" fill="#000000">)</tspan>
+ </text>
+ <text id="text5023" y="754.58966" x="0.85877073" font-size="15px">
+  <tspan id="tspan5025" font-size="37.50030136px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="754.58966" x="0.85877073" font-weight="bold" fill="#000000">~</tspan>
+ </text>
+ <text id="text5027" y="744.86469" x="34.613716" font-size="15px">
+  <tspan id="tspan5029" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="744.86469" x="34.613716 43.903572 50.31855 57.282845 63.734261 70.570076 77.53437" font-weight="normal" fill="#000000">Маркер</tspan>
+ </text>
+ <text id="text5031" y="744.86469" x="81.299995" font-size="15px">
+  <tspan id="tspan5033" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="744.86469" x="81.299995 87.867378" font-weight="normal" fill="#000000">ad</tspan>
+ </text>
+ <text id="text5035" y="744.86469" x="98.599983" font-size="15px">
+  <tspan id="tspan5037" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="744.86469" x="98.599983 105.42976 112.13764" font-weight="normal" fill="#000000">hoc</tspan>
+ </text>
+ <path id="path5039" d="m1.2674999,772.41467,11.0050001-7.3375,0,14.675-11.0050001-7.3375z" fill-rule="evenodd" fill="#FFF"/>
+ <path id="path5041" stroke-linejoin="round" d="m1.2674999,772.41467,11.0050001-7.3375,0,14.675-11.0050001-7.3375z" stroke="#000" stroke-linecap="round" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="1.5" fill="none"/>
+ <path id="path5043" d="m12.2725,772.41467,11.005-7.3375,0,14.675-11.005-7.3375z" fill-rule="evenodd" fill="#FFF"/>
+ <path id="path5045" stroke-linejoin="round" d="m12.2725,772.41467,11.005-7.3375,0,14.675-11.005-7.3375z" stroke="#000" stroke-linecap="round" stroke-miterlimit="2" stroke-dasharray="none" stroke-width="1.5" fill="none"/>
+ <text id="text5047" y="775.87714" x="34.613716" font-size="15px">
+  <tspan id="tspan5049" font-size="12.50010014px" font-family="DejaVu Sans" fill-rule="nonzero" style="writing-mode:lr-tb;" font-variant="normal" y="775.87714" x="34.613716 43.903572 50.31855 57.282845 63.734261 70.570076 77.53437 81.30024 87.751656 94.465645 102.99244 109.81629 116.65217 123.64085 129.85425 136.26929 143.15393 150.30118" font-weight="normal" fill="#000000">Маркер компенсации</tspan>
+ </text>
+</svg>

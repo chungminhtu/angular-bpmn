@@ -3,8 +3,8 @@
   "authors": "",
   "description": "",
   "main": [
-    "angular-bpmn.js",
-    "angular-bpmn.css"
+    "dist/angular-bpmn.js",
+    "dist/angular-bpmn.css"
   ],
   "moduleType": [],
   "license": "MIT",
@@ -18,18 +18,7 @@
   ],
   "dependencies": {
     "angular": "~1.4.7",
-    "angular-route": "~1.4.3",
-    "angular-route-segment": "~1.5.0",
-    "angular-resource": "~1.4.3",
     "jquery": "~2.1.4",
-    "bootstrap": "~3.3.5",
-    "animate.css": "animation.css#~3.4.0"
-  },
-  "overrides": {
-    "jquery": {
-      "main": [
-        "dist/jquery.min.js"
-      ]
-    }
+    "jsPlumb": "sporritt/jsplumb#~2.0.4"
   }
 }

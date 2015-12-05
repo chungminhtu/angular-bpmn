@@ -1,0 +1,126 @@
+/* ------------------------ main ----------------------------*/
+
+@zSwimlane: 10;
+@zSwimlaneRow: 15;
+@zConnector: 20;
+@zGroup: 25;
+@zLabel: 30;
+@zDraggable: 35;
+@zPageLoader: 40;
+
+/* ------------------------ flowchart ----------------------------*/
+.flowchart-wrapper {
+  position: relative;
+  margin: 15px 0;
+  outline: 1px solid #e2e2e2;
+  overflow: hidden;
+}
+
+.flowchart{
+  font-size: 11px;
+  position: relative;
+
+  .page-loader {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: @zPageLoader;
+    background-color: #ffffff;
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -64px 0 0 -64px;
+      width: 123px;
+      height: 86px;
+    }
+  }
+
+  .draggable {
+    cursor: pointer;
+    z-index: @zDraggable;
+    position: absolute;
+
+    -webkit-transition: -webkit-box-shadow 0.15s ease-in;
+    -moz-transition: -moz-box-shadow 0.15s ease-in;
+    -o-transition: -o-box-shadow 0.15s ease-in;
+    transition: box-shadow 0.15s ease-in;
+  }
+
+  .aLabel {
+    background-color: white;
+    opacity: 0.8;
+    padding: 0.3em;
+    cursor: pointer;
+    z-index: @zLabel;
+    max-width: 150px;
+    text-align: center;
+  }
+
+  .title {
+    position: absolute;
+    text-align: center;
+    background-color: #ffffff;
+    opacity: 0.8;
+    width: 100px;
+  }
+
+  .group {
+    position: absolute;
+    z-index: @zGroup;
+    min-width: 100px;
+    min-height: 100px;
+  }
+
+  .swimlane {
+    min-height: 200px;
+    min-width: 400px;
+    z-index: @zSwimlane;
+    .swimlane-row {
+      position: relative;
+      min-width: 400px;
+      min-height: 200px;
+      z-index: @zSwimlaneRow;
+      border-bottom: solid 1px;
+      padding-left: 50px;
+      &:last-child {
+        border-bottom: none;
+      }
+      .header {
+        border-right: solid 1px;
+        width: 50px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        .text {
+          position: absolute;
+          top: 75px;
+          left: -77px;
+          right: 0;
+          bottom: 0;
+          height: 50px;
+          width: 200px;
+
+          -webkit-transform: rotate(-90deg);
+          -moz-transform: rotate(-90deg);
+          -ms-transform: rotate(-90deg);
+          -o-transform: rotate(-90deg);
+          filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+          text-align: center;
+          padding: 0.8rem;
+          font-size: 1.3rem;
+          font-weight: 600;
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+
+  .jsplumb-connector {
+    z-index: @zConnector;
+  }
+}
+/* ------------------------ etc ----------------------------*/

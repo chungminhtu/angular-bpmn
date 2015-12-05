@@ -1,0 +1,189 @@
+
+'use strict'
+
+angular
+.module('angular-bpmn')
+.service 'bpmnSettings', () ->
+
+  themeSettings =
+    root_path: '/themes'
+    list: ['default', 'minimal']
+
+  engineSettings =
+    theme: 'minimal'
+    status: 'viewer'
+
+  instanceSettings =
+    DragOptions:
+      cursor: 'pointer'
+      zIndex: 20
+    ConnectionOverlays: [
+      [ "Arrow"
+        {
+          location: 1
+          id: "arrow"
+          width: 12
+          length: 12
+          foldback: 0.8
+        }
+      ]
+    ]
+
+  draggableSettings =
+    filter: '.ui-resizable-handle'
+    grid: [5, 5]
+    drag: (event, ui)->
+#     $log.debug 'etc dragging'
+
+  connectorStyle =
+    strokeStyle: "#000000"
+    lineWidth: 2
+    outlineWidth: 4
+
+  # свойства точки соединения примитива и линии связи
+  pointSettings =
+    isSource: true
+    isTarget: true
+    endpoint: ["Dot", {radius: 1}]
+    paintStyle:
+      outlineWidth: 1
+    hoverPaintStyle: {}
+    connectorStyle: connectorStyle
+
+  connector = ["Flowchart", {
+    cornerRadius: 0
+    midpoint: 0.5
+    minStubLength: 10
+    stub:[30, 30]
+    gap:0
+  }]
+
+#  свойства линии связи
+  connectorSettings =
+    connector: connector
+    isSource: true
+    isTarget: true
+
+  sourceSettings =
+    filter: ".ep"
+    anchor: []
+    connector: connector
+    connectorStyle: connectorStyle
+    endpoint: ["Dot", {radius: 1}]
+    maxConnections: 12
+    onMaxConnections: (info, e)->
+      alert("Maximum connections (" + info.maxConnections + ") reached")
+
+  targetSettings =
+    anchor: []
+    endpoint: ["Dot", {radius: 1}]
+    allowLoopback: false
+    uniqueEndpoint: true
+    isTarget:true
+    maxConnections: 12
+
+  templates =
+    event:
+      templateUrl: 'event.svg'
+      anchor: [
+        [ 0.52, 0.05, 0, -1, 0, 2]
+        [ 1, 0.52, 1, 0, -2, 0]
+        [ 0.52, 1, 0, 1, 0, -2]
+        [ 0.1, 0.52, -1, 0, 2, 0]
+      ]
+      make: ['source','target']
+      draggable: true
+      size:
+        width: 50
+        height: 50
+    task:
+      templateUrl: 'task.svg'
+      anchor: [
+        [ 0.25, 0.04, 0, -1, 0, 2]
+        [ 0.5, 0.04, 0, -1, 0, 2]
+        [ 0.75, 0.04, 0, -1, 0, 2]
+        [ 0.97, 0.25, 1, 0, -2, 0]
+        [ 0.97, 0.5, 1, 0, -2, 0]
+        [ 0.97, 0.75, 1, 0, -2, 0]
+        [ 0.75, 0.97, 0, 1, 0, -2]
+        [ 0.5, 0.97, 0, 1, 0, -2]
+        [ 0.25, 0.97, 0, 1, 0, -2]
+        [ 0.04, 0.75, -1, 0, 2, 0]
+        [ 0.04, 0.5, -1, 0, 2, 0]
+        [ 0.04, 0.25, -1, 0, 2, 0]
+      ]
+      make: ['source','target']
+      draggable: true
+      size:
+        width: 112
+        height: 92
+    gateway:
+      templateUrl: 'gateway.svg'
+      anchor: [
+        [ 0.5, 0, 0, -1, 0, 2]
+        [ 1, 0.5, 1, 0, -2, 0]
+        [ 0.5, 1, 0, 1, 0, -2]
+        [ 0, 0.5, -1, 0, 2, 0]
+      ]
+      make: ['source','target']
+      draggable: true
+      size:
+        width: 52
+        height: 52
+    group:
+      template: '<div scheme-object class="group etc draggable" ng-style="{width: data.width, height: data.height}" ng-class="{ dashed : data.style == \'dashed\', solid : data.style == \'solid\' }">
+          <div class="title">{{data.title}}</div>
+        </div>'
+      anchor: []
+      make: []
+      draggable: true
+    swimlane:
+      template: '<div scheme-object class="swimlane etc draggable" ng-style="{ width: data.width }"></div>'
+      anchor: []
+      make: []
+      draggable: true
+    'swimlane-row':
+      template: '<div scheme-object class="swimlane-row" ng-style="{width: \'100%\', height: data.height }">
+          <div class="header"><div class="text">{{data.title}}</div></div>
+        </div>'
+      anchor: []
+      make: []
+#      ignorePosition: true
+      draggable: false
+    poster:
+      template: '<div scheme-object class="poster draggable" ng-class="{ \'etc\' : data.draggable }"><img ng-src="{{data.url}}"></div>'
+      anchor: []
+      make: []
+      draggable: true
+    default:
+      template: '<div scheme-object class="dummy etc draggable">shape not found</div>'
+      anchor: [
+        [ 0.5, 0, 0, -1, 0, 2]
+        [ 1, 0.5, 1, 0, -2, 0]
+        [ 0.5, 1, 0, 1, 0, -2]
+        [ 0, 0.5, -1, 0, 2, 0]
+      ]
+      make: ['source','target']
+      draggable: true
+      size:
+        width: 40
+        height: 40
+
+  template = (id)->
+    if templates[id]?
+      return templates[id]
+    else
+      return templates['default']
+
+  {
+    theme: themeSettings
+    engine: engineSettings
+    instance: instanceSettings
+    draggable: draggableSettings
+    point: pointSettings
+    connecto: connectorSettings
+    source: sourceSettings
+    target: targetSettings
+    template: template
+    templates: templates
+  }

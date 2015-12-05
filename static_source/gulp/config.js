@@ -7,8 +7,8 @@ module.exports = {
         filename: 'lib.min.js',
         paths: {
             bowerDirectory: source + '/bower_components',
-            bowerrc: '.bowerrc',
-            bowerJson: 'bower.json'
+            bowerrc: source + '/.bowerrc',
+            bowerJson: source + '/bower.json'
         },
         dest: source + '/js'
     },
@@ -28,8 +28,8 @@ module.exports = {
         filename: 'lib.min.css',
         paths: {
             bowerDirectory: source + '/bower_components',
-            bowerrc: '.bowerrc',
-            bowerJson: 'bower.json'
+            bowerrc: '/.bowerrc',
+            bowerJson: source + '/bower.json'
         },
         dest: source + '/css'
     },
@@ -79,14 +79,14 @@ module.exports = {
             "!" + source + "/app/services/prevent_selection.coffee",
             "!" + source + "/app/services/scheme_service.coffee"
         ],
-        dest: './'
+        dest: './dist/'
     },
     build_engine_css: {
         filename: 'angular-bpmn.css',
         source: [
             source + '/less/app_bpmn.less'
         ],
-        dest: './'
+        dest: './dist/'
     },
     theme_less: {
         filename: 'style.css',

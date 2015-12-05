@@ -2,10 +2,10 @@
 'use strict'
 
 angular
-.module('appServices')
+.module('angular-bpmn')
 .service 'bpmnMock', () ->
   {
-    schema1: {
+    scheme1: {
       name: 'Simple scheme of the business process'
       description: ''
       objects: [
