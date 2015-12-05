@@ -12,6 +12,8 @@ angular
   engineSettings =
     theme: 'minimal'
     status: 'viewer'
+    container:
+      resizable: true
 
   instanceSettings =
     DragOptions:
@@ -28,6 +30,7 @@ angular
         }
       ]
     ]
+    Container: 'container'
 
   draggableSettings =
     filter: '.ui-resizable-handle'

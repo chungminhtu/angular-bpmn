@@ -18,7 +18,7 @@ angular
       instance: null
       style_id: 'bpmn-style-theme'
       wrap_class: 'bpmn-wrapper'
-      template: '<div ng-repeat="object in scheme.objects" class="draggable">{{object.type}}</div>'
+      template: '<div ng-repeat="object in scheme.objects" bpmn-object class="jtk-node draggable etc" ng-class="[object.status]"</div>'
 
       constructor: (container, settings, scheme)->
 #        set unique id
@@ -43,6 +43,9 @@ angular
         @cache = []
         @loadTemplates()
 
+        @instance = jsPlumb.getInstance($.extend(true, @settings.instance, {Container: container}))
+        @scope.instance = @instance
+
 #        compile template
         @container.append($compile(@template)(@scope))
         @container.addClass('bpmn')
@@ -50,7 +53,9 @@ angular
 #        set status
         @setStatus()
 
-        @instance = jsPlumb.getInstance(@settings.instance)
+        @instance.batch ()->
+          @instance.draggable( ".etc", @settings.draggable)
+
 
       setStatus: ()->
         if @settings.engine.status == 'editor'
@@ -69,8 +74,17 @@ angular
         if !settings?
           settings = {}
 
-        @settings = $.extend(true, bpmnSettings, settings)
+        @settings = $.extend(true, bpmnSettings, angular.copy(settings))
         @scope.settings = @settings
+
+        if @settings.engine.container?.resizable?
+          @container.resizable
+            minHeight: 200
+            minWidth: 400
+            grid: 10
+            handles: 's'
+            start: ()->
+            resize: ()->
 
       # load style
       #------------------------------------------------------------------------------
