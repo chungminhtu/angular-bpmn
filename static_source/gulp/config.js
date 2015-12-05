@@ -51,7 +51,9 @@ module.exports = {
         fallback: 'static_source/index.html',
         watch: [
             'static_source/js/*.js',
-            'static_source/css/*.css'
+            'static_source/css/*.css',
+            'static_source/themes/**/*.css',
+            'static_source/themes/**/*.svg'
         ]
     },
     build_haml: {
