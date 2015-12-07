@@ -94,12 +94,12 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
 
 'use strict';
 angular.module('angular-bpmn').directive('bpmnObject', [
-  '$log', '$timeout', '$templateCache', '$compile', '$templateRequest', function($log, $timeout, $templateCache, $compile, $templateRequest) {
+  '$log', '$timeout', '$templateCache', '$compile', '$templateRequest', '$q', function($log, $timeout, $templateCache, $compile, $templateRequest, $q) {
     return {
       restrict: 'A',
       controller: [
         "$scope", "$element", function($scope, $element) {
-          var appedndToElement, container, getTemplate, updateStyle;
+          var appedndToElement, batchUpdate, container, generateAnchor, getTemplate, updateStyle;
           container = $($element);
           appedndToElement = (function(_this) {
             return function(element) {
@@ -143,8 +143,44 @@ angular.module('angular-bpmn').directive('bpmnObject', [
             container.css(style);
             return $scope.instance.repaintEverything();
           };
+          batchUpdate = function() {
+            return $scope.instance.batch(function() {
+              var template;
+              $scope.instance.draggable(container, $scope.settings.draggable);
+              template = $scope.settings.template($scope.object.type.name);
+              if (template.anchor.length === 0) {
+                return;
+              }
+              if ($.inArray('source', template.make) !== -1) {
+                $scope.instance.makeSource(container, $.extend($scope.settings.source, {
+                  anchor: template.anchor
+                }));
+              }
+              if ($.inArray('target', template.make) !== -1) {
+                return $scope.instance.makeTarget(container, $.extend($scope.settings.target, {
+                  anchor: template.anchor
+                }));
+              }
+            });
+          };
+          generateAnchor = function() {
+            var anchors, template;
+            template = $scope.settings.template($scope.object.type.name);
+            anchors = template.anchor;
+            if (!anchors || anchors.length === 0) {
+              return;
+            }
+            return angular.forEach(anchors, function(anchor) {
+              return $scope.instance.addEndpoint(container, {
+                anchor: anchor,
+                maxConnections: -1
+              }, $scope.settings.point);
+            });
+          };
           getTemplate();
-          return updateStyle();
+          updateStyle();
+          generateAnchor();
+          return batchUpdate();
         }
       ],
       link: function($scope, element, attrs) {}
@@ -153,10 +189,26 @@ angular.module('angular-bpmn').directive('bpmnObject', [
 ]);
 
 'use strict';
+angular.module('angular-bpmn').factory('bpmnObjectFact', [
+  'bpmnSettings', '$compile', '$rootScope', '$log', '$templateRequest', '$templateCache', function(bpmnSettings, $compile, $rootScope, $log, $templateRequest, $templateCache) {
+    var schemeObject;
+    schemeObject = (function() {
+      function schemeObject() {}
+
+      return schemeObject;
+
+    })();
+    return schemeObject;
+  }
+]);
+
+'use strict';
 angular.module('angular-bpmn').factory('bpmnScheme', [
-  '$rootScope', '$log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', function($rootScope, $log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest) {
+  '$rootScope', '$log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', function($rootScope, $log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact) {
     var bpmnScheme;
     bpmnScheme = (function() {
+      bpmnScheme.prototype.isStarted = false;
+
       bpmnScheme.prototype.id = null;
 
       bpmnScheme.prototype.scope = null;
@@ -165,23 +217,17 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.wrapper = null;
 
-      bpmnScheme.prototype.elements = null;
-
-      bpmnScheme.prototype.scheme = null;
-
-      bpmnScheme.prototype.settings = null;
-
       bpmnScheme.prototype.cache = null;
-
-      bpmnScheme.prototype.instance = null;
 
       bpmnScheme.prototype.style_id = 'bpmn-style-theme';
 
       bpmnScheme.prototype.wrap_class = 'bpmn-wrapper';
 
-      bpmnScheme.prototype.template = '<div ng-repeat="object in scheme.objects" bpmn-object class="draggable etc" ng-class="[object.status]"</div>';
+      bpmnScheme.prototype.schemeWatch = null;
 
-      function bpmnScheme(container, settings, scheme) {
+      bpmnScheme.prototype.template = '<div ng-repeat="object in scheme.objects" bpmn-object class="draggable etc" ng-class="[object.status]" ready="false"></div>';
+
+      function bpmnScheme(container, settings) {
         var wrapper;
         this.id = bpmnUuid.gen();
         this.container = container;
@@ -191,22 +237,13 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         }
         this.wrapper = container.parent('.' + this.wrap_class);
         this.scope = $rootScope.$new();
-        this.setScheme(scheme);
+        this.scope.scheme = {};
+        this.scope.settings = {};
         this.setSettings(settings);
-        this.loadStyle();
-        this.cache = [];
-        this.loadTemplates();
-        this.instance = jsPlumb.getInstance($.extend(true, this.settings.instance, {
-          Container: container
-        }));
-        this.scope.instance = this.instance;
-        this.container.append($compile(this.template)(this.scope));
-        this.container.addClass('bpmn');
-        this.setStatus();
       }
 
       bpmnScheme.prototype.setStatus = function() {
-        if (this.settings.engine.status === 'editor') {
+        if (this.scope.settings.engine.status === 'editor') {
           return this.container.addClass('editor');
         } else {
           return this.container.addClass('viewer');
@@ -215,24 +252,31 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.setScheme = function(scheme) {
         if (scheme == null) {
-          scheme = {};
+          scheme = this.scope.scheme || {};
         }
-        this.scheme = scheme;
-        return this.scope.scheme = this.scheme;
+        return this.scope.scheme = scheme;
       };
 
       bpmnScheme.prototype.setSettings = function(settings) {
+        var ref;
         if (settings == null) {
           settings = {};
         }
-        this.settings = $.extend(true, bpmnSettings, angular.copy(settings));
-        return this.scope.settings = this.settings;
+        this.scope.settings = $.extend(true, bpmnSettings, angular.copy(settings));
+        if (((ref = this.scope.settings.engine.container) != null ? ref.resizable : void 0) != null) {
+          return this.container.resizable({
+            minHeight: 200,
+            minWidth: 400,
+            grid: 10,
+            handles: 's'
+          });
+        }
       };
 
       bpmnScheme.prototype.loadStyle = function() {
         var file, themeStyle, theme_name;
-        theme_name = this.settings.engine.theme;
-        file = this.settings.theme.root_path + '/' + theme_name + '/style.css';
+        theme_name = this.scope.settings.engine.theme;
+        file = this.scope.settings.theme.root_path + '/' + theme_name + '/style.css';
         themeStyle = $('link#' + this.style_id + '-' + theme_name);
         if (themeStyle.length === 0) {
           $("<link/>", {
@@ -248,14 +292,14 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         return this.wrapper.addClass(this.wrap_class + ' ' + theme_name);
       };
 
-      bpmnScheme.prototype.loadTemplates = function() {
-        return angular.forEach(this.settings.templates, (function(_this) {
+      bpmnScheme.prototype.cacheTemplates = function() {
+        return angular.forEach(this.scope.settings.templates, (function(_this) {
           return function(type) {
             var template, templatePromise, templateUrl;
             if ((type.templateUrl == null) || type.templateUrl === '') {
               return;
             }
-            templateUrl = _this.settings.theme.root_path + '/' + _this.settings.engine.theme + '/' + type.templateUrl;
+            templateUrl = _this.scope.settings.theme.root_path + '/' + _this.scope.settings.engine.theme + '/' + type.templateUrl;
             template = $templateCache.get(templateUrl);
             if (template == null) {
               templatePromise = $templateRequest(templateUrl);
@@ -269,11 +313,51 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         })(this));
       };
 
-      bpmnScheme.prototype.destroy = function() {};
+      bpmnScheme.prototype.makeObjects = function() {
+        var promise;
+        promise = [];
+        return angular.forEach(this.scope.scheme.objects, function(object) {
+          var obj;
+          obj = new bpmnObjectFact(instance, object, scheme, settings);
+          scheme.objects[object.id] = obj;
+          return promise.push(obj.elementPromise);
+        });
+      };
 
-      bpmnScheme.prototype.update = function() {};
+      bpmnScheme.prototype.start = function() {
+        this.loadStyle();
+        this.scope.instance = jsPlumb.getInstance($.extend(true, this.scope.settings.instance, {
+          Container: container
+        }));
+        this.cache = [];
+        this.cacheTemplates();
+        this.container.addClass('bpmn');
+        this.setStatus();
+        if (this.schemeWatch) {
+          this.schemeWatch();
+        }
+        return this.schemeWatch = this.scope.$watch('scheme', (function(_this) {
+          return function(val, old_val) {
+            if (val === old_val) {
+              return;
+            }
+            return _this.restart();
+          };
+        })(this));
+      };
 
-      bpmnScheme.prototype.init = function() {};
+      bpmnScheme.prototype.destroy = function() {
+        if (this.schemeWatch) {
+          return this.schemeWatch();
+        }
+      };
+
+      bpmnScheme.prototype.restart = function() {
+        if (this.isStarted != null) {
+          this.destry();
+        }
+        return this.start();
+      };
 
       return bpmnScheme;
 
@@ -291,7 +375,10 @@ angular.module('angular-bpmn').service('bpmnSettings', function() {
   };
   engineSettings = {
     theme: 'minimal',
-    status: 'viewer'
+    status: 'viewer',
+    container: {
+      resizable: true
+    }
   };
   instanceSettings = {
     DragOptions: {
@@ -324,16 +411,7 @@ angular.module('angular-bpmn').service('bpmnSettings', function() {
   pointSettings = {
     isSource: true,
     isTarget: true,
-    endpoint: [
-      "Dot", {
-        radius: 1
-      }
-    ],
-    paintStyle: {
-      outlineWidth: 1
-    },
-    hoverPaintStyle: {},
-    connectorStyle: connectorStyle
+    maxConnections: -1
   };
   connector = [
     "Flowchart", {
@@ -359,7 +437,7 @@ angular.module('angular-bpmn').service('bpmnSettings', function() {
         radius: 1
       }
     ],
-    maxConnections: 12,
+    maxConnections: -1,
     onMaxConnections: function(info, e) {
       return alert("Maximum connections (" + info.maxConnections + ") reached");
     }
@@ -374,7 +452,7 @@ angular.module('angular-bpmn').service('bpmnSettings', function() {
     allowLoopback: false,
     uniqueEndpoint: true,
     isTarget: true,
-    maxConnections: 12
+    maxConnections: -1
   };
   templates = {
     event: {
@@ -455,7 +533,7 @@ angular.module('angular-bpmn').service('bpmnSettings', function() {
     instance: instanceSettings,
     draggable: draggableSettings,
     point: pointSettings,
-    connecto: connectorSettings,
+    connector: connectorSettings,
     source: sourceSettings,
     target: targetSettings,
     template: template,

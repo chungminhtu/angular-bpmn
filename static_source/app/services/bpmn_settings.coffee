@@ -47,11 +47,12 @@ angular
   pointSettings =
     isSource: true
     isTarget: true
-    endpoint: ["Dot", {radius: 1}]
-    paintStyle:
-      outlineWidth: 1
-    hoverPaintStyle: {}
-    connectorStyle: connectorStyle
+#    endpoint: ["Dot", {radius: 1}]
+    maxConnections: -1
+#    paintStyle:
+#      outlineWidth: 1
+#    hoverPaintStyle: {}
+#    connectorStyle: connectorStyle
 
   connector = ["Flowchart", {
     cornerRadius: 0
@@ -73,7 +74,7 @@ angular
     connector: connector
     connectorStyle: connectorStyle
     endpoint: ["Dot", {radius: 1}]
-    maxConnections: 12
+    maxConnections: -1
     onMaxConnections: (info, e)->
       alert("Maximum connections (" + info.maxConnections + ") reached")
 
@@ -83,7 +84,7 @@ angular
     allowLoopback: false
     uniqueEndpoint: true
     isTarget:true
-    maxConnections: 12
+    maxConnections: -1
 
   templates =
     event:
@@ -184,7 +185,7 @@ angular
     instance: instanceSettings
     draggable: draggableSettings
     point: pointSettings
-    connecto: connectorSettings
+    connector: connectorSettings
     source: sourceSettings
     target: targetSettings
     template: template
