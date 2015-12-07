@@ -127,11 +127,26 @@ angular
 
               object.select(true)
 
-          # batcengine()
-          # connect()
+          @instanceBatch()
+          @connectPackageObjects()
 
           @isStarted = true
           #TODO update preloader fadeOut
+
+      instanceBatch: ()->
+        @scope.instance.batch ()=>
+          @log 'instance batch'
+
+          # все элементы внутри контейнера буду подвижны
+          if @scope.settings.engine.status == 'editor'
+            @scope.instance.draggable(@container.find(".etc"), @scope.settings.draggable)
+
+      connectPackageObjects: ()->
+        @log 'connect package objects'
+
+      addObject: (object)->
+
+      removeObject: (object)->
 
       start: ()->
         @log 'start'
