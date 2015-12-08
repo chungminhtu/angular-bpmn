@@ -47,12 +47,12 @@ angular
   pointSettings =
     isSource: true
     isTarget: true
-#    endpoint: ["Dot", {radius: 1}]
+    endpoint: ["Dot", {radius: 1}]
     maxConnections: -1
-#    paintStyle:
-#      outlineWidth: 1
-#    hoverPaintStyle: {}
-#    connectorStyle: connectorStyle
+    paintStyle:
+      outlineWidth: 1
+    hoverPaintStyle: {}
+    connectorStyle: connectorStyle
 
   connector = ["Flowchart", {
     cornerRadius: 0

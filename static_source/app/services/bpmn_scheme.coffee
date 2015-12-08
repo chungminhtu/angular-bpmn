@@ -142,7 +142,53 @@ angular
             @scope.instance.draggable(@container.find(".etc"), @scope.settings.draggable)
 
       connectPackageObjects: ()->
+        if !@scope.extScheme?.connectors?
+          return
+
         @log 'connect package objects'
+
+        angular.forEach @scope.extScheme.connectors, (connector)=>
+          if (!connector.start || !connector.end) ||
+              (!@scope.intScheme.objects[connector.start.object] || !@scope.intScheme.objects[connector.end.object]) ||
+              (!@scope.intScheme.objects[connector.start.object].points || !@scope.intScheme.objects[connector.end.object].points)
+            return
+
+          # связь создаётся по точкам созданным ранее
+          source_obj_points = {}
+          target_obj_points = {}
+
+          angular.forEach @scope.intScheme.objects, (object)->
+            if object.data.id == connector.start.object
+              source_obj_points = object.points
+            if object.data.id == connector.end.object
+              target_obj_points = object.points
+
+          if !source_obj_points[connector.start.point]?
+            $log.error 'connect: source not found', this
+            return
+
+          if !target_obj_points[connector.end.point]?
+            $log.error 'connect: target not found', this
+            return
+
+          # связь создаётся по точкам
+          points = {
+            sourceEndpoint: source_obj_points[connector.start.point]
+
+          # Привязка к объекту, якорь выбирается автоматически
+#          target: @scope.intScheme.objects[connector.end.object]['object']
+
+          # Привязка к конкретному якорю объекта
+            targetEndpoint: target_obj_points[connector.end.point]
+          }
+
+          # подпись для связи
+          if connector.title && connector.title != ""
+            points['overlays'] = [
+              [ "Label", { label:connector.title, cssClass: "aLabel" }, id:"myLabel" ]
+            ]
+
+          @scope.intScheme.connectors.push(@scope.instance.connect(points, @scope.settings.connector))
 
       addObject: (object)->
 
@@ -163,16 +209,26 @@ angular
         @schemeWatch = @scope.$watch 'extScheme', (val, old_val)=>
           if val == old_val
             return
-
           @restart()
 
         # make objects
         $q.all(@cache).then ()=>
           @makePackageObjects()
 
+        if @scope.settings.engine.container?.resizable?
+          @container.resizable
+            minHeight: 200
+            minWidth: 400
+            grid: 10
+            handles: 's'
+            start: ()->
+            resize: ()->
+
       destroy: ()->
         @log 'destroy'
         #TODO update preloader fadeIn
+
+        @container.resizable('destroy')
 
         if @schemeWatch
           @schemeWatch()
