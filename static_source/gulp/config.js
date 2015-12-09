@@ -74,6 +74,7 @@ module.exports = {
     },
     build_engine_js: {
         filename: 'angular-bpmn.js',
+        min_filename: 'angular-bpmn.min.js',
         source: [
             source + "/app/app_bpmn.coffee",
             source + "/app/directives/**/*.coffee",
@@ -85,6 +86,7 @@ module.exports = {
     },
     build_engine_css: {
         filename: 'angular-bpmn.css',
+        min_filename: 'angular-bpmn.min.css',
         source: [
             source + '/less/app_bpmn.less'
         ],

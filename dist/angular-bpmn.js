@@ -30,7 +30,7 @@ angular.module('angular-bpmn').service('log', [
 angular.module('angular-bpmn').service('bpmnMock', function() {
   return {
     scheme1: {
-      name: 'Simple scheme of the business process',
+      name: '',
       description: '',
       objects: [
         {
@@ -126,6 +126,11 @@ angular.module('angular-bpmn').directive('bpmnObject', [
         "$scope", "$element", function($scope, $element) {
           var container, updateStyle;
           container = $($element);
+          if ($scope.data.type.name === 'poster') {
+            container.find('img').on('dragstart', function(e) {
+              return e.preventDefault();
+            });
+          }
           updateStyle = function() {
             var style;
             style = {
@@ -260,10 +265,14 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
         }
         this.container = container;
         container.append(this.element);
-        $(this.element).css({
-          width: this.size.width,
-          height: this.size.height
-        });
+        if (this.size) {
+          $(this.element).css({
+            width: this.size.width,
+            height: this.size.height
+          });
+        } else {
+          log.error('@size is null, element:', this.element);
+        }
         return this.generateAnchor(options);
       };
 
@@ -318,6 +327,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
           container.wrap('<div class="' + this.wrap_class + '"></div>');
         }
         this.wrapper = container.parent('.' + this.wrap_class);
+        preventSelection(document);
         this.scope = $rootScope.$new();
         this.scope.extScheme = {};
         this.scope.intScheme = {
@@ -607,7 +617,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
           };
         })(this));
         if (((ref = this.scope.settings.engine.container) != null ? ref.resizable : void 0) != null) {
-          return this.container.resizable({
+          this.wrapper.resizable({
             minHeight: 200,
             minWidth: 400,
             grid: 10,
@@ -616,11 +626,19 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
             resize: function() {}
           });
         }
+        return this.scope.$on('$routeChangeSuccess', (function(_this) {
+          return function() {
+            return _this.destroy();
+          };
+        })(this));
       };
 
       bpmnScheme.prototype.destroy = function() {
+        var ref;
         log.debug('destroy');
-        this.container.resizable('destroy');
+        if (((ref = this.scope.settings.engine.container) != null ? ref.resizable : void 0) != null) {
+          this.wrapper.resizable('destroy');
+        }
         if (this.schemeWatch) {
           this.schemeWatch();
         }
@@ -776,31 +794,31 @@ angular.module('angular-bpmn').service('bpmnSettings', function() {
       }
     },
     group: {
-      template: '<div scheme-object class="group etc draggable" ng-style="{width: data.width, height: data.height}" ng-class="{ dashed : data.style == \'dashed\', solid : data.style == \'solid\' }"> <div class="title">{{data.title}}</div> </div>',
+      template: '<div bpmn-object class="group etc draggable" ng-style="{width: data.width, height: data.height}" ng-class="{ dashed : data.style == \'dashed\', solid : data.style == \'solid\' }"> <div class="title">{{data.title}}</div> </div>',
       anchor: [],
       make: [],
       draggable: true
     },
     swimlane: {
-      template: '<div scheme-object class="swimlane etc draggable" ng-style="{ width: data.width }"></div>',
+      template: '<div bpmn-object class="swimlane etc draggable" ng-style="{ width: data.width }"></div>',
       anchor: [],
       make: [],
       draggable: true
     },
     'swimlane-row': {
-      template: '<div scheme-object class="swimlane-row" ng-style="{width: \'100%\', height: data.height }"> <div class="header"><div class="text">{{data.title}}</div></div> </div>',
+      template: '<div bpmn-object class="swimlane-row" ng-style="{width: \'100%\', height: data.height }"> <div class="header"><div class="text">{{data.title}}</div></div> </div>',
       anchor: [],
       make: [],
       draggable: false
     },
     poster: {
-      template: '<div scheme-object class="poster draggable" ng-class="{ \'etc\' : data.draggable }"><img ng-src="{{data.url}}"></div>',
+      template: '<div bpmn-object class="poster draggable" ng-class="{ \'etc\' : data.draggable }"><img ng-src="{{data.url}}"></div>',
       anchor: [],
       make: [],
       draggable: true
     },
     "default": {
-      template: '<div scheme-object class="dummy etc draggable">shape not found</div>',
+      template: '<div bpmn-object class="dummy etc draggable">shape not found</div>',
       anchor: [[0.5, 0, 0, -1, 0, 2], [1, 0.5, 1, 0, -2, 0], [0.5, 1, 0, 1, 0, -2], [0, 0.5, -1, 0, 2, 0]],
       make: ['source', 'target'],
       draggable: true,

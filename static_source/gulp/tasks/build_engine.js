@@ -4,6 +4,8 @@ var gulp = require('gulp'),
     inject = require('gulp-inject'),
     coffee = require('gulp-coffee'),
     uglify = require('gulp-uglify'),
+    ngconcat = require('gulp-ngconcat'),
+    csso = require('gulp-csso'),
     gutil = require('gulp-util');
 
 gulp.task('build_engine_js', function(done) {
@@ -11,6 +13,11 @@ gulp.task('build_engine_js', function(done) {
         .pipe(coffee({bare: true})
             .on('error', done))
         .pipe(concat(conf_js.filename))
+        .pipe(gulp.dest(conf_js.dest))
+
+        // min
+        .pipe(concat(conf_js.min_filename))
+        .pipe(uglify())
         .pipe(gulp.dest(conf_js.dest));
 
 });
@@ -26,5 +33,9 @@ gulp.task('build_engine_css', function() {
             gutil.log(err);
             this.emit('end');
         })
+        .pipe(gulp.dest(conf_css.dest))
+
+        .pipe(concat(conf_css.min_filename))
+        .pipe(csso()) // минимизируем css
         .pipe(gulp.dest(conf_css.dest));
 });
