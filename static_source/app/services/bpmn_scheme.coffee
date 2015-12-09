@@ -1,6 +1,10 @@
 
 'use strict'
 
+LEFT_MB = 1
+MIDDLE_MB = 2
+RIGHT_MB = 3
+
 angular
 .module('angular-bpmn')
 .factory 'bpmnScheme', ['$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact'
@@ -39,6 +43,7 @@ angular
           connectors: []
         @scope.settings = {}
         @scope.selected = []
+        @scope.zoom = 1
         @setSettings(settings)
 
         #TODO add preloader
@@ -199,8 +204,102 @@ angular
         angular.forEach @scope.intScheme.objects, (object)->
           object.select(false)
 
+      #
+      # http://jsfiddle.net/X2PZP/3/
+      #
+      panning: ()->
+        template = $compile('<div class="panning-cross">
+<svg>
+ <g id="layer1" transform="translate(-291.18256,-337.29837)">
+   <path id="path3006" stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2.01302433"/>
+   <path id="path3008" stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/>
+ </g>
+</svg>
+<div class="zoom-info">({{zoom}})</div>
+</div>')(@scope)
+        @container.append(template)
+        $(template).css({
+          position: 'absolute'
+          top: -23
+          left: -45
+        })
+
+        drag =
+          x: 0
+          y: 0
+          state: false
+
+        delta =
+          x: 0
+          y: 0
+
+        @wrapper.on 'mousedown', (e)->
+          if $(e.target).hasClass('ui-resizable-handle')
+            return
+
+          if !drag.state && e.which == LEFT_MB
+            drag.x = e.pageX
+            drag.y = e.pageY
+            drag.state = true
+
+        @wrapper.on 'mousemove', (e)=>
+          if drag.state
+            delta.x = e.pageX - drag.x
+            delta.y = e.pageY - drag.y
+
+            cur_offset = @container.offset()
+
+            @container.offset({
+              left: (cur_offset.left + delta.x)
+              top: (cur_offset.top + delta.y)
+            })
+
+            drag.x = e.pageX
+            drag.y = e.pageY
+
+        @wrapper.on 'mouseup', (e)->
+          if drag.state
+            drag.state = false
+
+        @wrapper.on 'contextmenu', (e)->
+          return false
+
+        @wrapper.on 'mouseleave', (e)->
+          if drag.state
+            drag.state = false
+
+        # zoom
+        #-----------------------------------
+        @wrapper.on 'mousewheel', (e)=>
+          e.preventDefault()
+
+          @scope.zoom += 0.1 * e.deltaY
+          @scope.zoom = parseFloat(@scope.zoom.toFixed(1))
+          if @scope.zoom < 0.1
+            @scope.zoom = 0.1
+          else if @scope.zoom > 2
+            @scope.zoom = 2
+
+          @scope.instance.setZoom(@scope.zoom)
+          @scope.instance.repaintEverything(@scope.zoom)
+
+          $timeout ()=>
+            @scope.$apply(
+              @scope.zoom
+            )
+          , 0
+
+          @container.css({
+            '-webkit-transform':@scope.zoom
+            '-moz-transform':'scale('+@scope.zoom+')'
+            '-ms-transform':'scale('+@scope.zoom+')'
+            '-o-transform':'scale('+@scope.zoom+')'
+            'transform':'scale('+@scope.zoom+')'
+          })
+
       start: ()->
         log.debug 'start'
+        @panning()
         @loadStyle()
         @scope.instance = jsPlumb.getInstance($.extend(true, @scope.settings.instance, {Container: @container}))
         @cache = []
@@ -237,6 +336,13 @@ angular
 
         if @schemeWatch
           @schemeWatch()
+
+        # panning
+        @wrapper.off 'mousedown'
+        @wrapper.off 'mousemove'
+        @wrapper.off 'mouseup'
+        @wrapper.off 'contextmenu'
+        @wrapper.off 'mousewheel'
 
       restart: ()->
         log.debug 'restart'
