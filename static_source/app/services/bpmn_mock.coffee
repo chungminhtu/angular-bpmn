@@ -6,18 +6,16 @@ angular
 .service 'bpmnMock', () ->
   {
     scheme1: {
-      name: 'Simple scheme of the business process'
+      name: ''
       description: ''
       objects: [
         {
           id: 1
           type:
             name: 'event'
-            start: {
-              0: {
+            start:
+              0:
                 0: true
-              }
-            }
           position:
             top: 80
             left: 50

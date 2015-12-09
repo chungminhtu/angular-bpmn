@@ -8,7 +8,8 @@ angular
     vm = this
     vm.title = ''
     vm.menu = [
-      {name: 'home', path: 'base.home'}
+      {name: 'home', path: 'base'}
+      {name: 'events',path: 'base.events'}
     ]
 
 

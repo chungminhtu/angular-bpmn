@@ -22,6 +22,7 @@ angular.module('app')
   ($routeProvider, $locationProvider, $routeSegmentProvider) ->
     $routeSegmentProvider
       .when '/',              'base'
+      .when '/events',              'base.events'
 
       .segment 'base',
         templateUrl: '/templates/base.html'
@@ -29,11 +30,17 @@ angular.module('app')
         controllerAs: 'base'
 
       .within()
+
       .segment 'home',
         default: true
         templateUrl: '/templates/home.html'
         controller: 'homeCtrl'
         controllerAs: 'home'
+
+      .segment 'events',
+        templateUrl: '/templates/events.html'
+        controller: 'eventsCtrl'
+        controllerAs: 'events'
 
     $locationProvider.html5Mode
       enabled: true

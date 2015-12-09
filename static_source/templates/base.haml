@@ -11,7 +11,7 @@
     menu
   %ul
     %li(ng-repeat="link in base.menu")
-      %a(ng-if="!(link.path | routeSegmentStartsWith)" ng-href="{{ link.path | routeSegmentUrl }}" ng-class="{active: (link.path | routeSegmentStartsWith)}" ng-bind="link.name")
-      %span(ng-if="(link.path | routeSegmentStartsWith)" ng-bind="link.name")
+      %a(ng-if="!(link.path | routeSegmentEqualsTo)" ng-href="{{ link.path | routeSegmentUrl }}" ng-class="{active: (link.path | routeSegmentEqualsTo)}" ng-bind="link.name")
+      %span(ng-if="(link.path | routeSegmentEqualsTo)" ng-bind="link.name")
 
 -#base

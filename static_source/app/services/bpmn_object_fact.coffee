@@ -91,10 +91,14 @@ angular
 
         @container = container
         container.append(@element)
-        $(@element).css({
-          width: @size.width
-          height: @size.height
-        })
+
+        if @size
+          $(@element).css({
+            width: @size.width
+            height: @size.height
+          })
+        else
+          log.error '@size is null, element:', @element
 
 #        @checkParent()
 

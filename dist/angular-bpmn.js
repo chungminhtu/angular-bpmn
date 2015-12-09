@@ -10,27 +10,6 @@ angular.module('angular-bpmn').run([
 ]);
 
 'use strict';
-angular.module('appServices').directive('uiSource', [
-  '$log', '$compile', function($log, $compile) {
-    return {
-      restrict: 'EA',
-      compile: function(element) {
-        var escape, pre;
-        escape = function(content) {
-          content.replace(/\&/g, '&').replace(/\</g, '<').replace(/\>/g, '>').replace(/"/g, '"');
-          return content;
-        };
-        pre = angular.element('<pre class="prettyprint linenums"></pre>');
-        pre.append(prettyPrintOne(escape(elem.html().slice(1)), void 0, true));
-        elem.replaceWith(pre);
-        return elem;
-      },
-      link: function($scope, element, attrs) {}
-    };
-  }
-]);
-
-'use strict';
 angular.module('angular-bpmn').service('log', [
   '$log', '$rootScope', function($log, $rootScope) {
     return {

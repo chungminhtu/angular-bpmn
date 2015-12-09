@@ -320,7 +320,7 @@ angular
           @makePackageObjects()
 
         if @scope.settings.engine.container?.resizable?
-          @container.resizable
+          @wrapper.resizable
             minHeight: 200
             minWidth: 400
             grid: 10
