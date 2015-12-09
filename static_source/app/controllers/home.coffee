@@ -8,7 +8,7 @@ angular
     vm = this
     settings =
       engine:
-        status: 'editor'
+        status: 'viewer'
 
     scheme = bpmnMock.scheme1
     instance = new bpmnScheme($('#simply-scheme'))

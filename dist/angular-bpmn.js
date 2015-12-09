@@ -1,6 +1,52 @@
 'use strict';
 angular.module('angular-bpmn', []);
 
+angular.module('angular-bpmn').run([
+  '$rootScope', (function(_this) {
+    return function($rootScope) {
+      return $rootScope.runMode = 'debug';
+    };
+  })(this)
+]);
+
+'use strict';
+angular.module('appServices').directive('uiSource', [
+  '$log', '$compile', function($log, $compile) {
+    return {
+      restrict: 'EA',
+      compile: function(element) {
+        var escape, pre;
+        escape = function(content) {
+          content.replace(/\&/g, '&').replace(/\</g, '<').replace(/\>/g, '>').replace(/"/g, '"');
+          return content;
+        };
+        pre = angular.element('<pre class="prettyprint linenums"></pre>');
+        pre.append(prettyPrintOne(escape(elem.html().slice(1)), void 0, true));
+        elem.replaceWith(pre);
+        return elem;
+      },
+      link: function($scope, element, attrs) {}
+    };
+  }
+]);
+
+'use strict';
+angular.module('angular-bpmn').service('log', [
+  '$log', '$rootScope', function($log, $rootScope) {
+    return {
+      debug: function() {
+        if ($rootScope.runMode !== 'debug') {
+          return;
+        }
+        return $log.debug.apply(self, arguments);
+      },
+      error: function() {
+        return $log.error.apply(self, arguments);
+      }
+    };
+  }
+]);
+
 'use strict';
 angular.module('angular-bpmn').service('bpmnMock', function() {
   return {
@@ -94,7 +140,7 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
 
 'use strict';
 angular.module('angular-bpmn').directive('bpmnObject', [
-  '$log', '$timeout', '$templateCache', '$compile', '$templateRequest', '$q', function($log, $timeout, $templateCache, $compile, $templateRequest, $q) {
+  'log', '$timeout', '$templateCache', '$compile', '$templateRequest', '$q', function(log, $timeout, $templateCache, $compile, $templateRequest, $q) {
     return {
       restrict: 'A',
       controller: [
@@ -126,7 +172,7 @@ angular.module('angular-bpmn').directive('bpmnObject', [
 
 'use strict';
 angular.module('angular-bpmn').factory('bpmnObjectFact', [
-  'bpmnSettings', '$compile', '$rootScope', '$log', '$templateRequest', '$templateCache', function(bpmnSettings, $compile, $rootScope, $log, $templateRequest, $templateCache) {
+  'bpmnSettings', '$compile', '$rootScope', 'log', '$templateRequest', '$templateCache', function(bpmnSettings, $compile, $rootScope, log, $templateRequest, $templateCache) {
     var schemeObject;
     schemeObject = (function() {
       schemeObject.prototype.isDebug = true;
@@ -155,7 +201,7 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
 
       function schemeObject(data, parentScope) {
         var tpl;
-        this.log('object construct');
+        log.debug('object construct');
         this.parentScope = parentScope;
         this.settings = parentScope.settings;
         this.data = data;
@@ -187,7 +233,7 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
           templateUrl = this.settings.theme.root_path + '/' + this.settings.engine.theme + '/' + this.templateUrl;
           template = $templateCache.get(templateUrl);
           if (template == null) {
-            this.log('template not found', templateUrl);
+            log.debug('template not found', templateUrl);
             this.elementPromise = $templateRequest(templateUrl);
             return this.elementPromise.then(function(result) {
               appendToElement($compile(result)(childScope));
@@ -209,7 +255,7 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
           return;
         }
         if (!this.element) {
-          this.log('generateAnchor: @element is null', this);
+          log.debug('generateAnchor: @element is null', this);
           return;
         }
         points = [];
@@ -230,7 +276,7 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
 
       schemeObject.prototype.appendTo = function(container, options) {
         if (!this.element || this.element === '') {
-          this.log('appendTo: @element is null', this);
+          log.debug('appendTo: @element is null', this);
           return;
         }
         this.container = container;
@@ -242,17 +288,7 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
         return this.generateAnchor(options);
       };
 
-      schemeObject.prototype.log = function() {
-        var msg;
-        if (this.isDebug == null) {
-          return;
-        }
-        msg = '';
-        angular.forEach(arguments, function(arg) {
-          return msg += arg + ' ';
-        });
-        return $log.debug(msg);
-      };
+      schemeObject.prototype.select = function(tr) {};
 
       return schemeObject;
 
@@ -262,8 +298,16 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
 ]);
 
 'use strict';
+var LEFT_MB, MIDDLE_MB, RIGHT_MB;
+
+LEFT_MB = 1;
+
+MIDDLE_MB = 2;
+
+RIGHT_MB = 3;
+
 angular.module('angular-bpmn').factory('bpmnScheme', [
-  '$rootScope', '$log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', function($rootScope, $log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact) {
+  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', function($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact) {
     var bpmnScheme;
     bpmnScheme = (function() {
       bpmnScheme.prototype.isDebug = true;
@@ -302,6 +346,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
           connectors: []
         };
         this.scope.settings = {};
+        this.scope.selected = [];
+        this.scope.zoom = 1;
         this.setSettings(settings);
       }
 
@@ -341,7 +387,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         } else {
           themeStyle.attr('href', file);
         }
-        this.log('load style file:', file);
+        log.debug('load style file:', file);
         this.wrapper.removeClass();
         return this.wrapper.addClass(this.wrap_class + ' ' + theme_name);
       };
@@ -359,7 +405,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
               templatePromise = $templateRequest(templateUrl);
               _this.cache.push(templatePromise);
               return templatePromise.then(function(result) {
-                _this.log('load template file:', templateUrl);
+                log.debug('load template file:', templateUrl);
                 return $templateCache.put(templateUrl, result);
               });
             }
@@ -369,7 +415,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.makePackageObjects = function() {
         var promise;
-        this.log('make package objects');
+        log.debug('make package objects');
         promise = [];
         angular.forEach(this.scope.extScheme.objects, (function(_this) {
           return function(object) {
@@ -385,9 +431,9 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
               object.appendTo(_this.container, _this.scope.settings.point);
               _this.scope.instance.off(object.element);
               return _this.scope.instance.on(object.element, 'click', function() {
-                this.scope.selected = [];
-                this.scope.$apply(this.scope.selected.push(object.data.id));
-                deselectAll();
+                _this.scope.selected = [];
+                _this.scope.$apply(_this.scope.selected.push(object.data.id));
+                _this.deselectAll();
                 return object.select(true);
               });
             });
@@ -401,7 +447,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
       bpmnScheme.prototype.instanceBatch = function() {
         return this.scope.instance.batch((function(_this) {
           return function() {
-            _this.log('instance batch');
+            log.debug('instance batch');
             if (_this.scope.settings.engine.status === 'editor') {
               return _this.scope.instance.draggable(_this.container.find(".etc"), _this.scope.settings.draggable);
             }
@@ -414,7 +460,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         if (((ref = this.scope.extScheme) != null ? ref.connectors : void 0) == null) {
           return;
         }
-        this.log('connect package objects');
+        log.debug('connect package objects');
         return angular.forEach(this.scope.extScheme.connectors, (function(_this) {
           return function(connector) {
             var points, source_obj_points, target_obj_points;
@@ -432,11 +478,11 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
               }
             });
             if (source_obj_points[connector.start.point] == null) {
-              $log.error('connect: source not found', _this);
+              log.error('connect: source not found', _this);
               return;
             }
             if (target_obj_points[connector.end.point] == null) {
-              $log.error('connect: target not found', _this);
+              log.error('connect: target not found', _this);
               return;
             }
             points = {
@@ -464,9 +510,99 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.removeObject = function(object) {};
 
+      bpmnScheme.prototype.deselectAll = function() {
+        return angular.forEach(this.scope.intScheme.objects, function(object) {
+          return object.select(false);
+        });
+      };
+
+      bpmnScheme.prototype.panning = function() {
+        var delta, drag, template;
+        template = $compile('<div class="panning-cross"> <svg> <g id="layer1" transform="translate(-291.18256,-337.29837)"> <path id="path3006" stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2.01302433"/> <path id="path3008" stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/> </g> </svg> <div class="zoom-info">({{zoom}})</div> </div>')(this.scope);
+        this.container.append(template);
+        $(template).css({
+          position: 'absolute',
+          top: -23,
+          left: -45
+        });
+        drag = {
+          x: 0,
+          y: 0,
+          state: false
+        };
+        delta = {
+          x: 0,
+          y: 0
+        };
+        this.wrapper.on('mousedown', function(e) {
+          if ($(e.target).hasClass('ui-resizable-handle')) {
+            return;
+          }
+          if (!drag.state && e.which === LEFT_MB) {
+            drag.x = e.pageX;
+            drag.y = e.pageY;
+            return drag.state = true;
+          }
+        });
+        this.wrapper.on('mousemove', (function(_this) {
+          return function(e) {
+            var cur_offset;
+            if (drag.state) {
+              delta.x = e.pageX - drag.x;
+              delta.y = e.pageY - drag.y;
+              cur_offset = _this.container.offset();
+              _this.container.offset({
+                left: cur_offset.left + delta.x,
+                top: cur_offset.top + delta.y
+              });
+              drag.x = e.pageX;
+              return drag.y = e.pageY;
+            }
+          };
+        })(this));
+        this.wrapper.on('mouseup', function(e) {
+          if (drag.state) {
+            return drag.state = false;
+          }
+        });
+        this.wrapper.on('contextmenu', function(e) {
+          return false;
+        });
+        this.wrapper.on('mouseleave', function(e) {
+          if (drag.state) {
+            return drag.state = false;
+          }
+        });
+        return this.wrapper.on('mousewheel', (function(_this) {
+          return function(e) {
+            e.preventDefault();
+            _this.scope.zoom += 0.1 * e.deltaY;
+            _this.scope.zoom = parseFloat(_this.scope.zoom.toFixed(1));
+            if (_this.scope.zoom < 0.1) {
+              _this.scope.zoom = 0.1;
+            } else if (_this.scope.zoom > 2) {
+              _this.scope.zoom = 2;
+            }
+            _this.scope.instance.setZoom(_this.scope.zoom);
+            _this.scope.instance.repaintEverything(_this.scope.zoom);
+            $timeout(function() {
+              return _this.scope.$apply(_this.scope.zoom);
+            }, 0);
+            return _this.container.css({
+              '-webkit-transform': _this.scope.zoom,
+              '-moz-transform': 'scale(' + _this.scope.zoom + ')',
+              '-ms-transform': 'scale(' + _this.scope.zoom + ')',
+              '-o-transform': 'scale(' + _this.scope.zoom + ')',
+              'transform': 'scale(' + _this.scope.zoom + ')'
+            });
+          };
+        })(this));
+      };
+
       bpmnScheme.prototype.start = function() {
         var ref;
-        this.log('start');
+        log.debug('start');
+        this.panning();
         this.loadStyle();
         this.scope.instance = jsPlumb.getInstance($.extend(true, this.scope.settings.instance, {
           Container: this.container
@@ -504,31 +640,24 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
       };
 
       bpmnScheme.prototype.destroy = function() {
-        this.log('destroy');
+        log.debug('destroy');
         this.container.resizable('destroy');
         if (this.schemeWatch) {
-          return this.schemeWatch();
+          this.schemeWatch();
         }
+        this.wrapper.off('mousedown');
+        this.wrapper.off('mousemove');
+        this.wrapper.off('mouseup');
+        this.wrapper.off('contextmenu');
+        return this.wrapper.off('mousewheel');
       };
 
       bpmnScheme.prototype.restart = function() {
-        this.log('restart');
+        log.debug('restart');
         if (this.isStarted != null) {
           this.destry();
         }
         return this.start();
-      };
-
-      bpmnScheme.prototype.log = function() {
-        var msg;
-        if (this.isDebug == null) {
-          return;
-        }
-        msg = '';
-        angular.forEach(arguments, function(arg) {
-          return msg += arg + ' ';
-        });
-        return $log.debug(msg);
       };
 
       return bpmnScheme;

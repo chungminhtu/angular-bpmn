@@ -10,6 +10,15 @@
   font-size: 11px;
   position: relative;
 }
+.bpmn .panning-cross svg {
+  width: 58px;
+  height: 34px;
+}
+.bpmn .panning-cross .zoom-info {
+  position: absolute;
+  top: 0;
+  right: 25px;
+}
 .bpmn .page-loader {
   position: absolute;
   left: 0;
