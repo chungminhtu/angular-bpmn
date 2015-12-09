@@ -3,8 +3,8 @@
 
 angular
 .module('angular-bpmn')
-.directive 'bpmnObject', ['$log', '$timeout', '$templateCache', '$compile', '$templateRequest', '$q'
-  ($log, $timeout, $templateCache, $compile, $templateRequest, $q) ->
+.directive 'bpmnObject', ['log', '$timeout', '$templateCache', '$compile', '$templateRequest', '$q'
+  (log, $timeout, $templateCache, $compile, $templateRequest, $q) ->
     restrict: 'A'
     controller: ["$scope", "$element", ($scope, $element)->
 

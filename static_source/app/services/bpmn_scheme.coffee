@@ -3,8 +3,8 @@
 
 angular
 .module('angular-bpmn')
-.factory 'bpmnScheme', ['$rootScope', '$log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact'
-  ($rootScope, $log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact) ->
+.factory 'bpmnScheme', ['$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact'
+  ($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact) ->
     class bpmnScheme
 
       isDebug: true
@@ -38,6 +38,7 @@ angular
           objects: {}
           connectors: []
         @scope.settings = {}
+        @scope.selected = []
         @setSettings(settings)
 
         #TODO add preloader
@@ -76,7 +77,7 @@ angular
         else
           themeStyle.attr('href', file)
 
-        @log 'load style file:', file
+        log.debug 'load style file:', file
 
         @wrapper.removeClass()
         @wrapper.addClass(@wrap_class + ' ' + theme_name)
@@ -94,11 +95,11 @@ angular
             templatePromise = $templateRequest(templateUrl)
             @cache.push(templatePromise)
             templatePromise.then (result)=>
-              @log 'load template file:', templateUrl
+              log.debug 'load template file:', templateUrl
               $templateCache.put(templateUrl, result)
 
       makePackageObjects: ()->
-        @log 'make package objects'
+        log.debug 'make package objects'
         # Создадим все объекты, сохраним указатели в массиве
         # потому как возможны перекрёстные ссылки
         promise = []
@@ -117,13 +118,13 @@ angular
 
             # left button click event
             @scope.instance.off object.element
-            @scope.instance.on object.element, 'click', ()->
+            @scope.instance.on object.element, 'click', ()=>
               @scope.selected = []
               @scope.$apply(
                 @scope.selected.push(object.data.id)
               )
 
-              deselectAll()
+              @deselectAll()
 
               object.select(true)
 
@@ -135,7 +136,7 @@ angular
 
       instanceBatch: ()->
         @scope.instance.batch ()=>
-          @log 'instance batch'
+          log.debug 'instance batch'
 
           # все элементы внутри контейнера буду подвижны
           if @scope.settings.engine.status == 'editor'
@@ -145,7 +146,7 @@ angular
         if !@scope.extScheme?.connectors?
           return
 
-        @log 'connect package objects'
+        log.debug 'connect package objects'
 
         angular.forEach @scope.extScheme.connectors, (connector)=>
           if (!connector.start || !connector.end) ||
@@ -164,11 +165,11 @@ angular
               target_obj_points = object.points
 
           if !source_obj_points[connector.start.point]?
-            $log.error 'connect: source not found', this
+            log.error 'connect: source not found', this
             return
 
           if !target_obj_points[connector.end.point]?
-            $log.error 'connect: target not found', this
+            log.error 'connect: target not found', this
             return
 
           # связь создаётся по точкам
@@ -194,8 +195,12 @@ angular
 
       removeObject: (object)->
 
+      deselectAll: ()->
+        angular.forEach @scope.intScheme.objects, (object)->
+          object.select(false)
+
       start: ()->
-        @log 'start'
+        log.debug 'start'
         @loadStyle()
         @scope.instance = jsPlumb.getInstance($.extend(true, @scope.settings.instance, {Container: @container}))
         @cache = []
@@ -225,7 +230,7 @@ angular
             resize: ()->
 
       destroy: ()->
-        @log 'destroy'
+        log.debug 'destroy'
         #TODO update preloader fadeIn
 
         @container.resizable('destroy')
@@ -234,19 +239,10 @@ angular
           @schemeWatch()
 
       restart: ()->
-        @log 'restart'
+        log.debug 'restart'
         if @isStarted?
           @destry()
         @start()
-
-      log: ()->
-        if !@isDebug?
-          return
-
-        msg = ''
-        angular.forEach arguments, (arg)->
-          msg += arg + ' '
-        $log.debug msg
 
     bpmnScheme
   ]

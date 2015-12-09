@@ -99,88 +99,24 @@ angular.module('angular-bpmn').directive('bpmnObject', [
       restrict: 'A',
       controller: [
         "$scope", "$element", function($scope, $element) {
-          var appedndToElement, batchUpdate, container, generateAnchor, getTemplate, updateStyle;
+          var container, updateStyle;
           container = $($element);
-          appedndToElement = (function(_this) {
-            return function(element) {
-              return container.empty().append($compile(element)($scope));
-            };
-          })(this);
-          getTemplate = function() {
-            var template, templateUrl;
-            template = $scope.settings.template($scope.object.type.name);
-            container.addClass($scope.object.type.name);
-            container.css({
-              width: template.size.width,
-              height: template.size.height
-            });
-            templateUrl = template.templateUrl;
-            if ((templateUrl != null) && templateUrl !== '') {
-              templateUrl = $scope.settings.theme.root_path + '/' + $scope.settings.engine.theme + '/' + templateUrl;
-              template = $templateCache.get(templateUrl);
-              if (template != null) {
-                return template.then(function(template) {
-                  return appedndToElement(template.data);
-                });
-              } else {
-                $log.warn('template not found in cache, ', templateUrl);
-                this.elementPromise = $templateRequest(templateUrl);
-                return this.elementPromise.then(function(result) {
-                  $templateCache.put(templateUrl, result);
-                  return appedndToElement(result);
-                });
-              }
-            } else {
-              return $compile(template.template)($scope);
-            }
-          };
           updateStyle = function() {
             var style;
             style = {
-              top: $scope.object.position.top,
-              left: $scope.object.position.left
+              top: $scope.data.position.top,
+              left: $scope.data.position.left
             };
             container.css(style);
             return $scope.instance.repaintEverything();
           };
-          batchUpdate = function() {
-            return $scope.instance.batch(function() {
-              var template;
-              $scope.instance.draggable(container, $scope.settings.draggable);
-              template = $scope.settings.template($scope.object.type.name);
-              if (template.anchor.length === 0) {
-                return;
-              }
-              if ($.inArray('source', template.make) !== -1) {
-                $scope.instance.makeSource(container, $.extend($scope.settings.source, {
-                  anchor: template.anchor
-                }));
-              }
-              if ($.inArray('target', template.make) !== -1) {
-                return $scope.instance.makeTarget(container, $.extend($scope.settings.target, {
-                  anchor: template.anchor
-                }));
-              }
-            });
-          };
-          generateAnchor = function() {
-            var anchors, template;
-            template = $scope.settings.template($scope.object.type.name);
-            anchors = template.anchor;
-            if (!anchors || anchors.length === 0) {
+          $scope.$watch('data.position', function(val, old_val) {
+            if (val === old_val) {
               return;
             }
-            return angular.forEach(anchors, function(anchor) {
-              return $scope.instance.addEndpoint(container, {
-                anchor: anchor,
-                maxConnections: -1
-              }, $scope.settings.point);
-            });
-          };
-          getTemplate();
-          updateStyle();
-          generateAnchor();
-          return batchUpdate();
+            return updateStyle();
+          });
+          return updateStyle();
         }
       ],
       link: function($scope, element, attrs) {}
@@ -193,7 +129,130 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
   'bpmnSettings', '$compile', '$rootScope', '$log', '$templateRequest', '$templateCache', function(bpmnSettings, $compile, $rootScope, $log, $templateRequest, $templateCache) {
     var schemeObject;
     schemeObject = (function() {
-      function schemeObject() {}
+      schemeObject.prototype.isDebug = true;
+
+      schemeObject.prototype.parentScope = null;
+
+      schemeObject.prototype.data = null;
+
+      schemeObject.prototype.anchor = null;
+
+      schemeObject.prototype.make = null;
+
+      schemeObject.prototype.draggable = null;
+
+      schemeObject.prototype.templateUrl = null;
+
+      schemeObject.prototype.template = null;
+
+      schemeObject.prototype.element = null;
+
+      schemeObject.prototype.container = null;
+
+      schemeObject.prototype.size = null;
+
+      schemeObject.prototype.points = null;
+
+      function schemeObject(data, parentScope) {
+        var tpl;
+        this.log('object construct');
+        this.parentScope = parentScope;
+        this.settings = parentScope.settings;
+        this.data = data;
+        tpl = bpmnSettings.template(data.type.name);
+        this.anchor = tpl.anchor;
+        this.size = tpl.size;
+        this.make = tpl.make;
+        this.draggable = tpl.draggable;
+        this.templateUrl = tpl.templateUrl || null;
+        this.template = tpl.template || null;
+        this.templateUpdate();
+      }
+
+      schemeObject.prototype.templateUpdate = function() {
+        var appendToElement, childScope, template, templateUrl;
+        childScope = $rootScope.$new();
+        childScope.data = this.data;
+        childScope.instance = this.parentScope.instance;
+        childScope.object = this;
+        appendToElement = (function(_this) {
+          return function(element) {
+            return _this.element.empty().append(element);
+          };
+        })(this);
+        if ((this.templateUrl != null) && this.templateUrl !== '') {
+          if (this.element == null) {
+            this.element = $compile('<div bpmn-object class="' + this.data.type.name + ' draggable etc" ng-class="[data.status]"></div>')(childScope);
+          }
+          templateUrl = this.settings.theme.root_path + '/' + this.settings.engine.theme + '/' + this.templateUrl;
+          template = $templateCache.get(templateUrl);
+          if (template == null) {
+            this.log('template not found', templateUrl);
+            this.elementPromise = $templateRequest(templateUrl);
+            return this.elementPromise.then(function(result) {
+              appendToElement($compile(result)(childScope));
+              return $templateCache.put(templateUrl, result);
+            });
+          } else {
+            return appendToElement($compile(template)(childScope));
+          }
+        } else {
+          if (this.element == null) {
+            return this.element = $compile(this.template)(childScope);
+          }
+        }
+      };
+
+      schemeObject.prototype.generateAnchor = function(options) {
+        var points;
+        if (!this.anchor || this.anchor.length === 0) {
+          return;
+        }
+        if (!this.element) {
+          this.log('generateAnchor: @element is null', this);
+          return;
+        }
+        points = [];
+        angular.forEach(this.anchor, (function(_this) {
+          return function(anchor) {
+            var point;
+            point = _this.parentScope.instance.addEndpoint(_this.element, {
+              anchor: anchor,
+              maxConnections: -1
+            }, options);
+            if (points.indexOf(point) === -1) {
+              return points.push(point);
+            }
+          };
+        })(this));
+        return this.points = points;
+      };
+
+      schemeObject.prototype.appendTo = function(container, options) {
+        if (!this.element || this.element === '') {
+          this.log('appendTo: @element is null', this);
+          return;
+        }
+        this.container = container;
+        container.append(this.element);
+        $(this.element).css({
+          width: this.size.width,
+          height: this.size.height
+        });
+        return this.generateAnchor(options);
+      };
+
+      schemeObject.prototype.log = function() {
+        var msg;
+        if (this.isDebug == null) {
+          return;
+        }
+        msg = '';
+        angular.forEach(arguments, function(arg) {
+          return msg += arg + ' ';
+        });
+        return $log.debug(msg);
+      };
 
       return schemeObject;
 
@@ -207,6 +266,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
   '$rootScope', '$log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', function($rootScope, $log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact) {
     var bpmnScheme;
     bpmnScheme = (function() {
+      bpmnScheme.prototype.isDebug = true;
+
       bpmnScheme.prototype.isStarted = false;
 
       bpmnScheme.prototype.id = null;
@@ -225,8 +286,6 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.schemeWatch = null;
 
-      bpmnScheme.prototype.template = '<div ng-repeat="object in scheme.objects" bpmn-object class="draggable etc" ng-class="[object.status]" ready="false"></div>';
-
       function bpmnScheme(container, settings) {
         var wrapper;
         this.id = bpmnUuid.gen();
@@ -237,7 +296,11 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         }
         this.wrapper = container.parent('.' + this.wrap_class);
         this.scope = $rootScope.$new();
-        this.scope.scheme = {};
+        this.scope.extScheme = {};
+        this.scope.intScheme = {
+          objects: {},
+          connectors: []
+        };
         this.scope.settings = {};
         this.setSettings(settings);
       }
@@ -252,25 +315,16 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.setScheme = function(scheme) {
         if (scheme == null) {
-          scheme = this.scope.scheme || {};
+          scheme = this.scope.extScheme || {};
         }
-        return this.scope.scheme = scheme;
+        return this.scope.extScheme = scheme;
       };
 
       bpmnScheme.prototype.setSettings = function(settings) {
-        var ref;
         if (settings == null) {
           settings = {};
         }
-        this.scope.settings = $.extend(true, bpmnSettings, angular.copy(settings));
-        if (((ref = this.scope.settings.engine.container) != null ? ref.resizable : void 0) != null) {
-          return this.container.resizable({
-            minHeight: 200,
-            minWidth: 400,
-            grid: 10,
-            handles: 's'
-          });
-        }
+        return this.scope.settings = $.extend(true, bpmnSettings, angular.copy(settings));
       };
 
       bpmnScheme.prototype.loadStyle = function() {
@@ -287,7 +341,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         } else {
           themeStyle.attr('href', file);
         }
-        $log.info('load style file:', file);
+        this.log('load style file:', file);
         this.wrapper.removeClass();
         return this.wrapper.addClass(this.wrap_class + ' ' + theme_name);
       };
@@ -305,7 +359,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
               templatePromise = $templateRequest(templateUrl);
               _this.cache.push(templatePromise);
               return templatePromise.then(function(result) {
-                $log.info('load template file:', templateUrl);
+                _this.log('load template file:', templateUrl);
                 return $templateCache.put(templateUrl, result);
               });
             }
@@ -313,21 +367,109 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         })(this));
       };
 
-      bpmnScheme.prototype.makeObjects = function() {
+      bpmnScheme.prototype.makePackageObjects = function() {
         var promise;
+        this.log('make package objects');
         promise = [];
-        return angular.forEach(this.scope.scheme.objects, function(object) {
-          var obj;
-          obj = new bpmnObjectFact(instance, object, scheme, settings);
-          scheme.objects[object.id] = obj;
-          return promise.push(obj.elementPromise);
-        });
+        angular.forEach(this.scope.extScheme.objects, (function(_this) {
+          return function(object) {
+            var obj;
+            obj = new bpmnObjectFact(object, _this.scope);
+            _this.scope.intScheme.objects[object.id] = obj;
+            return promise.push(obj.elementPromise);
+          };
+        })(this));
+        return $q.all(promise).then((function(_this) {
+          return function() {
+            angular.forEach(_this.scope.intScheme.objects, function(object) {
+              object.appendTo(_this.container, _this.scope.settings.point);
+              _this.scope.instance.off(object.element);
+              return _this.scope.instance.on(object.element, 'click', function() {
+                this.scope.selected = [];
+                this.scope.$apply(this.scope.selected.push(object.data.id));
+                deselectAll();
+                return object.select(true);
+              });
+            });
+            _this.instanceBatch();
+            _this.connectPackageObjects();
+            return _this.isStarted = true;
+          };
+        })(this));
       };
 
+      bpmnScheme.prototype.instanceBatch = function() {
+        return this.scope.instance.batch((function(_this) {
+          return function() {
+            _this.log('instance batch');
+            if (_this.scope.settings.engine.status === 'editor') {
+              return _this.scope.instance.draggable(_this.container.find(".etc"), _this.scope.settings.draggable);
+            }
+          };
+        })(this));
+      };
+
+      bpmnScheme.prototype.connectPackageObjects = function() {
+        var ref;
+        if (((ref = this.scope.extScheme) != null ? ref.connectors : void 0) == null) {
+          return;
+        }
+        this.log('connect package objects');
+        return angular.forEach(this.scope.extScheme.connectors, (function(_this) {
+          return function(connector) {
+            var points, source_obj_points, target_obj_points;
+            if ((!connector.start || !connector.end) || (!_this.scope.intScheme.objects[connector.start.object] || !_this.scope.intScheme.objects[connector.end.object]) || (!_this.scope.intScheme.objects[connector.start.object].points || !_this.scope.intScheme.objects[connector.end.object].points)) {
+              return;
+            }
+            source_obj_points = {};
+            target_obj_points = {};
+            angular.forEach(_this.scope.intScheme.objects, function(object) {
+              if (object.data.id === connector.start.object) {
+                source_obj_points = object.points;
+              }
+              if (object.data.id === connector.end.object) {
+                return target_obj_points = object.points;
+              }
+            });
+            if (source_obj_points[connector.start.point] == null) {
+              $log.error('connect: source not found', _this);
+              return;
+            }
+            if (target_obj_points[connector.end.point] == null) {
+              $log.error('connect: target not found', _this);
+              return;
+            }
+            points = {
+              sourceEndpoint: source_obj_points[connector.start.point],
+              targetEndpoint: target_obj_points[connector.end.point]
+            };
+            if (connector.title && connector.title !== "") {
+              points['overlays'] = [
+                [
+                  "Label", {
+                    label: connector.title,
+                    cssClass: "aLabel"
+                  }, {
+                    id: "myLabel"
+                  }
+                ]
+              ];
+            }
+            return _this.scope.intScheme.connectors.push(_this.scope.instance.connect(points, _this.scope.settings.connector));
+          };
+        })(this));
+      };
+
+      bpmnScheme.prototype.addObject = function(object) {};
+
+      bpmnScheme.prototype.removeObject = function(object) {};
+
       bpmnScheme.prototype.start = function() {
+        var ref;
+        this.log('start');
         this.loadStyle();
         this.scope.instance = jsPlumb.getInstance($.extend(true, this.scope.settings.instance, {
-          Container: container
+          Container: this.container
         }));
         this.cache = [];
         this.cacheTemplates();
@@ -336,7 +478,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         if (this.schemeWatch) {
           this.schemeWatch();
         }
-        return this.schemeWatch = this.scope.$watch('scheme', (function(_this) {
+        this.schemeWatch = this.scope.$watch('extScheme', (function(_this) {
           return function(val, old_val) {
             if (val === old_val) {
               return;
@@ -344,19 +486,49 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
             return _this.restart();
           };
         })(this));
+        $q.all(this.cache).then((function(_this) {
+          return function() {
+            return _this.makePackageObjects();
+          };
+        })(this));
+        if (((ref = this.scope.settings.engine.container) != null ? ref.resizable : void 0) != null) {
+          return this.container.resizable({
+            minHeight: 200,
+            minWidth: 400,
+            grid: 10,
+            handles: 's',
+            start: function() {},
+            resize: function() {}
+          });
+        }
       };
 
       bpmnScheme.prototype.destroy = function() {
+        this.log('destroy');
+        this.container.resizable('destroy');
         if (this.schemeWatch) {
           return this.schemeWatch();
         }
       };
 
       bpmnScheme.prototype.restart = function() {
+        this.log('restart');
         if (this.isStarted != null) {
           this.destry();
         }
         return this.start();
+      };
+
+      bpmnScheme.prototype.log = function() {
+        var msg;
+        if (this.isDebug == null) {
+          return;
+        }
+        msg = '';
+        angular.forEach(arguments, function(arg) {
+          return msg += arg + ' ';
+        });
+        return $log.debug(msg);
       };
 
       return bpmnScheme;
@@ -411,7 +583,17 @@ angular.module('angular-bpmn').service('bpmnSettings', function() {
   pointSettings = {
     isSource: true,
     isTarget: true,
-    maxConnections: -1
+    endpoint: [
+      "Dot", {
+        radius: 1
+      }
+    ],
+    maxConnections: -1,
+    paintStyle: {
+      outlineWidth: 1
+    },
+    hoverPaintStyle: {},
+    connectorStyle: connectorStyle
   };
   connector = [
     "Flowchart", {

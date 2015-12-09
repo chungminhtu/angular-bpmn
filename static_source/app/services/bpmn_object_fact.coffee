@@ -3,8 +3,8 @@
 
 angular
 .module('angular-bpmn')
-.factory 'bpmnObjectFact', ['bpmnSettings', '$compile', '$rootScope', '$log', '$templateRequest', '$templateCache'
-  (bpmnSettings, $compile, $rootScope, $log, $templateRequest, $templateCache) ->
+.factory 'bpmnObjectFact', ['bpmnSettings', '$compile', '$rootScope', 'log', '$templateRequest', '$templateCache'
+  (bpmnSettings, $compile, $rootScope, log, $templateRequest, $templateCache) ->
     class schemeObject
 
       isDebug: true
@@ -21,7 +21,7 @@ angular
       points: null
 
       constructor: (data, parentScope)->
-        @log 'object construct'
+        log.debug 'object construct'
         @parentScope = parentScope
         @settings = parentScope.settings
         @data = data
@@ -53,7 +53,7 @@ angular
           templateUrl = @settings.theme.root_path + '/' + @settings.engine.theme + '/' + @templateUrl
           template = $templateCache.get(templateUrl)
           if !template?
-            @log 'template not found', templateUrl
+            log.debug 'template not found', templateUrl
             @elementPromise = $templateRequest(templateUrl)
             @elementPromise.then (result)->
               appendToElement($compile(result)(childScope))
@@ -69,7 +69,7 @@ angular
           return
 
         if !@element
-          @log 'generateAnchor: @element is null', this
+          log.debug 'generateAnchor: @element is null', this
           return
 
         points = []
@@ -86,7 +86,7 @@ angular
 
       appendTo: (container, options)->
         if !@element || @element == ''
-          @log 'appendTo: @element is null', this
+          log.debug 'appendTo: @element is null', this
           return
 
         @container = container
@@ -103,14 +103,7 @@ angular
 
 #        @setDraggable(@draggable)
 
-      log: ()->
-        if !@isDebug?
-          return
-
-        msg = ''
-        angular.forEach arguments, (arg)->
-          msg += arg + ' '
-        $log.debug msg
+      select: (tr)->
 
     schemeObject
   ]

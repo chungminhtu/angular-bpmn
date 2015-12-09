@@ -2,8 +2,8 @@
 
 angular
 .module('appControllers')
-.controller 'homeCtrl', ['$scope', 'bpmnMock', 'bpmnScheme', '$log', '$timeout'
-  ($scope, bpmnMock, bpmnScheme, $log, $timeout) ->
+.controller 'homeCtrl', ['$scope', 'bpmnMock', 'bpmnScheme', 'log', '$timeout'
+  ($scope, bpmnMock, bpmnScheme, log, $timeout) ->
 
     vm = this
     settings =

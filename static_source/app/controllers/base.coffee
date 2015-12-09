@@ -2,8 +2,8 @@
 
 angular
 .module('appControllers')
-.controller 'baseCtrl', ['$scope', '$log'
-  ($scope, $log) ->
+.controller 'baseCtrl', ['$scope', 'log'
+  ($scope, log) ->
 
     vm = this
     vm.title = ''
