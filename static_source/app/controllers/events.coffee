@@ -2,8 +2,8 @@
 
 angular
 .module('appControllers')
-.controller 'eventsCtrl', ['$scope', 'bpmnMock', 'bpmnScheme'
-  ($scope, bpmnMock, bpmnScheme) ->
+.controller 'eventsCtrl', ['$scope', 'bpmnMock', 'bpmnScheme', 'log'
+  ($scope, bpmnMock, bpmnScheme, log) ->
 
     vm = this
     settings =
@@ -162,8 +162,7 @@ angular
           0: true
 
     $scope.scheme =
-      id: 3
-      version: 1.0
+      id: 2
       name: ''
       description: ''
       objects: [
@@ -173,7 +172,6 @@ angular
             name: 'poster'
           url: '/images/event_poster.svg'
           draggable: false
-          sub: {}
           position:
             top: -1
             left: 2
