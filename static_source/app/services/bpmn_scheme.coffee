@@ -34,6 +34,7 @@ angular
         if wrapper.length == 0
           container.wrap('<div class="' + @wrap_class + '"></div>')
         @wrapper = container.parent('.' + @wrap_class)
+        preventSelection(document)
 
 #        create scope
         @scope = $rootScope.$new()
@@ -328,11 +329,15 @@ angular
             start: ()->
             resize: ()->
 
+        @scope.$on '$routeChangeSuccess', ()=>
+          @destroy()
+
       destroy: ()->
         log.debug 'destroy'
         #TODO update preloader fadeIn
 
-        @container.resizable('destroy')
+        if @scope.settings.engine.container?.resizable?
+          @wrapper.resizable('destroy')
 
         if @schemeWatch
           @schemeWatch()

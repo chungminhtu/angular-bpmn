@@ -135,19 +135,19 @@ angular
         width: 52
         height: 52
     group:
-      template: '<div scheme-object class="group etc draggable" ng-style="{width: data.width, height: data.height}" ng-class="{ dashed : data.style == \'dashed\', solid : data.style == \'solid\' }">
+      template: '<div bpmn-object class="group etc draggable" ng-style="{width: data.width, height: data.height}" ng-class="{ dashed : data.style == \'dashed\', solid : data.style == \'solid\' }">
           <div class="title">{{data.title}}</div>
         </div>'
       anchor: []
       make: []
       draggable: true
     swimlane:
-      template: '<div scheme-object class="swimlane etc draggable" ng-style="{ width: data.width }"></div>'
+      template: '<div bpmn-object class="swimlane etc draggable" ng-style="{ width: data.width }"></div>'
       anchor: []
       make: []
       draggable: true
     'swimlane-row':
-      template: '<div scheme-object class="swimlane-row" ng-style="{width: \'100%\', height: data.height }">
+      template: '<div bpmn-object class="swimlane-row" ng-style="{width: \'100%\', height: data.height }">
           <div class="header"><div class="text">{{data.title}}</div></div>
         </div>'
       anchor: []
@@ -155,12 +155,12 @@ angular
 #      ignorePosition: true
       draggable: false
     poster:
-      template: '<div scheme-object class="poster draggable" ng-class="{ \'etc\' : data.draggable }"><img ng-src="{{data.url}}"></div>'
+      template: '<div bpmn-object class="poster draggable" ng-class="{ \'etc\' : data.draggable }"><img ng-src="{{data.url}}"></div>'
       anchor: []
       make: []
       draggable: true
     default:
-      template: '<div scheme-object class="dummy etc draggable">shape not found</div>'
+      template: '<div bpmn-object class="dummy etc draggable">shape not found</div>'
       anchor: [
         [ 0.5, 0, 0, -1, 0, 2]
         [ 1, 0.5, 1, 0, -2, 0]

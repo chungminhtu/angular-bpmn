@@ -10,6 +10,12 @@ angular
 
       container = $($element)
 
+
+
+      if $scope.data.type.name == 'poster'
+        container.find('img').on 'dragstart', (e)->
+          e.preventDefault()
+
       updateStyle = ()->
         style =
           top: $scope.data.position.top
