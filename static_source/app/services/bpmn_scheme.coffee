@@ -47,7 +47,7 @@ angular
         @scope.zoom = 1
         @setSettings(settings)
 
-        #TODO add preloader
+        @wrapper.append('<div class="page-loader"><div class="spinner">loading...</div></div>')
 
       setStatus: ()->
         if @scope.settings.engine.status == 'editor'
@@ -138,7 +138,7 @@ angular
           @connectPackageObjects()
 
           @isStarted = true
-          #TODO update preloader fadeOut
+          @wrapper.find(".page-loader").fadeOut("slow")
 
       instanceBatch: ()->
         @scope.instance.batch ()=>
@@ -334,7 +334,7 @@ angular
 
       destroy: ()->
         log.debug 'destroy'
-        #TODO update preloader fadeIn
+        @wrapper.find(".page-loader").fadeIn("slow")
 
         if @scope.settings.engine.container?.resizable?
           @wrapper.resizable('destroy')

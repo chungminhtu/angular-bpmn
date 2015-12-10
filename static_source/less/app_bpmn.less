@@ -14,6 +14,31 @@
   margin: 15px 0;
   outline: 1px solid #e2e2e2;
   overflow: hidden;
+
+  .page-loader {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: @zPageLoader;
+    background-color: #ffffff;
+    opacity: 0.6;
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -64px 0 0 -64px;
+      width: 123px;
+      height: 86px;
+    }
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: 0;
+    }
+  }
 }
 
 .bpmn{
@@ -29,24 +54,6 @@
       position: absolute;
       top: 0;
       right: 25px;
-    }
-  }
-
-  .page-loader {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: @zPageLoader;
-    background-color: #ffffff;
-    img {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin: -64px 0 0 -64px;
-      width: 123px;
-      height: 86px;
     }
   }
 
