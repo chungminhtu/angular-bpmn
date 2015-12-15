@@ -336,8 +336,8 @@ angular
         log.debug 'destroy'
         @wrapper.find(".page-loader").fadeIn("slow")
 
-        if @scope.settings.engine.container?.resizable?
-          @wrapper.resizable('destroy')
+#        if @scope.settings.engine.container?.resizable?
+#          @wrapper.resizable('destroy')
 
         if @schemeWatch
           @schemeWatch()

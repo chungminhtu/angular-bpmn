@@ -10,6 +10,7 @@ angular
     vm.menu = [
       {name: 'home', path: 'base'}
       {name: 'events',path: 'base.events'}
+      {name: 'tasks',path: 'base.tasks'}
     ]
 
 

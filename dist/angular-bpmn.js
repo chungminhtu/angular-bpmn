@@ -338,6 +338,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         this.scope.selected = [];
         this.scope.zoom = 1;
         this.setSettings(settings);
+        this.wrapper.append('<div class="page-loader"><div class="spinner">loading...</div></div>');
       }
 
       bpmnScheme.prototype.setStatus = function() {
@@ -428,7 +429,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
             });
             _this.instanceBatch();
             _this.connectPackageObjects();
-            return _this.isStarted = true;
+            _this.isStarted = true;
+            return _this.wrapper.find(".page-loader").fadeOut("slow");
           };
         })(this));
       };
@@ -636,6 +638,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
       bpmnScheme.prototype.destroy = function() {
         var ref;
         log.debug('destroy');
+        this.wrapper.find(".page-loader").fadeIn("slow");
         if (((ref = this.scope.settings.engine.container) != null ? ref.resizable : void 0) != null) {
           this.wrapper.resizable('destroy');
         }

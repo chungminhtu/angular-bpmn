@@ -21,8 +21,9 @@ angular.module('app')
   .config ['$routeProvider', '$locationProvider', '$routeSegmentProvider'
   ($routeProvider, $locationProvider, $routeSegmentProvider) ->
     $routeSegmentProvider
-      .when '/',              'base'
+      .when '/',                    'base'
       .when '/events',              'base.events'
+      .when '/tasks',               'base.tasks'
 
       .segment 'base',
         templateUrl: '/templates/base.html'
@@ -41,6 +42,11 @@ angular.module('app')
         templateUrl: '/templates/events.html'
         controller: 'eventsCtrl'
         controllerAs: 'events'
+
+      .segment 'tasks',
+        templateUrl: '/templates/tasks.html'
+        controller: 'tasksCtrl'
+        controllerAs: 'tasks'
 
     $locationProvider.html5Mode
       enabled: true
