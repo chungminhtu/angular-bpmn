@@ -11,6 +11,7 @@ angular
       {name: 'home', path: 'base'}
       {name: 'events',path: 'base.events'}
       {name: 'tasks',path: 'base.tasks'}
+      {name: 'gateway',path: 'base.gateway'}
     ]
 
 

@@ -636,12 +636,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
       };
 
       bpmnScheme.prototype.destroy = function() {
-        var ref;
         log.debug('destroy');
         this.wrapper.find(".page-loader").fadeIn("slow");
-        if (((ref = this.scope.settings.engine.container) != null ? ref.resizable : void 0) != null) {
-          this.wrapper.resizable('destroy');
-        }
         if (this.schemeWatch) {
           this.schemeWatch();
         }

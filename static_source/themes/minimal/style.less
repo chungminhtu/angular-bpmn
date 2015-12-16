@@ -540,7 +540,7 @@
       circle {
         stroke: @base;
       }
-      polygon#quad {
+      polygon.quad {
         stroke: @base;
         fill: 'none';
       }
@@ -559,7 +559,7 @@
         circle {
           stroke: @active;
         }
-        polygon#quad {
+        polygon.quad {
           stroke: @active;
           fill: 'none';
         }
@@ -578,7 +578,7 @@
         circle {
           stroke: @disbled;
         }
-        polygon#quad {
+        polygon.quad {
           stroke: @disbled;
           fill: 'none';
         }
@@ -596,7 +596,7 @@
         circle {
           stroke: @selected;
         }
-        polygon#quad {
+        polygon.quad {
           stroke: @selected;
           fill: 'none';
         }
@@ -614,7 +614,7 @@
         circle {
           stroke: @hover;
         }
-        polygon#quad {
+        polygon.quad {
           stroke: @hover;
           fill: 'none';
         }
@@ -626,6 +626,11 @@
         left: -23px;
       }
     }//gateway
+
+    .dummy {
+      padding: 3px;
+      outline: @hover solid 1px;
+    }
 
     .ep {
       position: absolute;

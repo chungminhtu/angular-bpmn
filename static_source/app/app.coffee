@@ -24,6 +24,7 @@ angular.module('app')
       .when '/',                    'base'
       .when '/events',              'base.events'
       .when '/tasks',               'base.tasks'
+      .when '/gateway',             'base.gateway'
 
       .segment 'base',
         templateUrl: '/templates/base.html'
@@ -47,6 +48,11 @@ angular.module('app')
         templateUrl: '/templates/tasks.html'
         controller: 'tasksCtrl'
         controllerAs: 'tasks'
+
+      .segment 'gateway',
+        templateUrl: '/templates/gateway.html'
+        controller: 'gatewayCtrl'
+        controllerAs: 'gateway'
 
     $locationProvider.html5Mode
       enabled: true

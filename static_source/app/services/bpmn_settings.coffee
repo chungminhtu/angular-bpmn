@@ -159,6 +159,9 @@ angular
       anchor: []
       make: []
       draggable: true
+      size:
+        width: 'auto'
+        height: 'auto'
     default:
       template: '<div bpmn-object class="dummy etc draggable">shape not found</div>'
       anchor: [
@@ -170,8 +173,8 @@ angular
       make: ['source','target']
       draggable: true
       size:
-        width: 40
-        height: 40
+        width: 50
+        height: 50
 
   template = (id)->
     if templates[id]?
