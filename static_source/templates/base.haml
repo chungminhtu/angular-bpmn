@@ -1,17 +1,19 @@
 -#base
 
-.col-lg-12.base-title
-  %h2
-    {{base.title || 'Angular bpmn'}}
+#header
+  .container
+    .row.col-lg-12.base-title
+      %h2
+        {{base.title || 'Angular bpmn'}}
 
-.col-lg-9.page(app-view-segment="1")
+.container
+  .row
+    .col-lg-9.page(app-view-segment="1")
 
-.col-lg-3.page#main-menu
-  %h3
-    menu
-  %ul
-    %li(ng-repeat="link in base.menu")
-      %a(ng-if="!(link.path | routeSegmentEqualsTo)" ng-href="{{ link.path | routeSegmentUrl }}" ng-class="{active: (link.path | routeSegmentEqualsTo)}" ng-bind="link.name")
-      %span(ng-if="(link.path | routeSegmentEqualsTo)" ng-bind="link.name")
+    .col-lg-3.page#main-menu
+      %ol
+        %li(ng-repeat="link in base.menu")
+          %a(ng-if="!(link.path | routeSegmentEqualsTo)" ng-href="{{ link.path | routeSegmentUrl }}" ng-class="{active: (link.path | routeSegmentEqualsTo)}" ng-bind="link.name")
+          %span(ng-if="(link.path | routeSegmentEqualsTo)" ng-bind="link.name")
 
--#base
+#push

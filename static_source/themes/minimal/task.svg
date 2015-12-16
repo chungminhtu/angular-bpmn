@@ -1,18 +1,18 @@
 <svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="92" width="112" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/">
 
 <!-- cause actions -->
-<rect ng-if="data.type['status'] == 'cause_actions'" id="cause_actions" rx="10" ry="10" height="80" width="100" stroke="#000" y="6" x="6" stroke-width="4px" fill="none"/>
+<rect ng-if="data.type['status'] == 'cause_actions'" id="cause_actions" rx="10" ry="10" height="80" width="100" stroke="#000" y="6" x="6" stroke-width="4px" fill="#fff"/>
 <!-- /cause actions -->
 
 <!-- transaction -->
 <g ng-if="data.type['status'] == 'transaction'" id="transaction" transform="translate(6.0030479,5.9993294)" stroke="#000" stroke-dasharray="none" stroke-miterlimit="4" fill="none">
 <rect rx="11.370948" ry="11.370948" height="83.94677" width="103.94006" y="-1.9727143" x="-1.9730797" stroke-width="1px" display="block" fill="none"/>
-<rect id="rect48" rx="10" ry="10" height="80" width="100" y="0" x="0" stroke-width="1" display="block" fill="none"/>
+<rect id="rect48" rx="10" ry="10" height="80" width="100" y="0" x="0" stroke-width="1" display="block" fill="#fff"/>
 </g>
 <!-- /transaction -->
 
 <!-- base -->
-<rect ng-if="data.type['status'] == '' || data.type['status'] == 'event' || !data.type['status']" ng-class="{dashed: data.type['status'] == 'event'}" id="base" rx="10" ry="10" height="80" width="100" stroke="#000" y="6" x="6" stroke-width="2px" display="block" fill="none"/>
+<rect ng-if="data.type['status'] == '' || data.type['status'] == 'event' || !data.type['status']" ng-class="{dashed: data.type['status'] == 'event'}" id="base" rx="10" ry="10" height="80" width="100" stroke="#000" y="6" x="6" stroke-width="2px" display="block" fill="#fff"/>
 <!-- /base -->
 
  <g id="user" ng-if="data.type['action'] == 'user'" transform="translate(6,6)" display="block">
