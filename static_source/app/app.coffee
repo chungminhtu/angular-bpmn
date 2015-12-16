@@ -22,6 +22,7 @@ angular.module('app')
   ($routeProvider, $locationProvider, $routeSegmentProvider) ->
     $routeSegmentProvider
       .when '/',                    'base'
+      .when '/',                    'base.home'
       .when '/events',              'base.events'
       .when '/tasks',               'base.tasks'
       .when '/gateway',             'base.gateway'
