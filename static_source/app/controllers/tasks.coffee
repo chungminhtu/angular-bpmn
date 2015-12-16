@@ -33,7 +33,7 @@ angular
             action: ''
           parent: 0
           position:
-            top: 90
+            top: 60
             left: 0
           status: ''
           error: ''
@@ -48,7 +48,7 @@ angular
             action: ''
           parent: 0
           position:
-            top: 190
+            top: 160
             left: 0
           status: ''
           error: ''
@@ -63,7 +63,7 @@ angular
             action: ''
           parent: 0
           position:
-            top: 290
+            top: 260
             left: 0
           status: ''
           error: ''
@@ -78,7 +78,7 @@ angular
             action: ''
           parent: 0
           position:
-            top: 390
+            top: 360
             left: 0
           status: ''
           error: ''

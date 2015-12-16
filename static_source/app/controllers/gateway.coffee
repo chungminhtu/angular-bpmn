@@ -31,7 +31,7 @@ angular
           draggable: true
           parent: 0
           position:
-            top: 110
+            top: 80
             left: 10
           status: ''
           error: ''
@@ -47,7 +47,7 @@ angular
           draggable: true
           parent: 0
           position:
-            top: 110
+            top: 80
             left: 85
           status: ''
           error: ''
@@ -64,7 +64,7 @@ angular
             base: 'event'
             status: 'xor'
           position:
-            top: 205
+            top: 175
             left: 10
           status: ''
           error: ''
@@ -81,7 +81,7 @@ angular
             base: 'data'
             status: 'and'
           position:
-            top: 285
+            top: 255
             left: 10
           status: ''
           error: ''
@@ -97,7 +97,7 @@ angular
             base: 'data'
             status: 'or'
           position:
-            top: 380
+            top: 350
             left: 10
           status: ''
           error: ''
@@ -113,7 +113,7 @@ angular
             base: 'data'
             status: 'complex'
           position:
-            top: 510
+            top: 480
             left: 10
           status: ''
           error: ''
@@ -129,7 +129,7 @@ angular
             base: 'event'
             status: 'or'
           position:
-            top: 380
+            top: 350
             left: 280
           status: ''
           error: ''
@@ -145,7 +145,7 @@ angular
             base: 'event'
             status: 'and'
           position:
-            top: 510
+            top: 480
             left: 280
           status: ''
           error: ''
