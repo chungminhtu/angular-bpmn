@@ -116,7 +116,7 @@ angular
         # генерируем точки соединений для нового объекта
         @generateAnchor(options)
 
-#        @setDraggable(@draggable)
+        @setDraggable(@draggable)
 
       select: (tr)->
         if tr
@@ -129,6 +129,9 @@ angular
           @id = $(@element).attr('id')
 
         @id
+
+      setDraggable: (tr)->
+        @parentScope.instance.setDraggable($(@element), tr)
 
       # --------------------------------------------------
       # группировка элементов

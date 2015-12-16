@@ -29,6 +29,7 @@ angular.module('app')
       .when '/two_scheme',          'base.two_scheme'
       .when '/base_scheme',         'base.base_scheme'
       .when '/base_scheme_with_grouping',         'base.base_scheme_with_grouping'
+      .when '/base_scheme_with_swimlane',         'base.base_scheme_with_swimlane'
 
       .segment 'base',
         templateUrl: '/templates/base.html'
@@ -71,6 +72,11 @@ angular.module('app')
       .segment 'base_scheme_with_grouping',
         templateUrl: '/templates/base_scheme_with_grouping.html'
         controller: 'baseSchemeWithGroupingCtrl'
+        controllerAs: 'ctrl'
+
+      .segment 'base_scheme_with_swimlane',
+        templateUrl: '/templates/base_scheme_with_swimlane.html'
+        controller: 'baseSchemeWithSwimlaneCtrl'
         controllerAs: 'ctrl'
 
     $locationProvider.html5Mode

@@ -39,6 +39,44 @@ angular
                   container.css('height', v + 20)
 
               $scope.instance.repaintEverything()
+        when 'swimlane'
+          childs = []
+          container.resizable
+            minHeight: 200
+            minWidth: 400
+            grid: 10
+            handles: 'e'
+            start: ()->
+              childs = $scope.object.getAllChilds()
+              $scope.instance.repaintEverything()
+            resize: ()->
+              # во время изменения размера контейнера
+              # контролирует нахлёст родительского блока с дочерними по левой стороне
+              angular.forEach childs, (child)->
+                if child.data.type == 'swimlane-row'
+                  return
+                h = child.position.left + child.size.width
+                if container.width() <= h + 20
+                  container.css('width', h + 20)
+              $scope.instance.repaintEverything()
+        when 'swimlane-row'
+          childs = []
+          container.resizable
+            minHeight: 200
+            minWidth: 400
+            grid: 10
+            handles: 's'
+            start: ()->
+              childs = $scope.object.getAllChilds()
+              $scope.instance.repaintEverything()
+
+            resize: ()->
+              angular.forEach childs, (child)->
+                v = child.position.top + child.size.height
+                if container.height() <= v + 20
+                  container.css('height', v + 20)
+
+              $scope.instance.repaintEverything()
 
       updateStyle = ()->
         style =

@@ -149,6 +149,9 @@ angular
       anchor: []
       make: []
       draggable: true
+      size:
+        width: 'auto'
+        height: 'auto'
     'swimlane-row':
       template: '<div bpmn-object class="swimlane-row" ng-style="{width: \'100%\', height: data.height }">
           <div class="header"><div class="text">{{data.title}}</div></div>
@@ -157,6 +160,9 @@ angular
       make: []
 #      ignorePosition: true
       draggable: false
+      size:
+        width: 'auto'
+        height: 'auto'
     poster:
       template: '<div bpmn-object class="poster draggable" ng-class="{ \'etc\' : data.draggable }"><img ng-src="{{data.url}}"></div>'
       anchor: []

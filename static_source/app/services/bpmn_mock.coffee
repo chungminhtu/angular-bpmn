@@ -903,5 +903,410 @@ angular
         }
       ]
     }
+    scheme5: {
+      name: 'Base scheme with swimlane'
+      description: ''
+      objects: [
+        {
+          id: 1
+          type:
+            name: 'event'
+            start:
+              simply:
+                top_level: true
+          parent: 15
+          position:
+            top: 70
+            left: 120
+          status: ''
+          error: ''
+          title: ''
+          description: ''
+        }
+        {
+          id: 2
+          type:
+            name: 'task'
+          parent: 15
+          position:
+            top: 50
+            left: 240
+          status: ''
+          error: ''
+          title: 'Оформить заявку'
+          description: ''
+        }
+        {
+          id: 3
+          type:
+            name: 'task'
+          parent: 16
+          position:
+            top: 60
+            left: 240
+          status: ''
+          error: ''
+          title: 'Рассмотреть заявку'
+          description: ''
+        }
+        {
+          id: 4
+          type:
+            name: 'gateway'
+          parent: 16
+          position:
+            top: 80
+            left: 420
+          status: ''
+          error: ''
+          title: 'Одобрена?'
+          description: ''
+        }
+        {
+          id: 5
+          type:
+            name: 'task'
+          parent: 15
+          position:
+            top: 50
+            left: 390
+          status: ''
+          error: ''
+          title: 'Заявка отклонена'
+          description: ''
+        }
+        {
+          id: 6
+          type:
+            name: 'event'
+            end:
+              simply:
+                top_level: true
+          parent: 15
+          position:
+            top: 70
+            left: 570
+          status: ''
+          error: ''
+          title: 'Заявка отклонена'
+          description: ''
+        }
+        {
+          id: 7
+          type:
+            name: 'task'
+          parent: 17
+          position:
+            top: 60
+            left: 390
+          status: ''
+          error: ''
+          title: 'Выделить машину'
+          description: ''
+        }
+        {
+          id: 8
+          type:
+            name: 'gateway'
+          parent: 17
+          position:
+            top: 80
+            left: 570
+          status: ''
+          error: ''
+          title: 'Выделена?'
+          description: ''
+        }
+        {
+          id: 9
+          type:
+            name: 'gateway'
+            status: 'parallel'
+          parent: 17
+          position:
+            top: 80
+            left: 690
+          status: ''
+          error: ''
+          title: ''
+          description: ''
+        }
+        {
+          id: 10
+          type:
+            name: 'task'
+          parent: 15
+          position:
+            top: 50
+            left: 660
+          status: ''
+          error: ''
+          title: 'Машина выделена'
+          description: ''
+        }
+        {
+          id: 11
+          type:
+            name: 'gateway'
+            status: 'parallel'
+          parent: 15
+          position:
+            top: 70
+            left: 830
+          status: ''
+          error: ''
+          title: ''
+          description: ''
+        }
+        {
+          id: 12
+          type:
+            name: 'event'
+            end:
+              simply:
+                top_level: true
+          parent: 15
+          position:
+            top: 70
+            left: 940
+          status: ''
+          error: ''
+          title: 'Заявка выполнена'
+          description: ''
+        }
+        {
+          id: 13
+          type:
+            name: 'task'
+          parent: 17
+          position:
+            top: 60
+            left: 800
+          status: ''
+          error: ''
+          title: 'Выполнить рейс'
+          description: ''
+        }
+        {
+          id: 14
+          type:
+            name: 'swimlane'
+          position:
+            top: 10
+            left: 10
+          width: '1040px'
+          height: ''
+          status: ''
+          error: ''
+          title: ''
+          description: ''
+          style: ''
+        }
+        {
+          id: 15
+          type:
+            name: 'swimlane-row'
+          parent: 14
+          position:
+            top: 0
+            left: 0
+          width: '100%'
+          height: '200px'
+          status: ''
+          error: ''
+          title: 'Заказчик'
+          description: ''
+          style: ''
+        }
+        {
+          id: 16
+          type:
+            name: 'swimlane-row'
+          parent: 14
+          position:
+            top: 0
+            left: 0
+          width: '100%'
+          height: '200px'
+          status: ''
+          error: ''
+          title: 'Канцелярия'
+          description: ''
+          style: ''
+        }
+        {
+          id: 17
+          type:
+            name: 'swimlane-row'
+          parent: 14
+          position:
+            top: 0
+            left: 0
+          width: '100%'
+          height: '200px'
+          status: ''
+          error: ''
+          title: 'Гараж'
+          description: ''
+          style: ''
+        }
+      ]
+      connectors: [
+        {
+          id: 1
+          start:
+            object: 1
+            point:1
+          end:
+            object: 2
+            point: 10
+          flow_type: "default"
+          title: ""
+        }
+        {
+          id: 2
+          start:
+            object: 2
+            point: 7
+          end:
+            object: 3
+            point: 1
+          flow_type: "default"
+          title: ""
+        }
+        {
+          id: 3
+          start:
+            object: 3
+            point: 4
+          end:
+            object: 4
+            point: 3
+          flow_type: "default"
+          title: ""
+        }
+        {
+          id: 4
+          start:
+            object: 4
+            point: 0
+          end:
+            object: 5
+            point: 7
+          flow_type: "default"
+          title: "нет"
+        }
+        {
+          id: 5
+          start:
+            object: 5
+            point: 4
+          end:
+            object: 6
+            point: 3
+          flow_type: "default"
+          title: ""
+        }
+        {
+          id: 6
+          start:
+            object: 4
+            point: 2
+          end:
+            object: 7
+            point: 1
+          flow_type: "default"
+          title: "да"
+        }
+        {
+          id: 7
+          start:
+            object: 7
+            point: 4
+          end:
+            object: 8
+            point: 3
+          flow_type: "default"
+          title: ""
+        }
+        {
+          id: 7
+          start:
+            object: 8
+            point: 2
+          end:
+            object: 3
+            point: 7
+          flow_type: "default"
+          title: "нет"
+        }
+        {
+          id: 8
+          start:
+            object: 8
+            point: 1
+          end:
+            object: 9
+            point: 3
+          flow_type: "default"
+          title: "да"
+        }
+        {
+          id: 9
+          start:
+            object: 9
+            point: 0
+          end:
+            object: 10
+            point: 7
+          flow_type: "default"
+          title: ""
+        }
+        {
+          id: 10
+          start:
+            object: 10
+            point: 4
+          end:
+            object: 11
+            point: 3
+          flow_type: "default"
+          title: ""
+        }
+        {
+          id: 11
+          start:
+            object: 11
+            point: 1
+          end:
+            object: 12
+            point: 3
+          flow_type: "default"
+          title: ""
+        }
+        {
+          id: 12
+          start:
+            object: 13
+            point: 1
+          end:
+            object: 11
+            point: 2
+          flow_type: "default"
+          title: ""
+        }
+        {
+          id: 13
+          start:
+            object: 9
+            point: 1
+          end:
+            object: 13
+            point: 10
+          flow_type: "default"
+          title: ""
+        }
+      ]
+    }
   }
 
