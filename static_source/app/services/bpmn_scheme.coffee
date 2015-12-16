@@ -340,6 +340,12 @@ angular
 #        if @scope.settings.engine.container?.resizable?
 #          @wrapper.resizable('destroy')
 
+        angular.forEach @scope.intScheme.objects, (obj)->
+          obj.remove()
+
+        @scope.intScheme.objects = []
+        @scope.instance.empty(@container)
+
         if @schemeWatch
           @schemeWatch()
 

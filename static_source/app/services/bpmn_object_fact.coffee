@@ -7,6 +7,7 @@ angular
   (bpmnSettings, $compile, $rootScope, log, $templateRequest, $templateCache) ->
     class schemeObject
 
+      id: null
       isDebug: true
       parentScope: null
       data: null
@@ -24,6 +25,7 @@ angular
       position:
         top: 0
         left: 0
+      isParent: false
 
       constructor: (data, parentScope)->
         log.debug 'object construct'
@@ -122,6 +124,12 @@ angular
         else
           $(@element).removeClass("selected")
 
+      getId: ()->
+        if !@id?
+          @id = $(@element).attr('id')
+
+        @id
+
       # --------------------------------------------------
       # группировка элементов
       # --------------------------------------------------
@@ -215,6 +223,25 @@ angular
             childs = childs.concat(tch)
 
         return childs
+
+      remove: ()->
+        id = @getId()
+
+        if !id?
+          return
+
+        log.debug 'remove: ', id
+
+        @parentScope.instance
+          .detachAllConnections(@element)
+          .empty(id)
+          .remove(id)
+
+        @childs = null
+        @isParent = false
+        @container = null
+        @element = null
+        @points = null
 
     schemeObject
   ]
