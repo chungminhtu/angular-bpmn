@@ -26,6 +26,7 @@ angular.module('app')
       .when '/tasks',               'base.tasks'
       .when '/gateway',             'base.gateway'
       .when '/two_scheme',          'base.two_scheme'
+      .when '/base_scheme',          'base.base_scheme'
 
       .segment 'base',
         templateUrl: '/templates/base.html'
@@ -58,6 +59,11 @@ angular.module('app')
       .segment 'two_scheme',
         templateUrl: '/templates/two_scheme.html'
         controller: 'twoSchemeCtrl'
+        controllerAs: 'ctrl'
+
+      .segment 'base_scheme',
+        templateUrl: '/templates/base_scheme.html'
+        controller: 'baseSchemeCtrl'
         controllerAs: 'ctrl'
 
     $locationProvider.html5Mode

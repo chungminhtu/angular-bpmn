@@ -114,7 +114,7 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
         }
       ]
     },
-    schema2: {
+    scheme2: {
       name: 'Parallel Event-Based Gateway',
       description: '',
       objects: [
@@ -158,7 +158,8 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
           id: 3,
           type: {
             name: 'gateway',
-            status: 'parallel'
+            base: 'data',
+            status: 'xor'
           },
           position: {
             top: 160,
@@ -179,7 +180,7 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
           },
           status: '',
           error: '',
-          title: 'task 1',
+          title: 'task',
           description: ''
         }
       ],
@@ -195,7 +196,7 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
             point: 0
           },
           flow_type: "default",
-          title: ""
+          title: "connector №1"
         }, {
           id: 2,
           start: {
@@ -207,7 +208,7 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
             point: 2
           },
           flow_type: "default",
-          title: ""
+          title: "connector №2"
         }, {
           id: 2,
           start: {
@@ -219,7 +220,7 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
             point: 10
           },
           flow_type: "default",
-          title: ""
+          title: "connector №3"
         }
       ]
     }

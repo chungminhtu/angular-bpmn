@@ -13,6 +13,7 @@ angular
       {name: 'tasks',path: 'base.tasks'}
       {name: 'gateway',path: 'base.gateway'}
       {name: 'two schemes',path: 'base.two_scheme'}
+      {name: 'base scheme',path: 'base.base_scheme'}
     ]
 
 
