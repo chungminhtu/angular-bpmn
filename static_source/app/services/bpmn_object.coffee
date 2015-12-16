@@ -9,13 +9,13 @@ angular
     controller: ["$scope", "$element", ($scope, $element)->
 
       container = $($element)
+      childs = []
 
       switch $scope.data.type.name
         when 'poster'
           container.find('img').on 'dragstart', (e)->
             e.preventDefault()
         when 'group'
-          childs = []
           container.resizable
             minHeight: 100
             minWidth: 100
@@ -40,7 +40,6 @@ angular
 
               $scope.instance.repaintEverything()
         when 'swimlane'
-          childs = []
           container.resizable
             minHeight: 200
             minWidth: 400
@@ -60,7 +59,6 @@ angular
                   container.css('width', h + 20)
               $scope.instance.repaintEverything()
         when 'swimlane-row'
-          childs = []
           container.resizable
             minHeight: 200
             minWidth: 400

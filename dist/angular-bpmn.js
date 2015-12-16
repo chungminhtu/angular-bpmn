@@ -223,6 +223,1248 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
           title: "connector №3"
         }
       ]
+    },
+    scheme3: {
+      name: 'Base scheme',
+      description: '',
+      objects: [
+        {
+          id: 1,
+          type: {
+            name: 'event',
+            start: {
+              simply: {
+                top_level: true
+              }
+            }
+          },
+          parent: 0,
+          position: {
+            top: 210,
+            left: 120
+          },
+          status: '',
+          error: '',
+          title: '',
+          description: ''
+        }, {
+          id: 2,
+          type: {
+            name: 'task'
+          },
+          parent: 0,
+          position: {
+            top: 190,
+            left: 220
+          },
+          status: '',
+          error: '',
+          title: 'Оформить заявку',
+          description: ''
+        }, {
+          id: 3,
+          type: {
+            name: 'task'
+          },
+          parent: 0,
+          position: {
+            top: 190,
+            left: 370
+          },
+          status: '',
+          error: '',
+          title: 'Рассмотреть заявку',
+          description: ''
+        }, {
+          id: 4,
+          type: {
+            name: 'gateway'
+          },
+          parent: 0,
+          position: {
+            top: 210,
+            left: 540
+          },
+          status: '',
+          error: '',
+          title: 'Одобрена?',
+          description: ''
+        }, {
+          id: 5,
+          type: {
+            name: 'task'
+          },
+          parent: 0,
+          position: {
+            top: 190,
+            left: 650
+          },
+          status: '',
+          error: '',
+          title: 'Выделить машину',
+          description: ''
+        }, {
+          id: 6,
+          type: {
+            name: 'task'
+          },
+          parent: 0,
+          position: {
+            top: 390,
+            left: 510
+          },
+          status: '',
+          error: '',
+          title: 'Заявка отклоннена',
+          description: ''
+        }, {
+          id: 7,
+          type: {
+            name: 'event',
+            end: {
+              simply: {
+                top_level: true
+              }
+            }
+          },
+          parent: 0,
+          position: {
+            top: 550,
+            left: 540
+          },
+          status: '',
+          error: '',
+          title: 'Заявка отклонена',
+          description: ''
+        }, {
+          id: 8,
+          type: {
+            name: 'gateway'
+          },
+          parent: 0,
+          position: {
+            top: 210,
+            left: 810
+          },
+          status: '',
+          error: '',
+          title: 'Выделена?',
+          description: ''
+        }, {
+          id: 9,
+          type: {
+            name: 'gateway',
+            status: 'parallel'
+          },
+          parent: 0,
+          position: {
+            top: 210,
+            left: 930
+          },
+          status: '',
+          error: '',
+          title: '',
+          description: ''
+        }, {
+          id: 10,
+          type: {
+            name: 'task'
+          },
+          parent: 0,
+          position: {
+            top: 100,
+            left: 1050
+          },
+          status: '',
+          error: '',
+          title: 'Машина выделена',
+          description: ''
+        }, {
+          id: 11,
+          type: {
+            name: 'task'
+          },
+          parent: 0,
+          position: {
+            top: 290,
+            left: 1050
+          },
+          status: '',
+          error: '',
+          title: 'Выполнить рейс',
+          description: ''
+        }, {
+          id: 12,
+          type: {
+            name: 'gateway',
+            status: 'parallel'
+          },
+          parent: 0,
+          position: {
+            top: 210,
+            left: 1200
+          },
+          status: '',
+          error: '',
+          title: '',
+          description: ''
+        }, {
+          id: 13,
+          type: {
+            name: 'event',
+            end: {
+              simply: {
+                top_level: true
+              }
+            }
+          },
+          parent: 0,
+          position: {
+            top: 210,
+            left: 1340
+          },
+          status: '',
+          error: '',
+          title: 'Заявка выполнена',
+          description: ''
+        }
+      ],
+      connectors: [
+        {
+          id: 1,
+          start: {
+            object: 1,
+            point: 1
+          },
+          end: {
+            object: 2,
+            point: 10
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 2,
+          start: {
+            object: 2,
+            point: 4
+          },
+          end: {
+            object: 3,
+            point: 10
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 3,
+          start: {
+            object: 3,
+            point: 4
+          },
+          end: {
+            object: 4,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 4,
+          start: {
+            object: 4,
+            point: 2
+          },
+          end: {
+            object: 6,
+            point: 1
+          },
+          flow_type: "default",
+          title: "Нет"
+        }, {
+          id: 4,
+          start: {
+            object: 4,
+            point: 1
+          },
+          end: {
+            object: 5,
+            point: 10
+          },
+          flow_type: "default",
+          title: "Да"
+        }, {
+          id: 5,
+          start: {
+            object: 6,
+            point: 7
+          },
+          end: {
+            object: 7,
+            point: 0
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 6,
+          start: {
+            object: 5,
+            point: 4
+          },
+          end: {
+            object: 8,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 7,
+          start: {
+            object: 8,
+            point: 0
+          },
+          end: {
+            object: 3,
+            point: 1
+          },
+          flow_type: "default",
+          title: "Нет"
+        }, {
+          id: 8,
+          start: {
+            object: 8,
+            point: 1
+          },
+          end: {
+            object: 9,
+            point: 3
+          },
+          flow_type: "default",
+          title: "Да"
+        }, {
+          id: 9,
+          start: {
+            object: 9,
+            point: 1
+          },
+          end: {
+            object: 10,
+            point: 10
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 10,
+          start: {
+            object: 9,
+            point: 1
+          },
+          end: {
+            object: 11,
+            point: 10
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 11,
+          start: {
+            object: 10,
+            point: 4
+          },
+          end: {
+            object: 12,
+            point: 0
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 12,
+          start: {
+            object: 11,
+            point: 4
+          },
+          end: {
+            object: 12,
+            point: 2
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 13,
+          start: {
+            object: 12,
+            point: 1
+          },
+          end: {
+            object: 13,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }
+      ]
+    },
+    scheme4: {
+      name: 'Base scheme with grouping',
+      description: '',
+      objects: [
+        {
+          id: 1,
+          type: {
+            name: 'event',
+            start: {
+              simply: {
+                top_level: true
+              }
+            }
+          },
+          position: {
+            top: 80,
+            left: 50
+          },
+          status: '',
+          error: '',
+          title: '',
+          description: ''
+        }, {
+          id: 2,
+          type: {
+            name: 'task'
+          },
+          parent: 14,
+          position: {
+            top: 40,
+            left: 40
+          },
+          status: '',
+          error: '',
+          title: 'Оформить заявку',
+          description: ''
+        }, {
+          id: 3,
+          type: {
+            name: 'task'
+          },
+          parent: 15,
+          position: {
+            top: 40,
+            left: 40
+          },
+          status: '',
+          error: '',
+          title: 'Рассмотреть заявку',
+          description: ''
+        }, {
+          id: 4,
+          type: {
+            name: 'gateway'
+          },
+          position: {
+            top: 290,
+            left: 370
+          },
+          status: '',
+          error: '',
+          title: 'Одобрена?',
+          description: ''
+        }, {
+          id: 5,
+          type: {
+            name: 'task'
+          },
+          parent: 14,
+          position: {
+            top: 40,
+            left: 200
+          },
+          status: '',
+          error: '',
+          title: 'Заявка отклонена',
+          description: ''
+        }, {
+          id: 6,
+          type: {
+            name: 'event',
+            end: {
+              simply: {
+                top_level: true
+              }
+            }
+          },
+          parent: 14,
+          position: {
+            top: 60,
+            left: 380
+          },
+          status: '',
+          error: '',
+          title: 'Заявка отклонена',
+          description: ''
+        }, {
+          id: 7,
+          type: {
+            name: 'task'
+          },
+          parent: 16,
+          position: {
+            top: 30,
+            left: 30
+          },
+          status: '',
+          error: '',
+          title: 'Выделить машину',
+          description: ''
+        }, {
+          id: 8,
+          type: {
+            name: 'gateway'
+          },
+          parent: 16,
+          position: {
+            top: 50,
+            left: 210
+          },
+          status: '',
+          error: '',
+          title: 'Выделена?',
+          description: ''
+        }, {
+          id: 9,
+          type: {
+            name: 'gateway',
+            status: 'parallel'
+          },
+          parent: 16,
+          position: {
+            top: 50,
+            left: 340
+          },
+          status: '',
+          error: '',
+          title: '',
+          description: ''
+        }, {
+          id: 10,
+          type: {
+            name: 'task'
+          },
+          parent: 14,
+          position: {
+            top: 40,
+            left: 480
+          },
+          status: '',
+          error: '',
+          title: 'Машина выделена',
+          description: ''
+        }, {
+          id: 11,
+          type: {
+            name: 'gateway',
+            status: 'parallel'
+          },
+          position: {
+            top: 80,
+            left: 780
+          },
+          status: '',
+          error: '',
+          title: '',
+          description: ''
+        }, {
+          id: 12,
+          type: {
+            name: 'event',
+            end: {
+              simply: {
+                top_level: true
+              }
+            }
+          },
+          position: {
+            top: 80,
+            left: 890
+          },
+          status: '',
+          error: '',
+          title: 'Заявка выполнена',
+          description: ''
+        }, {
+          id: 13,
+          type: {
+            name: 'task'
+          },
+          parent: 16,
+          position: {
+            top: 30,
+            left: 440
+          },
+          status: '',
+          error: '',
+          title: 'Выполнить рейс',
+          description: ''
+        }, {
+          id: 14,
+          type: {
+            name: 'group'
+          },
+          position: {
+            top: 20,
+            left: 140
+          },
+          width: '614px',
+          height: '170px',
+          status: '',
+          error: '',
+          title: 'Заказчик',
+          description: '',
+          style: 'solid'
+        }, {
+          id: 15,
+          type: {
+            name: 'group'
+          },
+          position: {
+            top: 230,
+            left: 140
+          },
+          width: '186px',
+          height: '176px',
+          status: '',
+          error: '',
+          title: 'Канцелярия',
+          description: '',
+          style: 'solid'
+        }, {
+          id: 16,
+          type: {
+            name: 'group'
+          },
+          position: {
+            top: 430,
+            left: 310
+          },
+          width: '588px',
+          height: '168px',
+          status: '',
+          error: '',
+          title: 'Гараж',
+          description: '',
+          style: 'solid'
+        }
+      ],
+      connectors: [
+        {
+          id: 1,
+          start: {
+            object: 1,
+            point: 1
+          },
+          end: {
+            object: 2,
+            point: 10
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 2,
+          start: {
+            object: 2,
+            point: 7
+          },
+          end: {
+            object: 3,
+            point: 1
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 3,
+          start: {
+            object: 3,
+            point: 4
+          },
+          end: {
+            object: 4,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 4,
+          start: {
+            object: 4,
+            point: 0
+          },
+          end: {
+            object: 5,
+            point: 7
+          },
+          flow_type: "default",
+          title: "нет"
+        }, {
+          id: 5,
+          start: {
+            object: 5,
+            point: 4
+          },
+          end: {
+            object: 6,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 6,
+          start: {
+            object: 4,
+            point: 2
+          },
+          end: {
+            object: 7,
+            point: 1
+          },
+          flow_type: "default",
+          title: "да"
+        }, {
+          id: 7,
+          start: {
+            object: 7,
+            point: 4
+          },
+          end: {
+            object: 8,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 7,
+          start: {
+            object: 8,
+            point: 2
+          },
+          end: {
+            object: 3,
+            point: 7
+          },
+          flow_type: "default",
+          title: "нет"
+        }, {
+          id: 8,
+          start: {
+            object: 8,
+            point: 1
+          },
+          end: {
+            object: 9,
+            point: 3
+          },
+          flow_type: "default",
+          title: "да"
+        }, {
+          id: 9,
+          start: {
+            object: 9,
+            point: 0
+          },
+          end: {
+            object: 10,
+            point: 7
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 10,
+          start: {
+            object: 10,
+            point: 4
+          },
+          end: {
+            object: 11,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 11,
+          start: {
+            object: 11,
+            point: 1
+          },
+          end: {
+            object: 12,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 12,
+          start: {
+            object: 13,
+            point: 1
+          },
+          end: {
+            object: 11,
+            point: 2
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 13,
+          start: {
+            object: 9,
+            point: 1
+          },
+          end: {
+            object: 13,
+            point: 10
+          },
+          flow_type: "default",
+          title: ""
+        }
+      ]
+    },
+    scheme5: {
+      name: 'Base scheme with swimlane',
+      description: '',
+      objects: [
+        {
+          id: 1,
+          type: {
+            name: 'event',
+            start: {
+              simply: {
+                top_level: true
+              }
+            }
+          },
+          parent: 15,
+          position: {
+            top: 70,
+            left: 120
+          },
+          status: '',
+          error: '',
+          title: '',
+          description: ''
+        }, {
+          id: 2,
+          type: {
+            name: 'task'
+          },
+          parent: 15,
+          position: {
+            top: 50,
+            left: 240
+          },
+          status: '',
+          error: '',
+          title: 'Оформить заявку',
+          description: ''
+        }, {
+          id: 3,
+          type: {
+            name: 'task'
+          },
+          parent: 16,
+          position: {
+            top: 60,
+            left: 240
+          },
+          status: '',
+          error: '',
+          title: 'Рассмотреть заявку',
+          description: ''
+        }, {
+          id: 4,
+          type: {
+            name: 'gateway'
+          },
+          parent: 16,
+          position: {
+            top: 80,
+            left: 420
+          },
+          status: '',
+          error: '',
+          title: 'Одобрена?',
+          description: ''
+        }, {
+          id: 5,
+          type: {
+            name: 'task'
+          },
+          parent: 15,
+          position: {
+            top: 50,
+            left: 390
+          },
+          status: '',
+          error: '',
+          title: 'Заявка отклонена',
+          description: ''
+        }, {
+          id: 6,
+          type: {
+            name: 'event',
+            end: {
+              simply: {
+                top_level: true
+              }
+            }
+          },
+          parent: 15,
+          position: {
+            top: 70,
+            left: 570
+          },
+          status: '',
+          error: '',
+          title: 'Заявка отклонена',
+          description: ''
+        }, {
+          id: 7,
+          type: {
+            name: 'task'
+          },
+          parent: 17,
+          position: {
+            top: 60,
+            left: 390
+          },
+          status: '',
+          error: '',
+          title: 'Выделить машину',
+          description: ''
+        }, {
+          id: 8,
+          type: {
+            name: 'gateway'
+          },
+          parent: 17,
+          position: {
+            top: 80,
+            left: 570
+          },
+          status: '',
+          error: '',
+          title: 'Выделена?',
+          description: ''
+        }, {
+          id: 9,
+          type: {
+            name: 'gateway',
+            status: 'parallel'
+          },
+          parent: 17,
+          position: {
+            top: 80,
+            left: 690
+          },
+          status: '',
+          error: '',
+          title: '',
+          description: ''
+        }, {
+          id: 10,
+          type: {
+            name: 'task'
+          },
+          parent: 15,
+          position: {
+            top: 50,
+            left: 660
+          },
+          status: '',
+          error: '',
+          title: 'Машина выделена',
+          description: ''
+        }, {
+          id: 11,
+          type: {
+            name: 'gateway',
+            status: 'parallel'
+          },
+          parent: 15,
+          position: {
+            top: 70,
+            left: 830
+          },
+          status: '',
+          error: '',
+          title: '',
+          description: ''
+        }, {
+          id: 12,
+          type: {
+            name: 'event',
+            end: {
+              simply: {
+                top_level: true
+              }
+            }
+          },
+          parent: 15,
+          position: {
+            top: 70,
+            left: 940
+          },
+          status: '',
+          error: '',
+          title: 'Заявка выполнена',
+          description: ''
+        }, {
+          id: 13,
+          type: {
+            name: 'task'
+          },
+          parent: 17,
+          position: {
+            top: 60,
+            left: 800
+          },
+          status: '',
+          error: '',
+          title: 'Выполнить рейс',
+          description: ''
+        }, {
+          id: 14,
+          type: {
+            name: 'swimlane'
+          },
+          position: {
+            top: 10,
+            left: 10
+          },
+          width: '1040px',
+          height: '',
+          status: '',
+          error: '',
+          title: '',
+          description: '',
+          style: ''
+        }, {
+          id: 15,
+          type: {
+            name: 'swimlane-row'
+          },
+          parent: 14,
+          position: {
+            top: 0,
+            left: 0
+          },
+          width: '100%',
+          height: '200px',
+          status: '',
+          error: '',
+          title: 'Заказчик',
+          description: '',
+          style: ''
+        }, {
+          id: 16,
+          type: {
+            name: 'swimlane-row'
+          },
+          parent: 14,
+          position: {
+            top: 0,
+            left: 0
+          },
+          width: '100%',
+          height: '200px',
+          status: '',
+          error: '',
+          title: 'Канцелярия',
+          description: '',
+          style: ''
+        }, {
+          id: 17,
+          type: {
+            name: 'swimlane-row'
+          },
+          parent: 14,
+          position: {
+            top: 0,
+            left: 0
+          },
+          width: '100%',
+          height: '200px',
+          status: '',
+          error: '',
+          title: 'Гараж',
+          description: '',
+          style: ''
+        }
+      ],
+      connectors: [
+        {
+          id: 1,
+          start: {
+            object: 1,
+            point: 1
+          },
+          end: {
+            object: 2,
+            point: 10
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 2,
+          start: {
+            object: 2,
+            point: 7
+          },
+          end: {
+            object: 3,
+            point: 1
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 3,
+          start: {
+            object: 3,
+            point: 4
+          },
+          end: {
+            object: 4,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 4,
+          start: {
+            object: 4,
+            point: 0
+          },
+          end: {
+            object: 5,
+            point: 7
+          },
+          flow_type: "default",
+          title: "нет"
+        }, {
+          id: 5,
+          start: {
+            object: 5,
+            point: 4
+          },
+          end: {
+            object: 6,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 6,
+          start: {
+            object: 4,
+            point: 2
+          },
+          end: {
+            object: 7,
+            point: 1
+          },
+          flow_type: "default",
+          title: "да"
+        }, {
+          id: 7,
+          start: {
+            object: 7,
+            point: 4
+          },
+          end: {
+            object: 8,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 7,
+          start: {
+            object: 8,
+            point: 2
+          },
+          end: {
+            object: 3,
+            point: 7
+          },
+          flow_type: "default",
+          title: "нет"
+        }, {
+          id: 8,
+          start: {
+            object: 8,
+            point: 1
+          },
+          end: {
+            object: 9,
+            point: 3
+          },
+          flow_type: "default",
+          title: "да"
+        }, {
+          id: 9,
+          start: {
+            object: 9,
+            point: 0
+          },
+          end: {
+            object: 10,
+            point: 7
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 10,
+          start: {
+            object: 10,
+            point: 4
+          },
+          end: {
+            object: 11,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 11,
+          start: {
+            object: 11,
+            point: 1
+          },
+          end: {
+            object: 12,
+            point: 3
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 12,
+          start: {
+            object: 13,
+            point: 1
+          },
+          end: {
+            object: 11,
+            point: 2
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 13,
+          start: {
+            object: 9,
+            point: 1
+          },
+          end: {
+            object: 13,
+            point: 10
+          },
+          flow_type: "default",
+          title: ""
+        }
+      ]
     }
   };
 });
@@ -234,12 +1476,89 @@ angular.module('angular-bpmn').directive('bpmnObject', [
       restrict: 'A',
       controller: [
         "$scope", "$element", function($scope, $element) {
-          var container, updateStyle;
+          var childs, container, updateStyle;
           container = $($element);
-          if ($scope.data.type.name === 'poster') {
-            container.find('img').on('dragstart', function(e) {
-              return e.preventDefault();
-            });
+          childs = [];
+          switch ($scope.data.type.name) {
+            case 'poster':
+              container.find('img').on('dragstart', function(e) {
+                return e.preventDefault();
+              });
+              break;
+            case 'group':
+              container.resizable({
+                minHeight: 100,
+                minWidth: 100,
+                grid: 10,
+                handles: "all",
+                start: function(event, ui) {
+                  return childs = $scope.object.getAllChilds();
+                },
+                stop: function(event, ui) {
+                  return $scope.instance.repaintEverything();
+                },
+                resize: function(event, ui) {
+                  angular.forEach(childs, function(child, ch_key) {
+                    var h, v;
+                    h = child.position.left + child.size.width;
+                    v = child.position.top + child.size.height;
+                    if (container.width() <= h + 20) {
+                      container.css('width', h + 20);
+                    }
+                    if (container.height() <= v + 20) {
+                      return container.css('height', v + 20);
+                    }
+                  });
+                  return $scope.instance.repaintEverything();
+                }
+              });
+              break;
+            case 'swimlane':
+              container.resizable({
+                minHeight: 200,
+                minWidth: 400,
+                grid: 10,
+                handles: 'e',
+                start: function() {
+                  childs = $scope.object.getAllChilds();
+                  return $scope.instance.repaintEverything();
+                },
+                resize: function() {
+                  angular.forEach(childs, function(child) {
+                    var h;
+                    if (child.data.type === 'swimlane-row') {
+                      return;
+                    }
+                    h = child.position.left + child.size.width;
+                    if (container.width() <= h + 20) {
+                      return container.css('width', h + 20);
+                    }
+                  });
+                  return $scope.instance.repaintEverything();
+                }
+              });
+              break;
+            case 'swimlane-row':
+              container.resizable({
+                minHeight: 200,
+                minWidth: 400,
+                grid: 10,
+                handles: 's',
+                start: function() {
+                  childs = $scope.object.getAllChilds();
+                  return $scope.instance.repaintEverything();
+                },
+                resize: function() {
+                  angular.forEach(childs, function(child) {
+                    var v;
+                    v = child.position.top + child.size.height;
+                    if (container.height() <= v + 20) {
+                      return container.css('height', v + 20);
+                    }
+                  });
+                  return $scope.instance.repaintEverything();
+                }
+              });
           }
           updateStyle = function() {
             var style;
@@ -269,6 +1588,8 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
   'bpmnSettings', '$compile', '$rootScope', 'log', '$templateRequest', '$templateCache', function(bpmnSettings, $compile, $rootScope, log, $templateRequest, $templateCache) {
     var schemeObject;
     schemeObject = (function() {
+      schemeObject.prototype.id = null;
+
       schemeObject.prototype.isDebug = true;
 
       schemeObject.prototype.parentScope = null;
@@ -293,6 +1614,17 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
 
       schemeObject.prototype.points = null;
 
+      schemeObject.prototype.settings = null;
+
+      schemeObject.prototype.childs = null;
+
+      schemeObject.prototype.position = {
+        top: 0,
+        left: 0
+      };
+
+      schemeObject.prototype.isParent = false;
+
       function schemeObject(data, parentScope) {
         var tpl;
         log.debug('object construct');
@@ -306,6 +1638,11 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
         this.draggable = tpl.draggable;
         this.templateUrl = tpl.templateUrl || null;
         this.template = tpl.template || null;
+        this.childs = [];
+        this.position = {
+          top: data.position.top,
+          left: data.position.left
+        };
         this.templateUpdate();
       }
 
@@ -383,10 +1720,136 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
         } else {
           log.error('@size is null, element:', this.element);
         }
-        return this.generateAnchor(options);
+        this.checkParent();
+        this.generateAnchor(options);
+        return this.setDraggable(this.draggable);
       };
 
-      schemeObject.prototype.select = function(tr) {};
+      schemeObject.prototype.select = function(tr) {
+        if (tr) {
+          return $(this.element).addClass("selected");
+        } else {
+          return $(this.element).removeClass("selected");
+        }
+      };
+
+      schemeObject.prototype.getId = function() {
+        if (this.id == null) {
+          this.id = $(this.element).attr('id');
+        }
+        return this.id;
+      };
+
+      schemeObject.prototype.setDraggable = function(tr) {
+        return this.parentScope.instance.setDraggable($(this.element), tr);
+      };
+
+      schemeObject.prototype.group = function(groupId) {
+        return this.parentScope.instance.addToPosse(this.getId(), {
+          id: groupId,
+          active: true
+        });
+      };
+
+      schemeObject.prototype.ungroup = function(groupId) {
+        return this.parentScope.instance.removeFromPosse(this.getId(), groupId);
+      };
+
+      schemeObject.prototype.checkParent = function() {
+        var parent, parentId;
+        if ((this.data.parent == null) || this.data.parent === '') {
+          return;
+        }
+        parent = null;
+        angular.forEach(this.parentScope.intScheme.objects, (function(_this) {
+          return function(obj) {
+            if (obj.data.id === _this.data.parent) {
+              return parent = obj;
+            }
+          };
+        })(this));
+        if (parent == null) {
+          return;
+        }
+        this.element.removeClass("etc");
+        parentId = this.setParent(parent);
+        if (((this.data.draggable != null) && this.data.draggable) || (this.data.draggable == null)) {
+          return this.parentScope.instance.draggable(this.element, $.extend({}, this.settings.draggable, {
+            containment: parentId,
+            drag: function(event, ui) {},
+            stop: function(event, ui) {
+              this.position.left = event.pos[0];
+              this.position.top = event.pos[1];
+              return this.parentScope.instance.repaintEverything();
+            }
+          }));
+        }
+      };
+
+      schemeObject.prototype.setParent = function(parent) {
+        var id, parent_element;
+        if (parent == null) {
+          return;
+        }
+        parent_element = parent.element;
+        this.parentScope.instance.setParent(this.element, parent_element);
+        id = parent_element.attr('id');
+        parent.isParent = true;
+        if ($.inArray(this.data, parent.childs) === -1) {
+          parent.childs.push(this);
+        }
+        if (parent_element.hasClass(id)) {
+          return id;
+        }
+        parent_element.addClass(id).removeClass("etc");
+        if (((parent.data.draggable != null) && parent.data.draggable) || (parent.data.draggable == null)) {
+          return this.parentScope.instance.draggable(parent_element, $.extend({}, this.settings.draggable, {
+            drag: (function(_this) {
+              return function(event, ui) {
+                return _this.parentScope.instance.repaintEverything();
+              };
+            })(this),
+            stop: (function(_this) {
+              return function(event, ui) {
+                _this.position.left = event.pos[0];
+                _this.position.top = event.pos[1];
+                return _this.parentScope.instance.repaintEverything();
+              };
+            })(this)
+          }));
+        }
+      };
+
+      schemeObject.prototype.removeParent = function() {};
+
+      schemeObject.prototype.getAllChilds = function() {
+        var childs;
+        childs = [];
+        angular.forEach(this.childs, function(child) {
+          var tch;
+          childs.push(child);
+          tch = child.getAllChilds();
+          if (tch.length > 0) {
+            return childs = childs.concat(tch);
+          }
+        });
+        return childs;
+      };
+
+      schemeObject.prototype.remove = function() {
+        var id;
+        id = this.getId();
+        if (id == null) {
+          return;
+        }
+        log.debug('remove: ', id);
+        this.parentScope.instance.detachAllConnections(this.element).empty(id).remove(id);
+        this.childs = null;
+        this.isParent = false;
+        this.container = null;
+        this.element = null;
+        return this.points = null;
+      };
 
       return schemeObject;
 
@@ -705,9 +2168,11 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         log.debug('start');
         this.panning();
         this.loadStyle();
-        this.scope.instance = jsPlumb.getInstance($.extend(true, this.scope.settings.instance, {
-          Container: this.container
-        }));
+        if (!this.scope.instance) {
+          this.scope.instance = jsPlumb.getInstance($.extend(true, this.scope.settings.instance, {
+            Container: this.container
+          }));
+        }
         this.cache = [];
         this.cacheTemplates();
         this.container.addClass('bpmn');
@@ -729,13 +2194,14 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
           };
         })(this));
         if (((ref = this.scope.settings.engine.container) != null ? ref.resizable : void 0) != null) {
+          if (this.wrapper.resizable('instance')) {
+            this.wrapper.resizable('destroy');
+          }
           this.wrapper.resizable({
             minHeight: 200,
             minWidth: 400,
             grid: 10,
-            handles: 's',
-            start: function() {},
-            resize: function() {}
+            handles: 's'
           });
         }
         return this.scope.$on('$routeChangeSuccess', (function(_this) {
@@ -748,6 +2214,11 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
       bpmnScheme.prototype.destroy = function() {
         log.debug('destroy');
         this.wrapper.find(".page-loader").fadeIn("slow");
+        angular.forEach(this.scope.intScheme.objects, function(obj) {
+          return obj.remove();
+        });
+        this.scope.intScheme.objects = [];
+        this.scope.instance.empty(this.container);
         if (this.schemeWatch) {
           this.schemeWatch();
         }
@@ -761,7 +2232,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
       bpmnScheme.prototype.restart = function() {
         log.debug('restart');
         if (this.isStarted != null) {
-          this.destry();
+          this.destroy();
         }
         return this.start();
       };
@@ -906,19 +2377,31 @@ angular.module('angular-bpmn').service('bpmnSettings', function() {
       template: '<div bpmn-object class="group etc draggable" ng-style="{width: data.width, height: data.height}" ng-class="{ dashed : data.style == \'dashed\', solid : data.style == \'solid\' }"> <div class="title">{{data.title}}</div> </div>',
       anchor: [],
       make: [],
-      draggable: true
+      draggable: true,
+      size: {
+        width: 'auto',
+        height: 'auto'
+      }
     },
     swimlane: {
       template: '<div bpmn-object class="swimlane etc draggable" ng-style="{ width: data.width }"></div>',
       anchor: [],
       make: [],
-      draggable: true
+      draggable: true,
+      size: {
+        width: 'auto',
+        height: 'auto'
+      }
     },
     'swimlane-row': {
       template: '<div bpmn-object class="swimlane-row" ng-style="{width: \'100%\', height: data.height }"> <div class="header"><div class="text">{{data.title}}</div></div> </div>',
       anchor: [],
       make: [],
-      draggable: false
+      draggable: false,
+      size: {
+        width: 'auto',
+        height: 'auto'
+      }
     },
     poster: {
       template: '<div bpmn-object class="poster draggable" ng-class="{ \'etc\' : data.draggable }"><img ng-src="{{data.url}}"></div>',

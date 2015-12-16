@@ -303,7 +303,10 @@ angular
         log.debug 'start'
         @panning()
         @loadStyle()
-        @scope.instance = jsPlumb.getInstance($.extend(true, @scope.settings.instance, {Container: @container}))
+
+        if !@scope.instance
+          @scope.instance = jsPlumb.getInstance($.extend(true, @scope.settings.instance, {Container: @container}))
+
         @cache = []
         @cacheTemplates()
         @container.addClass('bpmn')
@@ -322,13 +325,13 @@ angular
           @makePackageObjects()
 
         if @scope.settings.engine.container?.resizable?
+          if @wrapper.resizable('instance')
+            @wrapper.resizable('destroy')
           @wrapper.resizable
             minHeight: 200
             minWidth: 400
             grid: 10
             handles: 's'
-            start: ()->
-            resize: ()->
 
         @scope.$on '$routeChangeSuccess', ()=>
           @destroy()
@@ -359,7 +362,7 @@ angular
       restart: ()->
         log.debug 'restart'
         if @isStarted?
-          @destry()
+          @destroy()
         @start()
 
     bpmnScheme
