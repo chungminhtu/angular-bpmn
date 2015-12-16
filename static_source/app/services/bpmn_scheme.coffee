@@ -7,7 +7,8 @@ RIGHT_MB = 3
 
 angular
 .module('angular-bpmn')
-.factory 'bpmnScheme', ['$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact'
+.factory 'bpmnScheme', [
+  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact'
   ($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact) ->
     class bpmnScheme
 

@@ -19,6 +19,11 @@ angular
       container: null
       size: null
       points: null
+      settings: null
+      childs: null
+      position:
+        top: 0
+        left: 0
 
       constructor: (data, parentScope)->
         log.debug 'object construct'
@@ -33,6 +38,10 @@ angular
         @draggable = tpl.draggable
         @templateUrl = tpl.templateUrl || null
         @template = tpl.template || null
+        @childs = []
+        @position =
+          top: data.position.top
+          left: data.position.left
         @templateUpdate()
 
       templateUpdate: ()->
@@ -100,7 +109,7 @@ angular
         else
           log.error '@size is null, element:', @element
 
-#        @checkParent()
+        @checkParent()
 
         # генерируем точки соединений для нового объекта
         @generateAnchor(options)
@@ -108,6 +117,104 @@ angular
 #        @setDraggable(@draggable)
 
       select: (tr)->
+        if tr
+          $(@element).addClass("selected")
+        else
+          $(@element).removeClass("selected")
+
+      # --------------------------------------------------
+      # группировка элементов
+      # --------------------------------------------------
+
+      group: (groupId)->
+        @parentScope.instance.addToPosse(@getId(), {id:groupId,active:true})
+
+      ungroup: (groupId)->
+        @parentScope.instance.removeFromPosse(@getId(), groupId);
+
+      # --------------------------------------------------
+      # операции с потомками
+      # --------------------------------------------------
+      checkParent: ()->
+
+        # Проверим конфиг, если указаны родители, подключимся к ним
+        if !@data.parent? || @data.parent == ''
+          return
+
+        parent = null
+        angular.forEach @parentScope.intScheme.objects, (obj)=>
+          if obj.data.id == @data.parent
+            parent = obj
+
+        if !parent?
+          return
+
+        @element.removeClass("etc")
+
+        parentId = @setParent(parent)
+        #------------------------
+        if (@data.draggable? && @data.draggable) || !@data.draggable?
+
+          @parentScope.instance.draggable(@element, $.extend({}, @settings.draggable, {
+            containment: parentId
+            drag: (event, ui)->
+#              $log.debug 'child dragging'
+#              instance.repaintEverything()
+            stop: (event, ui)->
+
+              # update position info
+              @position.left = event.pos[0]
+              @position.top = event.pos[1]
+
+              @parentScope.instance.repaintEverything()
+          }))
+
+      setParent: (parent)->
+        if !parent?
+          return
+
+        parent_element = parent.element
+        @parentScope.instance.setParent(@element, parent_element)
+        id = parent_element.attr('id')
+
+        parent.isParent = true
+        if $.inArray(@data, parent.childs) == -1
+          parent.childs.push(this)
+
+        if parent_element.hasClass(id)
+          return id
+
+        parent_element
+          .addClass(id)
+          .removeClass("etc")
+
+        #------------------------
+        if (parent.data.draggable? && parent.data.draggable) || !parent.data.draggable?
+          @parentScope.instance.draggable(parent_element, $.extend({}, @settings.draggable, {
+            drag: (event, ui)=>
+              @parentScope.instance.repaintEverything()
+#            $log.debug 'parent dragging'
+
+            stop: (event, ui)=>
+              # update position info
+              @position.left = event.pos[0]
+              @position.top = event.pos[1]
+
+              @parentScope.instance.repaintEverything()
+          }))
+
+      removeParent: ()->
+        #TODO add remove parent
+
+      getAllChilds: ()->
+        childs = []
+        angular.forEach @childs, (child)->
+          childs.push(child)
+          tch = child.getAllChilds()
+          if tch.length > 0
+            childs = childs.concat(tch)
+
+        return childs
 
     schemeObject
   ]

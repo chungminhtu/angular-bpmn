@@ -141,6 +141,9 @@ angular
       anchor: []
       make: []
       draggable: true
+      size:
+        width: 'auto'
+        height: 'auto'
     swimlane:
       template: '<div bpmn-object class="swimlane etc draggable" ng-style="{ width: data.width }"></div>'
       anchor: []

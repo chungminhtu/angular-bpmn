@@ -14,6 +14,7 @@ angular
       {name: 'gateway',path: 'base.gateway'}
       {name: 'two schemes',path: 'base.two_scheme'}
       {name: 'base scheme',path: 'base.base_scheme'}
+      {name: 'base scheme with grouping',path: 'base.base_scheme_with_grouping'}
     ]
 
 

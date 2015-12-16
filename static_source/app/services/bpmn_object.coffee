@@ -10,11 +10,35 @@ angular
 
       container = $($element)
 
+      switch $scope.data.type.name
+        when 'poster'
+          container.find('img').on 'dragstart', (e)->
+            e.preventDefault()
+        when 'group'
+          childs = []
+          container.resizable
+            minHeight: 100
+            minWidth: 100
+            grid: 10
+            handles: "all"
+            start: (event, ui)->
+              childs = $scope.object.getAllChilds()
+            stop: (event, ui)->
+              $scope.instance.repaintEverything()
+            resize: (event, ui)->
+              # во время изменения размера контейнера
+              # контролирует нахлёст родительского блока с дочерними
+              angular.forEach childs, (child, ch_key)->
+                h = child.position.left + child.size.width
+                v = child.position.top + child.size.height
 
+                if container.width() <= h + 20
+                  container.css('width', h + 20)
 
-      if $scope.data.type.name == 'poster'
-        container.find('img').on 'dragstart', (e)->
-          e.preventDefault()
+                if container.height() <= v + 20
+                  container.css('height', v + 20)
+
+              $scope.instance.repaintEverything()
 
       updateStyle = ()->
         style =
