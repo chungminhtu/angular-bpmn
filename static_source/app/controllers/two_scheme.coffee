@@ -12,8 +12,6 @@ angular
       engine:
         status: 'viewer'
 
-    $log.debug scheme2
-
     instance1 = new bpmnScheme($('#scheme1'))
     instance1.setScheme(scheme1)
     instance1.setSettings(settings)

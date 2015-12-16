@@ -30,7 +30,7 @@ angular.module('angular-bpmn').service('log', [
 angular.module('angular-bpmn').service('bpmnMock', function() {
   return {
     scheme1: {
-      name: '',
+      name: 'Simply bpmn scheme',
       description: '',
       objects: [
         {
@@ -111,6 +111,115 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
           },
           flow_type: "default",
           title: "connector №2"
+        }
+      ]
+    },
+    schema2: {
+      name: 'Parallel Event-Based Gateway',
+      description: '',
+      objects: [
+        {
+          id: 1,
+          type: {
+            name: 'event',
+            start: {
+              0: {
+                0: true
+              }
+            }
+          },
+          position: {
+            top: 80,
+            left: 50
+          },
+          status: '',
+          error: '',
+          title: 'message 1',
+          description: ''
+        }, {
+          id: 2,
+          type: {
+            name: 'event',
+            start: {
+              0: {
+                0: true
+              }
+            }
+          },
+          position: {
+            top: 240,
+            left: 50
+          },
+          status: '',
+          error: '',
+          title: 'message 2',
+          description: ''
+        }, {
+          id: 3,
+          type: {
+            name: 'gateway',
+            status: 'parallel'
+          },
+          position: {
+            top: 160,
+            left: 190
+          },
+          status: '',
+          error: '',
+          title: '',
+          description: ''
+        }, {
+          id: 4,
+          type: {
+            name: 'task'
+          },
+          position: {
+            top: 140,
+            left: 370
+          },
+          status: '',
+          error: '',
+          title: 'task 1',
+          description: ''
+        }
+      ],
+      connectors: [
+        {
+          id: 1,
+          start: {
+            object: 1,
+            point: 1
+          },
+          end: {
+            object: 3,
+            point: 0
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 2,
+          start: {
+            object: 2,
+            point: 1
+          },
+          end: {
+            object: 3,
+            point: 2
+          },
+          flow_type: "default",
+          title: ""
+        }, {
+          id: 2,
+          start: {
+            object: 3,
+            point: 1
+          },
+          end: {
+            object: 4,
+            point: 10
+          },
+          flow_type: "default",
+          title: ""
         }
       ]
     }
@@ -814,7 +923,11 @@ angular.module('angular-bpmn').service('bpmnSettings', function() {
       template: '<div bpmn-object class="poster draggable" ng-class="{ \'etc\' : data.draggable }"><img ng-src="{{data.url}}"></div>',
       anchor: [],
       make: [],
-      draggable: true
+      draggable: true,
+      size: {
+        width: 'auto',
+        height: 'auto'
+      }
     },
     "default": {
       template: '<div bpmn-object class="dummy etc draggable">shape not found</div>',
@@ -822,8 +935,8 @@ angular.module('angular-bpmn').service('bpmnSettings', function() {
       make: ['source', 'target'],
       draggable: true,
       size: {
-        width: 40,
-        height: 40
+        width: 50,
+        height: 50
       }
     }
   };
