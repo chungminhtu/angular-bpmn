@@ -31,6 +31,7 @@ angular.module('app')
       .when '/base_scheme_with_grouping',         'base.base_scheme_with_grouping'
       .when '/base_scheme_with_swimlane',         'base.base_scheme_with_swimlane'
       .when '/update_scheme_data',                'base.update_scheme_data'
+      .when '/process_monitor',                   'base.process_monitor'
 
       .segment 'base',
         templateUrl: '/templates/base.html'
@@ -83,6 +84,11 @@ angular.module('app')
       .segment 'update_scheme_data',
         templateUrl: '/templates/update_scheme_data.html'
         controller: 'updateSchemeDataCtrl'
+        controllerAs: 'ctrl'
+
+      .segment 'process_monitor',
+        templateUrl: '/templates/process_monitor.html'
+        controller: 'processMonitorCtrl'
         controllerAs: 'ctrl'
 
     $locationProvider.html5Mode

@@ -17,6 +17,7 @@ angular
       {name: 'base scheme with grouping',path: 'base.base_scheme_with_grouping'}
       {name: 'base scheme with swimlane',path: 'base.base_scheme_with_swimlane'}
       {name: 'update scheme data',path: 'base.update_scheme_data'}
+      {name: 'real time process monitor',path: 'base.process_monitor'}
     ]
 
 
