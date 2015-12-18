@@ -2213,7 +2213,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.destroy = function() {
         log.debug('destroy');
-        this.wrapper.find(".page-loader").fadeIn("slow");
+        this.wrapper.find(".page-loader").css('opacity', 1);
         angular.forEach(this.scope.intScheme.objects, function(obj) {
           return obj.remove();
         });

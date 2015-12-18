@@ -22,6 +22,7 @@ angular
       style_id: 'bpmn-style-theme'
       wrap_class: 'bpmn-wrapper'
       schemeWatch: null
+      stopListen: null
 
       constructor: (container, settings)->
 #        set unique id
@@ -105,8 +106,7 @@ angular
               log.debug 'load template file:', templateUrl
               $templateCache.put(templateUrl, result)
 
-      makePackageObjects: ()->
-        log.debug 'make package objects'
+      makePackageObjects: (resolve)->
         # Создадим все объекты, сохраним указатели в массиве
         # потому как возможны перекрёстные ссылки
         promise = []
@@ -140,6 +140,7 @@ angular
 
           @isStarted = true
           @wrapper.find(".page-loader").fadeOut("slow")
+          resolve()
 
       instanceBatch: ()->
         @scope.instance.batch ()=>
@@ -301,6 +302,11 @@ angular
 
       start: ()->
         log.debug 'start'
+        return $q (resolve)=>
+          @instart(resolve)
+
+      instart: (resolve)->
+
         @panning()
         @loadStyle()
 
@@ -322,7 +328,7 @@ angular
 
         # make objects
         $q.all(@cache).then ()=>
-          @makePackageObjects()
+          @makePackageObjects(resolve)
 
         if @scope.settings.engine.container?.resizable?
           if @wrapper.resizable('instance')
@@ -333,12 +339,12 @@ angular
             grid: 10
             handles: 's'
 
-        @scope.$on '$routeChangeSuccess', ()=>
+        @stopListen = @scope.$on '$routeChangeSuccess', ()=>
           @destroy()
 
       destroy: ()->
         log.debug 'destroy'
-        @wrapper.find(".page-loader").fadeIn("slow")
+        @wrapper.find(".page-loader").fadeIn("fast")
 
 #        if @scope.settings.engine.container?.resizable?
 #          @wrapper.resizable('destroy')
