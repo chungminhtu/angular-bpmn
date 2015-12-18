@@ -69,6 +69,10 @@ angular
 
         @scope.settings = $.extend(true, bpmnSettings, angular.copy(settings))
 
+        @loadStyle()
+        @cacheTemplates()
+        @objectsUpdate()
+
       # load style
       #------------------------------------------------------------------------------
       loadStyle: ()->
@@ -93,6 +97,9 @@ angular
       # template caching
       #------------------------------------------------------------------------------
       cacheTemplates: ()->
+        if !@cache
+          @cache = []
+
         angular.forEach @scope.settings.templates, (type)=>
           if !type.templateUrl? || type.templateUrl == ''
             return
@@ -299,6 +306,10 @@ angular
             '-o-transform':'scale('+@scope.zoom+')'
             'transform':'scale('+@scope.zoom+')'
           })
+
+      objectsUpdate: ()->
+        angular.forEach @scope.intScheme.objects, (object)->
+          object.templateUpdate()
 
       start: ()->
         log.debug 'start'

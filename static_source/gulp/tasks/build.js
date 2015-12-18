@@ -7,7 +7,7 @@ gulp.task('default', function(cb) {
         'build_coffee_js',
         ['build_haml', 'build_templates'],
         ['build_engine_js', 'build_engine_css'],
-        ['default_theme_less','minimal_theme_less'],
+        ['default_theme_less','minimal_theme_less', 'orange_theme_less'],
         'build_lib_css',
         'build_less',
         'webserver',
@@ -21,7 +21,7 @@ gulp.task('pack', function(cb) {
         'build_coffee_js',
         ['build_haml', 'build_templates'],
         ['build_engine_js', 'build_engine_css'],
-        ['default_theme_less','minimal_theme_less'],
+        ['default_theme_less','minimal_theme_less', 'orange_theme_less'],
         'build_lib_css',
         'build_less'
     );

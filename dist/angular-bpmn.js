@@ -1891,6 +1891,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.schemeWatch = null;
 
+      bpmnScheme.prototype.stopListen = null;
+
       function bpmnScheme(container, settings) {
         var wrapper;
         this.id = bpmnUuid.gen();
@@ -1933,7 +1935,10 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         if (settings == null) {
           settings = {};
         }
-        return this.scope.settings = $.extend(true, bpmnSettings, angular.copy(settings));
+        this.scope.settings = $.extend(true, bpmnSettings, angular.copy(settings));
+        this.loadStyle();
+        this.cacheTemplates();
+        return this.objectsUpdate();
       };
 
       bpmnScheme.prototype.loadStyle = function() {
@@ -1956,6 +1961,9 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
       };
 
       bpmnScheme.prototype.cacheTemplates = function() {
+        if (!this.cache) {
+          this.cache = [];
+        }
         return angular.forEach(this.scope.settings.templates, (function(_this) {
           return function(type) {
             var template, templatePromise, templateUrl;
@@ -1976,9 +1984,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         })(this));
       };
 
-      bpmnScheme.prototype.makePackageObjects = function() {
+      bpmnScheme.prototype.makePackageObjects = function(resolve) {
         var promise;
-        log.debug('make package objects');
         promise = [];
         angular.forEach(this.scope.extScheme.objects, (function(_this) {
           return function(object) {
@@ -2003,7 +2010,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
             _this.instanceBatch();
             _this.connectPackageObjects();
             _this.isStarted = true;
-            return _this.wrapper.find(".page-loader").fadeOut("slow");
+            _this.wrapper.find(".page-loader").fadeOut("slow");
+            return resolve();
           };
         })(this));
       };
@@ -2163,9 +2171,23 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         })(this));
       };
 
+      bpmnScheme.prototype.objectsUpdate = function() {
+        return angular.forEach(this.scope.intScheme.objects, function(object) {
+          return object.templateUpdate();
+        });
+      };
+
       bpmnScheme.prototype.start = function() {
-        var ref;
         log.debug('start');
+        return $q((function(_this) {
+          return function(resolve) {
+            return _this.instart(resolve);
+          };
+        })(this));
+      };
+
+      bpmnScheme.prototype.instart = function(resolve) {
+        var ref;
         this.panning();
         this.loadStyle();
         if (!this.scope.instance) {
@@ -2190,7 +2212,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         })(this));
         $q.all(this.cache).then((function(_this) {
           return function() {
-            return _this.makePackageObjects();
+            return _this.makePackageObjects(resolve);
           };
         })(this));
         if (((ref = this.scope.settings.engine.container) != null ? ref.resizable : void 0) != null) {
@@ -2204,7 +2226,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
             handles: 's'
           });
         }
-        return this.scope.$on('$routeChangeSuccess', (function(_this) {
+        return this.stopListen = this.scope.$on('$routeChangeSuccess', (function(_this) {
           return function() {
             return _this.destroy();
           };
@@ -2213,7 +2235,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.destroy = function() {
         log.debug('destroy');
-        this.wrapper.find(".page-loader").css('opacity', 1);
+        this.wrapper.find(".page-loader").fadeIn("fast");
         angular.forEach(this.scope.intScheme.objects, function(obj) {
           return obj.remove();
         });
@@ -2245,17 +2267,19 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 ]);
 
 'use strict';
-angular.module('angular-bpmn').service('bpmnSettings', function() {
+angular.module('angular-bpmn').factory('bpmnSettings', function() {
   var connector, connectorSettings, connectorStyle, draggableSettings, engineSettings, instanceSettings, pointSettings, sourceSettings, targetSettings, template, templates, themeSettings;
   themeSettings = {
     root_path: '/themes',
-    list: ['default', 'minimal']
+    list: ['orange', 'minimal']
   };
   engineSettings = {
     theme: 'minimal',
     status: 'viewer',
     container: {
-      resizable: true
+      resizable: true,
+      zoom: false,
+      movable: false
     }
   };
   instanceSettings = {

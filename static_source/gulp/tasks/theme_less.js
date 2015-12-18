@@ -25,3 +25,14 @@ gulp.task('minimal_theme_less', function() {
         })
         .pipe(gulp.dest(conf.minimal.dest));
 });
+
+gulp.task('orange_theme_less', function() {
+    return gulp.src(conf.orange.source)
+        .pipe(concat(conf.filename))
+        .pipe(less())
+        .on('error', function(err){
+            gutil.log(err);
+            this.emit('end');
+        })
+        .pipe(gulp.dest(conf.orange.dest));
+});

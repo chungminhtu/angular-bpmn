@@ -3,17 +3,20 @@
 
 angular
 .module('angular-bpmn')
-.service 'bpmnSettings', () ->
+.factory 'bpmnSettings', () ->
 
   themeSettings =
     root_path: '/themes'
-    list: ['default', 'minimal']
+    list: ['orange', 'minimal']
 
   engineSettings =
     theme: 'minimal'
     status: 'viewer'
     container:
       resizable: true
+      zoom: false
+      movable: false
+      minimap: false
 
   instanceSettings =
     DragOptions:

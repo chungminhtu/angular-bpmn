@@ -1,0 +1,17 @@
+-#themes
+
+%h3
+  Themes
+
+#scheme3.scheme(style="height:400px;")
+
+%form.form-horizontal
+  .form-group
+    %label.control-label.col-lg-2
+      select theme:
+    .col-lg-10
+      %select.form-control(ng-model="ctrl.theme" ng-change="themeChanged()" style="width: auto;" )
+        %option(ng-repeat="them in ctrl.themes" value="{{them}}")
+          {{them}}
+
+-#themes

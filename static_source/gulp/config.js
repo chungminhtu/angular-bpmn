@@ -106,6 +106,12 @@ module.exports = {
                 source + '/themes/minimal/**/*.less'
             ],
             dest: source + '/themes/minimal'
+        },
+        orange: {
+            source: [
+                source + '/themes/orange/**/*.less'
+            ],
+            dest: source + '/themes/orange'
         }
     }
 };
