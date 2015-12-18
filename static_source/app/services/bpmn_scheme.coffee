@@ -225,7 +225,6 @@ angular
    <path id="path3008" stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/>
  </g>
 </svg>
-<div class="zoom-info">({{zoom}})</div>
 </div>')(@scope)
         @container.append(template)
         $(template).css({
@@ -233,6 +232,8 @@ angular
           top: -23
           left: -45
         })
+
+        @wrapper.append($compile('<div class="zoom-info">x{{zoom}}</div>')(@scope))
 
         drag =
           x: 0
@@ -281,6 +282,9 @@ angular
         # zoom
         #-----------------------------------
         @wrapper.on 'mousewheel', (e)=>
+          if !@scope.settings.engine.container.zoom
+            return
+
           e.preventDefault()
 
           @scope.zoom += 0.1 * e.deltaY

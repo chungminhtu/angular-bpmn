@@ -14,7 +14,7 @@ angular
     status: 'viewer'
     container:
       resizable: true
-      zoom: false
+      zoom: true
       movable: false
       minimap: false
 
