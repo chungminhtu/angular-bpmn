@@ -30,6 +30,15 @@
   left: 50%;
   margin: 0;
 }
+.bpmn-wrapper .zoom-info {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 25px;
+  font-style: italic;
+  color: #5d5d5d;
+  opacity: 0.3;
+}
 .bpmn {
   font-size: 11px;
   position: relative;
@@ -37,11 +46,6 @@
 .bpmn .panning-cross svg {
   width: 58px;
   height: 34px;
-}
-.bpmn .panning-cross .zoom-info {
-  position: absolute;
-  top: 0;
-  right: 25px;
 }
 .bpmn .draggable {
   cursor: pointer;

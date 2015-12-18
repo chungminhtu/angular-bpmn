@@ -244,7 +244,10 @@ angular
           x: 0
           y: 0
 
-        @wrapper.on 'mousedown', (e)->
+        @wrapper.on 'mousedown', (e)=>
+          if !@scope.settings.engine.container.movable
+            return
+
           if $(e.target).hasClass('ui-resizable-handle')
             return
 
@@ -268,7 +271,10 @@ angular
             drag.x = e.pageX
             drag.y = e.pageY
 
-        @wrapper.on 'mouseup', (e)->
+        @wrapper.on 'mouseup', (e)=>
+          if !@scope.settings.engine.container.movable
+            return
+
           if drag.state
             drag.state = false
 

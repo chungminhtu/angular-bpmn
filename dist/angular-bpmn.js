@@ -2090,13 +2090,14 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.panning = function() {
         var delta, drag, template;
-        template = $compile('<div class="panning-cross"> <svg> <g id="layer1" transform="translate(-291.18256,-337.29837)"> <path id="path3006" stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2.01302433"/> <path id="path3008" stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/> </g> </svg> <div class="zoom-info">({{zoom}})</div> </div>')(this.scope);
+        template = $compile('<div class="panning-cross"> <svg> <g id="layer1" transform="translate(-291.18256,-337.29837)"> <path id="path3006" stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2.01302433"/> <path id="path3008" stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/> </g> </svg> </div>')(this.scope);
         this.container.append(template);
         $(template).css({
           position: 'absolute',
           top: -23,
           left: -45
         });
+        this.wrapper.append($compile('<div class="zoom-info">x{{zoom}}</div>')(this.scope));
         drag = {
           x: 0,
           y: 0,
@@ -2107,6 +2108,9 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
           y: 0
         };
         this.wrapper.on('mousedown', function(e) {
+          if (!this.scope.settings.engine.container.movable) {
+            return;
+          }
           if ($(e.target).hasClass('ui-resizable-handle')) {
             return;
           }
@@ -2133,6 +2137,9 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
           };
         })(this));
         this.wrapper.on('mouseup', function(e) {
+          if (!this.scope.settings.engine.container.movable) {
+            return;
+          }
           if (drag.state) {
             return drag.state = false;
           }
@@ -2147,6 +2154,9 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         });
         return this.wrapper.on('mousewheel', (function(_this) {
           return function(e) {
+            if (!_this.scope.settings.engine.container.zoom) {
+              return;
+            }
             e.preventDefault();
             _this.scope.zoom += 0.1 * e.deltaY;
             _this.scope.zoom = parseFloat(_this.scope.zoom.toFixed(1));
@@ -2278,8 +2288,9 @@ angular.module('angular-bpmn').factory('bpmnSettings', function() {
     status: 'viewer',
     container: {
       resizable: true,
-      zoom: false,
-      movable: false
+      zoom: true,
+      movable: true,
+      minimap: false
     }
   };
   instanceSettings = {
