@@ -25,7 +25,9 @@
     "jsPlumb": "sporritt/jsplumb#~2.0.4",
     "jquery-mousewheel": "~3.1.13",
     "jquery-ui": "~1.11.4",
-    "animate.css": "daneden/animate.css#*"
+    "animate.css": "daneden/animate.css#*",
+    "canvg": "~1.3.0",
+    "html2canvas": "~0.4.1"
   },
   "overrides": {
     "jquery": {

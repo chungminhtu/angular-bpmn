@@ -8,8 +8,8 @@ RIGHT_MB = 3
 angular
 .module('angular-bpmn')
 .factory 'bpmnScheme', [
-  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact'
-  ($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact) ->
+  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', 'bpmnMinimap'
+  ($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact, bpmnMinimap) ->
     class bpmnScheme
 
       isDebug: true
@@ -23,6 +23,7 @@ angular
       wrap_class: 'bpmn-wrapper'
       schemeWatch: null
       stopListen: null
+      minimap: null
 
       constructor: (container, settings)->
 #        set unique id
@@ -147,6 +148,8 @@ angular
 
           @isStarted = true
           @wrapper.find(".page-loader").fadeOut("slow")
+          if !@minimap
+            @minimap = new bpmnMinimap(@wrapper)
           resolve()
 
       instanceBatch: ()->
@@ -385,6 +388,10 @@ angular
         @wrapper.off 'mouseup'
         @wrapper.off 'contextmenu'
         @wrapper.off 'mousewheel'
+
+        if @minimap
+          @minimap.destroy()
+        @minimap = null
 
       restart: ()->
         log.debug 'restart'

@@ -15,7 +15,7 @@ angular
     container:
       resizable: true
       zoom: true
-      movable: true
+      movable: false
       minimap: false
 
   instanceSettings =
