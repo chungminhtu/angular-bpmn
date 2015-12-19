@@ -2107,19 +2107,21 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
           x: 0,
           y: 0
         };
-        this.wrapper.on('mousedown', function(e) {
-          if (!this.scope.settings.engine.container.movable) {
-            return;
-          }
-          if ($(e.target).hasClass('ui-resizable-handle')) {
-            return;
-          }
-          if (!drag.state && e.which === LEFT_MB) {
-            drag.x = e.pageX;
-            drag.y = e.pageY;
-            return drag.state = true;
-          }
-        });
+        this.wrapper.on('mousedown', (function(_this) {
+          return function(e) {
+            if (!_this.scope.settings.engine.container.movable) {
+              return;
+            }
+            if ($(e.target).hasClass('ui-resizable-handle')) {
+              return;
+            }
+            if (!drag.state && e.which === LEFT_MB) {
+              drag.x = e.pageX;
+              drag.y = e.pageY;
+              return drag.state = true;
+            }
+          };
+        })(this));
         this.wrapper.on('mousemove', (function(_this) {
           return function(e) {
             var cur_offset;
@@ -2136,14 +2138,16 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
             }
           };
         })(this));
-        this.wrapper.on('mouseup', function(e) {
-          if (!this.scope.settings.engine.container.movable) {
-            return;
-          }
-          if (drag.state) {
-            return drag.state = false;
-          }
-        });
+        this.wrapper.on('mouseup', (function(_this) {
+          return function(e) {
+            if (!_this.scope.settings.engine.container.movable) {
+              return;
+            }
+            if (drag.state) {
+              return drag.state = false;
+            }
+          };
+        })(this));
         this.wrapper.on('contextmenu', function(e) {
           return false;
         });
