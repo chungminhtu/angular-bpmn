@@ -162,15 +162,15 @@ angular.module('angular-bpmn').factory('bpmnMinimap', [
           canvas = document.createElement("canvas");
           canvas.setAttribute("class", "screenShotTempCanvas");
           canvas.style.position = "absolute";
-          canvas.style.left = this.style.left || 0;
-          canvas.style.top = this.style.top || 0;
+          canvas.style.left = this.style.left;
+          canvas.style.top = this.style.top;
           xml = (new XMLSerializer()).serializeToString(this);
           canvg(canvas, xml);
           $(canvas).insertAfter(this);
           this.setAttribute("class", "tempHide");
           return $(this).hide();
         });
-        html2canvas(this.$elem, {
+        return html2canvas(this.$elem, {
           allowTaint: true,
           onrendered: (function(_this) {
             return function(i) {
@@ -183,8 +183,6 @@ angular.module('angular-bpmn').factory('bpmnMinimap', [
             };
           })(this)
         });
-        this.$elem.find('.screenShotTempCanvas').remove();
-        return this.$elem.find('.tempHide').show().removeClass('tempHide');
       };
 
       minimap.prototype.destroy = function() {};
