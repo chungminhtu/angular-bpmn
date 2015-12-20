@@ -48,7 +48,8 @@ angular
           if !@scope.settings.engine.container.movable
             return
 
-          if $(e.target).hasClass('ui-resizable-handle')
+          if $(e.target).hasClass('ui-resizable-handle') ||
+              $(e.target).hasClass('viewport') || $(e.target).hasClass('minimap')
             return
 
           if !drag.state && e.which == LEFT_MB
