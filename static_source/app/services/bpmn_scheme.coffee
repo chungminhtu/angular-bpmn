@@ -67,7 +67,7 @@ angular
         if !settings?
           settings = {}
 
-        @scope.settings = $.extend(true, bpmnSettings, angular.copy(settings))
+        @scope.settings = $.extend(true, angular.copy(bpmnSettings), angular.copy(settings))
 
         @loadStyle()
         @cacheTemplates()

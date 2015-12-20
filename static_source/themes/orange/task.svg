@@ -1,7 +1,7 @@
 <svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="92" width="112" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/">
 
 <!-- cause actions -->
-<rect ng-if="data.type['status'] == 'cause_actions'" id="cause_actions" rx="10" ry="10" height="80" width="100" stroke="#000" y="6" x="6" stroke-width="4px" fill="#fff"/>
+<rect ng-if="data.type['status'] == 'cause_actions'" class="cause_actions" rx="10" ry="10" height="80" width="100" stroke="#000" y="6" x="6" stroke-width="4px" fill="#fff"/>
 <!-- /cause actions -->
 
 <!-- transaction -->

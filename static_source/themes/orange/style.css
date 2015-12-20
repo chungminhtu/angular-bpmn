@@ -4,257 +4,257 @@
   right: 3px;
   top: 6px;
 }
-.bpmn-wrapper.orange .bpmn .event circle#end {
+.bpmn-wrapper.orange .bpmn .event circle.end {
   stroke: #ff4200;
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event g#intermediate {
+.bpmn-wrapper.orange .bpmn .event g.intermediate {
   stroke-width: 2px;
 }
-.bpmn-wrapper.orange .bpmn .event g#intermediate circle {
+.bpmn-wrapper.orange .bpmn .event g.intermediate circle {
   stroke: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .event g#intermediate circle#circle56 {
+.bpmn-wrapper.orange .bpmn .event g.intermediate circle.circle56 {
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event g#intermediate.dashed circle {
+.bpmn-wrapper.orange .bpmn .event g.intermediate.dashed circle {
   stroke-dasharray: 6,3;
   stroke-dashoffset: 0;
 }
-.bpmn-wrapper.orange .bpmn .event g#start circle {
+.bpmn-wrapper.orange .bpmn .event g.start circle {
   stroke-width: 2px;
   stroke: #ff4200;
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event g#start.dashed circle {
+.bpmn-wrapper.orange .bpmn .event g.start.dashed circle {
   stroke-dasharray: 6,3;
   stroke-dashoffset: 0;
 }
-.bpmn-wrapper.orange .bpmn .event #message_inverted {
+.bpmn-wrapper.orange .bpmn .event .message_inverted {
   fill: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .event #timer,
-.bpmn-wrapper.orange .bpmn .event #escalation {
+.bpmn-wrapper.orange .bpmn .event .timer,
+.bpmn-wrapper.orange .bpmn .event .escalation {
   stroke-width: 2px;
   stroke: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .event #conditional,
-.bpmn-wrapper.orange .bpmn .event #compensation,
-.bpmn-wrapper.orange .bpmn .event #signal,
-.bpmn-wrapper.orange .bpmn .event #message,
-.bpmn-wrapper.orange .bpmn .event #cancel,
-.bpmn-wrapper.orange .bpmn .event #error,
-.bpmn-wrapper.orange .bpmn .event #compound,
-.bpmn-wrapper.orange .bpmn .event #parallel,
-.bpmn-wrapper.orange .bpmn .event #link {
+.bpmn-wrapper.orange .bpmn .event .conditional,
+.bpmn-wrapper.orange .bpmn .event .compensation,
+.bpmn-wrapper.orange .bpmn .event .signal,
+.bpmn-wrapper.orange .bpmn .event .message,
+.bpmn-wrapper.orange .bpmn .event .cancel,
+.bpmn-wrapper.orange .bpmn .event .error,
+.bpmn-wrapper.orange .bpmn .event .compound,
+.bpmn-wrapper.orange .bpmn .event .parallel,
+.bpmn-wrapper.orange .bpmn .event .link {
   stroke: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .event #compensation_invert,
-.bpmn-wrapper.orange .bpmn .event #cancel_invert,
-.bpmn-wrapper.orange .bpmn .event #error_invert,
-.bpmn-wrapper.orange .bpmn .event #link_invert,
-.bpmn-wrapper.orange .bpmn .event #signal_invert,
-.bpmn-wrapper.orange .bpmn .event #compound_invert,
-.bpmn-wrapper.orange .bpmn .event #stop,
-.bpmn-wrapper.orange .bpmn .event #escalation_invert {
+.bpmn-wrapper.orange .bpmn .event .compensation_invert,
+.bpmn-wrapper.orange .bpmn .event .cancel_invert,
+.bpmn-wrapper.orange .bpmn .event .error_invert,
+.bpmn-wrapper.orange .bpmn .event .link_invert,
+.bpmn-wrapper.orange .bpmn .event .signal_invert,
+.bpmn-wrapper.orange .bpmn .event .compound_invert,
+.bpmn-wrapper.orange .bpmn .event .stop,
+.bpmn-wrapper.orange .bpmn .event .escalation_invert {
   stroke: #ff4200;
-  fill: 'none';
-}
-.bpmn-wrapper.orange .bpmn .event.active circle#end {
-  stroke: #ff4200;
-  fill: 'none';
-}
-.bpmn-wrapper.orange .bpmn .event.active g#intermediate circle {
-  stroke: #ff4200;
-}
-.bpmn-wrapper.orange .bpmn .event.active g#intermediate circle#circle56 {
-  fill: 'none';
-}
-.bpmn-wrapper.orange .bpmn .event.active g#start circle {
-  stroke: #ff4200;
-  fill: 'none';
-}
-.bpmn-wrapper.orange .bpmn .event.active #message_inverted {
   fill: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .event.active #timer,
-.bpmn-wrapper.orange .bpmn .event.active #conditional,
-.bpmn-wrapper.orange .bpmn .event.active #link,
-.bpmn-wrapper.orange .bpmn .event.active #cancel,
-.bpmn-wrapper.orange .bpmn .event.active #signal,
-.bpmn-wrapper.orange .bpmn .event.active #compensation #compound #parallel #message {
+.bpmn-wrapper.orange .bpmn .event.active circle.end {
+  stroke: #ff4200;
+  fill: 'none';
+}
+.bpmn-wrapper.orange .bpmn .event.active g.intermediate circle {
   stroke: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .event.active #escalation {
+.bpmn-wrapper.orange .bpmn .event.active g.intermediate circle.circle56 {
+  fill: 'none';
+}
+.bpmn-wrapper.orange .bpmn .event.active g.start circle {
+  stroke: #ff4200;
+  fill: 'none';
+}
+.bpmn-wrapper.orange .bpmn .event.active .message_inverted {
+  fill: #ff4200;
+}
+.bpmn-wrapper.orange .bpmn .event.active .timer,
+.bpmn-wrapper.orange .bpmn .event.active .conditional,
+.bpmn-wrapper.orange .bpmn .event.active .link,
+.bpmn-wrapper.orange .bpmn .event.active .cancel,
+.bpmn-wrapper.orange .bpmn .event.active .signal,
+.bpmn-wrapper.orange .bpmn .event.active .compensation .compound .parallel .message {
+  stroke: #ff4200;
+}
+.bpmn-wrapper.orange .bpmn .event.active .escalation {
   stroke-width: 2px;
   stroke: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .event.active #escalation_invert,
-.bpmn-wrapper.orange .bpmn .event.active #cancel_invert,
-.bpmn-wrapper.orange .bpmn .event.active #error,
-.bpmn-wrapper.orange .bpmn .event.active #compensation_invert,
-.bpmn-wrapper.orange .bpmn .event.active #error_invert,
-.bpmn-wrapper.orange .bpmn .event.active #signal_invert,
-.bpmn-wrapper.orange .bpmn .event.active #stop,
-.bpmn-wrapper.orange .bpmn .event.active #compound_invert,
-.bpmn-wrapper.orange .bpmn .event.active #link_invert {
+.bpmn-wrapper.orange .bpmn .event.active .escalation_invert,
+.bpmn-wrapper.orange .bpmn .event.active .cancel_invert,
+.bpmn-wrapper.orange .bpmn .event.active .error,
+.bpmn-wrapper.orange .bpmn .event.active .compensation_invert,
+.bpmn-wrapper.orange .bpmn .event.active .error_invert,
+.bpmn-wrapper.orange .bpmn .event.active .signal_invert,
+.bpmn-wrapper.orange .bpmn .event.active .stop,
+.bpmn-wrapper.orange .bpmn .event.active .compound_invert,
+.bpmn-wrapper.orange .bpmn .event.active .link_invert {
   stroke: #ff4200;
   fill: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .event.done circle#end,
-.bpmn-wrapper.orange .bpmn .event.disabled circle#end {
+.bpmn-wrapper.orange .bpmn .event.done circle.end,
+.bpmn-wrapper.orange .bpmn .event.disabled circle.end {
   stroke: rgba(255, 66, 0, 0.5);
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event.done g#intermediate circle,
-.bpmn-wrapper.orange .bpmn .event.disabled g#intermediate circle {
+.bpmn-wrapper.orange .bpmn .event.done g.intermediate circle,
+.bpmn-wrapper.orange .bpmn .event.disabled g.intermediate circle {
   stroke: rgba(255, 66, 0, 0.5);
 }
-.bpmn-wrapper.orange .bpmn .event.done g#intermediate circle#circle56,
-.bpmn-wrapper.orange .bpmn .event.disabled g#intermediate circle#circle56 {
+.bpmn-wrapper.orange .bpmn .event.done g.intermediate circle.circle56,
+.bpmn-wrapper.orange .bpmn .event.disabled g.intermediate circle.circle56 {
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event.done g#start circle,
-.bpmn-wrapper.orange .bpmn .event.disabled g#start circle {
+.bpmn-wrapper.orange .bpmn .event.done g.start circle,
+.bpmn-wrapper.orange .bpmn .event.disabled g.start circle {
   stroke: rgba(255, 66, 0, 0.5);
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event.done #message_inverted,
-.bpmn-wrapper.orange .bpmn .event.disabled #message_inverted {
+.bpmn-wrapper.orange .bpmn .event.done .message_inverted,
+.bpmn-wrapper.orange .bpmn .event.disabled .message_inverted {
   fill: rgba(255, 66, 0, 0.5);
 }
-.bpmn-wrapper.orange .bpmn .event.done #escalation,
-.bpmn-wrapper.orange .bpmn .event.disabled #escalation {
+.bpmn-wrapper.orange .bpmn .event.done .escalation,
+.bpmn-wrapper.orange .bpmn .event.disabled .escalation {
   stroke-width: 2px;
   stroke: rgba(255, 66, 0, 0.5);
 }
-.bpmn-wrapper.orange .bpmn .event.done #escalation_invert,
-.bpmn-wrapper.orange .bpmn .event.disabled #escalation_invert,
-.bpmn-wrapper.orange .bpmn .event.done #error_invert,
-.bpmn-wrapper.orange .bpmn .event.disabled #error_invert,
-.bpmn-wrapper.orange .bpmn .event.done #compensation_invert,
-.bpmn-wrapper.orange .bpmn .event.disabled #compensation_invert,
-.bpmn-wrapper.orange .bpmn .event.done #cancel_invert,
-.bpmn-wrapper.orange .bpmn .event.disabled #cancel_invert,
-.bpmn-wrapper.orange .bpmn .event.done #signal_invert,
-.bpmn-wrapper.orange .bpmn .event.disabled #signal_invert,
-.bpmn-wrapper.orange .bpmn .event.done #stop,
-.bpmn-wrapper.orange .bpmn .event.disabled #stop,
-.bpmn-wrapper.orange .bpmn .event.done #compound_invert,
-.bpmn-wrapper.orange .bpmn .event.disabled #compound_invert,
-.bpmn-wrapper.orange .bpmn .event.done #link_invert,
-.bpmn-wrapper.orange .bpmn .event.disabled #link_invert {
+.bpmn-wrapper.orange .bpmn .event.done .escalation_invert,
+.bpmn-wrapper.orange .bpmn .event.disabled .escalation_invert,
+.bpmn-wrapper.orange .bpmn .event.done .error_invert,
+.bpmn-wrapper.orange .bpmn .event.disabled .error_invert,
+.bpmn-wrapper.orange .bpmn .event.done .compensation_invert,
+.bpmn-wrapper.orange .bpmn .event.disabled .compensation_invert,
+.bpmn-wrapper.orange .bpmn .event.done .cancel_invert,
+.bpmn-wrapper.orange .bpmn .event.disabled .cancel_invert,
+.bpmn-wrapper.orange .bpmn .event.done .signal_invert,
+.bpmn-wrapper.orange .bpmn .event.disabled .signal_invert,
+.bpmn-wrapper.orange .bpmn .event.done .stop,
+.bpmn-wrapper.orange .bpmn .event.disabled .stop,
+.bpmn-wrapper.orange .bpmn .event.done .compound_invert,
+.bpmn-wrapper.orange .bpmn .event.disabled .compound_invert,
+.bpmn-wrapper.orange .bpmn .event.done .link_invert,
+.bpmn-wrapper.orange .bpmn .event.disabled .link_invert {
   stroke: rgba(255, 66, 0, 0.5);
   fill: rgba(255, 66, 0, 0.5);
 }
-.bpmn-wrapper.orange .bpmn .event.done #conditional,
-.bpmn-wrapper.orange .bpmn .event.disabled #conditional,
-.bpmn-wrapper.orange .bpmn .event.done #link,
-.bpmn-wrapper.orange .bpmn .event.disabled #link,
-.bpmn-wrapper.orange .bpmn .event.done #error,
-.bpmn-wrapper.orange .bpmn .event.disabled #error,
-.bpmn-wrapper.orange .bpmn .event.done #compensation,
-.bpmn-wrapper.orange .bpmn .event.disabled #compensation,
-.bpmn-wrapper.orange .bpmn .event.done #cancel,
-.bpmn-wrapper.orange .bpmn .event.disabled #cancel,
-.bpmn-wrapper.orange .bpmn .event.done #timer,
-.bpmn-wrapper.orange .bpmn .event.disabled #timer,
-.bpmn-wrapper.orange .bpmn .event.done #signal,
-.bpmn-wrapper.orange .bpmn .event.disabled #signal,
-.bpmn-wrapper.orange .bpmn .event.done #parallel,
-.bpmn-wrapper.orange .bpmn .event.disabled #parallel,
-.bpmn-wrapper.orange .bpmn .event.done #compound,
-.bpmn-wrapper.orange .bpmn .event.disabled #compound,
-.bpmn-wrapper.orange .bpmn .event.done #message,
-.bpmn-wrapper.orange .bpmn .event.disabled #message {
+.bpmn-wrapper.orange .bpmn .event.done .conditional,
+.bpmn-wrapper.orange .bpmn .event.disabled .conditional,
+.bpmn-wrapper.orange .bpmn .event.done .link,
+.bpmn-wrapper.orange .bpmn .event.disabled .link,
+.bpmn-wrapper.orange .bpmn .event.done .error,
+.bpmn-wrapper.orange .bpmn .event.disabled .error,
+.bpmn-wrapper.orange .bpmn .event.done .compensation,
+.bpmn-wrapper.orange .bpmn .event.disabled .compensation,
+.bpmn-wrapper.orange .bpmn .event.done .cancel,
+.bpmn-wrapper.orange .bpmn .event.disabled .cancel,
+.bpmn-wrapper.orange .bpmn .event.done .timer,
+.bpmn-wrapper.orange .bpmn .event.disabled .timer,
+.bpmn-wrapper.orange .bpmn .event.done .signal,
+.bpmn-wrapper.orange .bpmn .event.disabled .signal,
+.bpmn-wrapper.orange .bpmn .event.done .parallel,
+.bpmn-wrapper.orange .bpmn .event.disabled .parallel,
+.bpmn-wrapper.orange .bpmn .event.done .compound,
+.bpmn-wrapper.orange .bpmn .event.disabled .compound,
+.bpmn-wrapper.orange .bpmn .event.done .message,
+.bpmn-wrapper.orange .bpmn .event.disabled .message {
   stroke: rgba(255, 66, 0, 0.5);
 }
-.bpmn-wrapper.orange .bpmn .event.selected circle#end {
+.bpmn-wrapper.orange .bpmn .event.selected circle.end {
   stroke: #ff7248;
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event.selected g#intermediate circle {
+.bpmn-wrapper.orange .bpmn .event.selected g.intermediate circle {
   stroke: #ff7248;
 }
-.bpmn-wrapper.orange .bpmn .event.selected g#intermediate circle#circle56 {
+.bpmn-wrapper.orange .bpmn .event.selected g.intermediate circle.circle56 {
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event.selected g#start circle {
+.bpmn-wrapper.orange .bpmn .event.selected g.start circle {
   stroke: #ff7248;
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event.selected #message_inverted {
+.bpmn-wrapper.orange .bpmn .event.selected .message_inverted {
   fill: #ff7248;
 }
-.bpmn-wrapper.orange .bpmn .event.selected #timer,
-.bpmn-wrapper.orange .bpmn .event.selected #link,
-.bpmn-wrapper.orange .bpmn .event.selected #compensation,
-.bpmn-wrapper.orange .bpmn .event.selected #cancel,
-.bpmn-wrapper.orange .bpmn .event.selected #error,
-.bpmn-wrapper.orange .bpmn .event.selected #conditional,
-.bpmn-wrapper.orange .bpmn .event.selected #signal,
-.bpmn-wrapper.orange .bpmn .event.selected #parallel,
-.bpmn-wrapper.orange .bpmn .event.selected #compound,
-.bpmn-wrapper.orange .bpmn .event.selected #message {
+.bpmn-wrapper.orange .bpmn .event.selected .timer,
+.bpmn-wrapper.orange .bpmn .event.selected .link,
+.bpmn-wrapper.orange .bpmn .event.selected .compensation,
+.bpmn-wrapper.orange .bpmn .event.selected .cancel,
+.bpmn-wrapper.orange .bpmn .event.selected .error,
+.bpmn-wrapper.orange .bpmn .event.selected .conditional,
+.bpmn-wrapper.orange .bpmn .event.selected .signal,
+.bpmn-wrapper.orange .bpmn .event.selected .parallel,
+.bpmn-wrapper.orange .bpmn .event.selected .compound,
+.bpmn-wrapper.orange .bpmn .event.selected .message {
   stroke: #ff7248;
 }
-.bpmn-wrapper.orange .bpmn .event.selected #escalation {
+.bpmn-wrapper.orange .bpmn .event.selected .escalation {
   stroke-width: 2px;
   stroke: #ff7248;
 }
-.bpmn-wrapper.orange .bpmn .event.selected #compensation_invert,
-.bpmn-wrapper.orange .bpmn .event.selected #cancel_invert,
-.bpmn-wrapper.orange .bpmn .event.selected #error_invert,
-.bpmn-wrapper.orange .bpmn .event.selected #escalation_invert,
-.bpmn-wrapper.orange .bpmn .event.selected #signal_invert,
-.bpmn-wrapper.orange .bpmn .event.selected #stop,
-.bpmn-wrapper.orange .bpmn .event.selected #compound_invert,
-.bpmn-wrapper.orange .bpmn .event.selected #link_invert {
+.bpmn-wrapper.orange .bpmn .event.selected .compensation_invert,
+.bpmn-wrapper.orange .bpmn .event.selected .cancel_invert,
+.bpmn-wrapper.orange .bpmn .event.selected .error_invert,
+.bpmn-wrapper.orange .bpmn .event.selected .escalation_invert,
+.bpmn-wrapper.orange .bpmn .event.selected .signal_invert,
+.bpmn-wrapper.orange .bpmn .event.selected .stop,
+.bpmn-wrapper.orange .bpmn .event.selected .compound_invert,
+.bpmn-wrapper.orange .bpmn .event.selected .link_invert {
   stroke: #ff7248;
   fill: #ff7248;
 }
-.bpmn-wrapper.orange .bpmn .event:hover circle#end {
+.bpmn-wrapper.orange .bpmn .event:hover circle.end {
   stroke: #ff6528;
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event:hover g#intermediate circle {
+.bpmn-wrapper.orange .bpmn .event:hover g.intermediate circle {
   stroke: #ff6528;
 }
-.bpmn-wrapper.orange .bpmn .event:hover g#intermediate circle#circle56 {
+.bpmn-wrapper.orange .bpmn .event:hover g.intermediate circle.circle56 {
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event:hover g#start circle {
+.bpmn-wrapper.orange .bpmn .event:hover g.start circle {
   stroke: #ff6528;
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .event:hover #message_inverted {
+.bpmn-wrapper.orange .bpmn .event:hover .message_inverted {
   fill: #ff6528;
 }
-.bpmn-wrapper.orange .bpmn .event:hover #escalation {
+.bpmn-wrapper.orange .bpmn .event:hover .escalation {
   stroke-width: 2px;
   stroke: #ff6528;
 }
-.bpmn-wrapper.orange .bpmn .event:hover #error_invert,
-.bpmn-wrapper.orange .bpmn .event:hover #link_invert,
-.bpmn-wrapper.orange .bpmn .event:hover #escalation_invert,
-.bpmn-wrapper.orange .bpmn .event:hover #cancel_invert,
-.bpmn-wrapper.orange .bpmn .event:hover #compound_invert,
-.bpmn-wrapper.orange .bpmn .event:hover #signal_invert,
-.bpmn-wrapper.orange .bpmn .event:hover #stop,
-.bpmn-wrapper.orange .bpmn .event:hover #compensation_invert {
+.bpmn-wrapper.orange .bpmn .event:hover .error_invert,
+.bpmn-wrapper.orange .bpmn .event:hover .link_invert,
+.bpmn-wrapper.orange .bpmn .event:hover .escalation_invert,
+.bpmn-wrapper.orange .bpmn .event:hover .cancel_invert,
+.bpmn-wrapper.orange .bpmn .event:hover .compound_invert,
+.bpmn-wrapper.orange .bpmn .event:hover .signal_invert,
+.bpmn-wrapper.orange .bpmn .event:hover .stop,
+.bpmn-wrapper.orange .bpmn .event:hover .compensation_invert {
   stroke: #ff6528;
   fill: #ff6528;
 }
-.bpmn-wrapper.orange .bpmn .event:hover #conditional,
-.bpmn-wrapper.orange .bpmn .event:hover #message,
-.bpmn-wrapper.orange .bpmn .event:hover #cancel,
-.bpmn-wrapper.orange .bpmn .event:hover #error,
-.bpmn-wrapper.orange .bpmn .event:hover #signal,
-.bpmn-wrapper.orange .bpmn .event:hover #parallel,
-.bpmn-wrapper.orange .bpmn .event:hover #link,
-.bpmn-wrapper.orange .bpmn .event:hover #compound,
-.bpmn-wrapper.orange .bpmn .event:hover #compensation,
-.bpmn-wrapper.orange .bpmn .event:hover #timer {
+.bpmn-wrapper.orange .bpmn .event:hover .conditional,
+.bpmn-wrapper.orange .bpmn .event:hover .message,
+.bpmn-wrapper.orange .bpmn .event:hover .cancel,
+.bpmn-wrapper.orange .bpmn .event:hover .error,
+.bpmn-wrapper.orange .bpmn .event:hover .signal,
+.bpmn-wrapper.orange .bpmn .event:hover .parallel,
+.bpmn-wrapper.orange .bpmn .event:hover .link,
+.bpmn-wrapper.orange .bpmn .event:hover .compound,
+.bpmn-wrapper.orange .bpmn .event:hover .compensation,
+.bpmn-wrapper.orange .bpmn .event:hover .timer {
   stroke: #ff6528;
 }
 .bpmn-wrapper.orange .bpmn .event .title {
@@ -264,7 +264,7 @@
 }
 .bpmn-wrapper.orange .bpmn .task #base,
 .bpmn-wrapper.orange .bpmn .task #transaction,
-.bpmn-wrapper.orange .bpmn .task #cause_actions,
+.bpmn-wrapper.orange .bpmn .task .cause_actions,
 .bpmn-wrapper.orange .bpmn .task #subprocess rect,
 .bpmn-wrapper.orange .bpmn .task #user path,
 .bpmn-wrapper.orange .bpmn .task #manual path,
@@ -287,7 +287,7 @@
 }
 .bpmn-wrapper.orange .bpmn .task.active #base,
 .bpmn-wrapper.orange .bpmn .task.active #transaction,
-.bpmn-wrapper.orange .bpmn .task.active #cause_actions,
+.bpmn-wrapper.orange .bpmn .task.active .cause_actions,
 .bpmn-wrapper.orange .bpmn .task.active #subprocess rect,
 .bpmn-wrapper.orange .bpmn .task.active #user path,
 .bpmn-wrapper.orange .bpmn .task.active #manual path,
@@ -305,7 +305,7 @@
   fill: #ff4200;
 }
 .bpmn-wrapper.orange .bpmn .task.active #base,
-.bpmn-wrapper.orange .bpmn .task.active #cause_actions,
+.bpmn-wrapper.orange .bpmn .task.active .cause_actions,
 .bpmn-wrapper.orange .bpmn .task.active #transaction #rect48 {
   fill: 'none';
 }
@@ -313,8 +313,8 @@
 .bpmn-wrapper.orange .bpmn .task.disabled #base,
 .bpmn-wrapper.orange .bpmn .task.done #transaction,
 .bpmn-wrapper.orange .bpmn .task.disabled #transaction,
-.bpmn-wrapper.orange .bpmn .task.done #cause_actions,
-.bpmn-wrapper.orange .bpmn .task.disabled #cause_actions,
+.bpmn-wrapper.orange .bpmn .task.done .cause_actions,
+.bpmn-wrapper.orange .bpmn .task.disabled .cause_actions,
 .bpmn-wrapper.orange .bpmn .task.done #subprocess rect,
 .bpmn-wrapper.orange .bpmn .task.disabled #subprocess rect,
 .bpmn-wrapper.orange .bpmn .task.done #user path,
@@ -344,15 +344,15 @@
 }
 .bpmn-wrapper.orange .bpmn .task.done #base,
 .bpmn-wrapper.orange .bpmn .task.disabled #base,
-.bpmn-wrapper.orange .bpmn .task.done #cause_actions,
-.bpmn-wrapper.orange .bpmn .task.disabled #cause_actions,
+.bpmn-wrapper.orange .bpmn .task.done .cause_actions,
+.bpmn-wrapper.orange .bpmn .task.disabled .cause_actions,
 .bpmn-wrapper.orange .bpmn .task.done #transaction #rect48,
 .bpmn-wrapper.orange .bpmn .task.disabled #transaction #rect48 {
   fill: 'none';
 }
 .bpmn-wrapper.orange .bpmn .task.selected #base,
 .bpmn-wrapper.orange .bpmn .task.selected #transaction,
-.bpmn-wrapper.orange .bpmn .task.selected #cause_actions,
+.bpmn-wrapper.orange .bpmn .task.selected .cause_actions,
 .bpmn-wrapper.orange .bpmn .task.selected #subprocess rect,
 .bpmn-wrapper.orange .bpmn .task.selected #user path,
 .bpmn-wrapper.orange .bpmn .task.selected #manual path,
@@ -370,13 +370,13 @@
   fill: #ff7248;
 }
 .bpmn-wrapper.orange .bpmn .task.selected #base,
-.bpmn-wrapper.orange .bpmn .task.selected #cause_actions,
+.bpmn-wrapper.orange .bpmn .task.selected .cause_actions,
 .bpmn-wrapper.orange .bpmn .task.selected #transaction #rect48 {
   fill: 'none';
 }
 .bpmn-wrapper.orange .bpmn .task:hover #base,
 .bpmn-wrapper.orange .bpmn .task:hover #transaction,
-.bpmn-wrapper.orange .bpmn .task:hover #cause_actions,
+.bpmn-wrapper.orange .bpmn .task:hover .cause_actions,
 .bpmn-wrapper.orange .bpmn .task:hover #subprocess rect,
 .bpmn-wrapper.orange .bpmn .task:hover #user path,
 .bpmn-wrapper.orange .bpmn .task:hover #manual path,
@@ -394,7 +394,7 @@
   fill: #ff6528;
 }
 .bpmn-wrapper.orange .bpmn .task:hover #base,
-.bpmn-wrapper.orange .bpmn .task:hover #cause_actions,
+.bpmn-wrapper.orange .bpmn .task:hover .cause_actions,
 .bpmn-wrapper.orange .bpmn .task:hover #transaction #rect48 {
   fill: 'none';
 }
