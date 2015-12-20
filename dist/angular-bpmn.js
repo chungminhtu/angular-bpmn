@@ -37,11 +37,7 @@ angular.module('angular-bpmn').factory('bpmnMinimap', [
 
       minimap.prototype.navigator = null;
 
-      minimap.prototype.canvasSupported = null;
-
       minimap.prototype.forceDom = false;
-
-      minimap.prototype.$canvas = null;
 
       minimap.prototype.$viewport = null;
 
@@ -49,39 +45,29 @@ angular.module('angular-bpmn').factory('bpmnMinimap', [
 
       minimap.prototype.$elem = null;
 
+      minimap.prototype.minimap_class = 'minimap';
+
+      minimap.prototype.viewport_class = 'viewport';
+
       function minimap(container) {
-        log.debug('minimap');
+        var navigator;
+        log.debug('minimap constructor');
         this.container = container;
         this.scope = $rootScope.$new();
-        this.init();
-      }
-
-      minimap.prototype.init = function() {
-        var navigator;
-        navigator = $compile('<div class="mgNavigator"><canvas></canvas><div class="mgViewport"></div></div>')(this.scope);
+        navigator = $compile('<div class="' + this.minimap_class + '"><div class="' + this.viewport_class + '"></div></div>')(this.scope);
         this.container.append(navigator);
-        this.$navigator = $(this.container).find('.mgNavigator');
-        this.$canvas = this.$navigator.find('canvas');
+        this.$navigator = $(this.container).find('.' + this.minimap_class);
         this.$elem = $(this.container).find('.scheme');
+        this.$viewport = this.$navigator.find('.' + this.viewport_class);
         this.ratio = 0.1;
-        this.checkCanvas();
-        this.ctx = this.$canvas.get(0).getContext('2d');
-        this.$viewport = this.$navigator.find('.mgViewport');
         this.bindings();
         this.updateViewport();
-        return this.renderScheme();
-      };
-
-      minimap.prototype.checkCanvas = function() {
-        var elem;
-        elem = this.$canvas.get(0);
-        this.canvasSupported = !!(elem.getContext && elem.getContext('2d'));
-        return this.canvasSupported;
-      };
+        this.renderScheme();
+      }
 
       minimap.prototype.updateViewport = function() {
         var g, h, i, j;
-        log.debug('update viewport');
+        log.debug('minimap update viewport');
         g = this.$elem.height();
         h = this.$elem.width();
         j = this.$elem.scrollTop();
@@ -92,6 +78,8 @@ angular.module('angular-bpmn').factory('bpmnMinimap', [
         }).width(h * this.ratio).height(g * this.ratio);
       };
 
+      minimap.prototype.onresize = function() {};
+
       minimap.prototype.scrolled = function(h) {
         return this.$elem.offset({
           left: -h.left / this.ratio,
@@ -101,6 +89,11 @@ angular.module('angular-bpmn').factory('bpmnMinimap', [
 
       minimap.prototype.bindings = function() {
         this.scrolling = false;
+        this.container.off('resize').on('resize', (function(_this) {
+          return function() {
+            return _this.onresize();
+          };
+        })(this));
         this.$navigator.click((function(_this) {
           return function(i) {
             var h, j, k, l;
@@ -153,39 +146,14 @@ angular.module('angular-bpmn').factory('bpmnMinimap', [
 
       minimap.prototype.renderScheme = function() {
         var svgElements;
-        this.ctx.clearRect(0, 0, this.ctx.width, this.ctx.height);
-        this.$navigator.hide();
         svgElements = this.$elem.find('.draggable svg, svg.jsplumb-connector');
         log.debug(svgElements);
-        svgElements.each(function() {
-          var canvas, xml;
-          canvas = document.createElement("canvas");
-          canvas.setAttribute("class", "screenShotTempCanvas");
-          canvas.style.position = "absolute";
-          canvas.style.left = this.style.left;
-          canvas.style.top = this.style.top;
-          xml = (new XMLSerializer()).serializeToString(this);
-          canvg(canvas, xml);
-          $(canvas).insertAfter(this);
-          this.setAttribute("class", "tempHide");
-          return $(this).hide();
-        });
-        return html2canvas(this.$elem, {
-          allowTaint: true,
-          onrendered: (function(_this) {
-            return function(i) {
-              var j;
-              j = _this.$canvas.get(0);
-              _this.ctx.drawImage(i, 0, 0, i.width, i.height, 0, 0, j.width, j.height);
-              _this.$navigator.show();
-              _this.updating = false;
-              return log.debug('Html2Canvas end drawing');
-            };
-          })(this)
-        });
+        return svgElements.each(function() {});
       };
 
-      minimap.prototype.destroy = function() {};
+      minimap.prototype.destroy = function() {
+        return this.container.off('resize');
+      };
 
       return minimap;
 
@@ -2027,6 +1995,135 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
 ]);
 
 'use strict';
+angular.module('angular-bpmn').factory('bpmnPanning', [
+  'log', '$compile', '$rootScope', function(log, $compile, $rootScope) {
+    var bpmnPanning;
+    bpmnPanning = (function() {
+      bpmnPanning.prototype.container = null;
+
+      bpmnPanning.prototype.scope = null;
+
+      bpmnPanning.prototype.wrapper = null;
+
+      function bpmnPanning(container, scope, wrapper) {
+        this.container = container;
+        this.scope = scope;
+        this.wrapper = wrapper;
+      }
+
+      bpmnPanning.prototype.init = function() {
+        var delta, drag, template;
+        template = $compile('<div class="panning-cross"> <svg> <g id="layer1" transform="translate(-291.18256,-337.29837)"> <path id="path3006" stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2.01302433"/> <path id="path3008" stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/> </g> </svg> </div>')(this.scope);
+        this.container.append(template);
+        $(template).css({
+          position: 'absolute',
+          top: -23,
+          left: -45
+        });
+        this.wrapper.append($compile('<div class="zoom-info">x{{zoom}}</div>')(this.scope));
+        drag = {
+          x: 0,
+          y: 0,
+          state: false
+        };
+        delta = {
+          x: 0,
+          y: 0
+        };
+        this.wrapper.on('mousedown', (function(_this) {
+          return function(e) {
+            if (!_this.scope.settings.engine.container.movable) {
+              return;
+            }
+            if ($(e.target).hasClass('ui-resizable-handle')) {
+              return;
+            }
+            if (!drag.state && e.which === LEFT_MB) {
+              drag.x = e.pageX;
+              drag.y = e.pageY;
+              return drag.state = true;
+            }
+          };
+        })(this));
+        this.wrapper.on('mousemove', (function(_this) {
+          return function(e) {
+            var cur_offset;
+            if (drag.state) {
+              delta.x = e.pageX - drag.x;
+              delta.y = e.pageY - drag.y;
+              cur_offset = _this.container.offset();
+              _this.container.offset({
+                left: cur_offset.left + delta.x,
+                top: cur_offset.top + delta.y
+              });
+              drag.x = e.pageX;
+              return drag.y = e.pageY;
+            }
+          };
+        })(this));
+        this.wrapper.on('mouseup', (function(_this) {
+          return function(e) {
+            if (!_this.scope.settings.engine.container.movable) {
+              return;
+            }
+            if (drag.state) {
+              return drag.state = false;
+            }
+          };
+        })(this));
+        this.wrapper.on('contextmenu', function(e) {
+          return false;
+        });
+        this.wrapper.on('mouseleave', function(e) {
+          if (drag.state) {
+            return drag.state = false;
+          }
+        });
+        return this.wrapper.on('mousewheel', (function(_this) {
+          return function(e) {
+            if (!_this.scope.settings.engine.container.zoom) {
+              return;
+            }
+            e.preventDefault();
+            _this.scope.zoom += 0.1 * e.deltaY;
+            _this.scope.zoom = parseFloat(_this.scope.zoom.toFixed(1));
+            if (_this.scope.zoom < 0.1) {
+              _this.scope.zoom = 0.1;
+            } else if (_this.scope.zoom > 2) {
+              _this.scope.zoom = 2;
+            }
+            _this.scope.instance.setZoom(_this.scope.zoom);
+            _this.scope.instance.repaintEverything(_this.scope.zoom);
+            $timeout(function() {
+              return _this.scope.$apply(_this.scope.zoom);
+            }, 0);
+            return _this.container.css({
+              '-webkit-transform': _this.scope.zoom,
+              '-moz-transform': 'scale(' + _this.scope.zoom + ')',
+              '-ms-transform': 'scale(' + _this.scope.zoom + ')',
+              '-o-transform': 'scale(' + _this.scope.zoom + ')',
+              'transform': 'scale(' + _this.scope.zoom + ')'
+            });
+          };
+        })(this));
+      };
+
+      bpmnPanning.prototype.destroy = function() {
+        this.wrapper.off('mousedown');
+        this.wrapper.off('mousemove');
+        this.wrapper.off('mouseup');
+        this.wrapper.off('contextmenu');
+        return this.wrapper.off('mousewheel');
+      };
+
+      return bpmnPanning;
+
+    })();
+    return bpmnPanning;
+  }
+]);
+
+'use strict';
 var LEFT_MB, MIDDLE_MB, RIGHT_MB;
 
 LEFT_MB = 1;
@@ -2036,7 +2133,7 @@ MIDDLE_MB = 2;
 RIGHT_MB = 3;
 
 angular.module('angular-bpmn').factory('bpmnScheme', [
-  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', 'bpmnMinimap', function($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact, bpmnMinimap) {
+  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', 'bpmnMinimap', 'bpmnPanning', function($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact, bpmnMinimap, bpmnPanning) {
     var bpmnScheme;
     bpmnScheme = (function() {
       bpmnScheme.prototype.isDebug = true;
@@ -2062,6 +2159,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
       bpmnScheme.prototype.stopListen = null;
 
       bpmnScheme.prototype.minimap = null;
+
+      bpmnScheme.prototype.panning = null;
 
       function bpmnScheme(container, settings) {
         var wrapper;
@@ -2261,103 +2360,6 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         });
       };
 
-      bpmnScheme.prototype.panning = function() {
-        var delta, drag, template;
-        template = $compile('<div class="panning-cross"> <svg> <g id="layer1" transform="translate(-291.18256,-337.29837)"> <path id="path3006" stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2.01302433"/> <path id="path3008" stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/> </g> </svg> </div>')(this.scope);
-        this.container.append(template);
-        $(template).css({
-          position: 'absolute',
-          top: -23,
-          left: -45
-        });
-        this.wrapper.append($compile('<div class="zoom-info">x{{zoom}}</div>')(this.scope));
-        drag = {
-          x: 0,
-          y: 0,
-          state: false
-        };
-        delta = {
-          x: 0,
-          y: 0
-        };
-        this.wrapper.on('mousedown', (function(_this) {
-          return function(e) {
-            if (!_this.scope.settings.engine.container.movable) {
-              return;
-            }
-            if ($(e.target).hasClass('ui-resizable-handle')) {
-              return;
-            }
-            if (!drag.state && e.which === LEFT_MB) {
-              drag.x = e.pageX;
-              drag.y = e.pageY;
-              return drag.state = true;
-            }
-          };
-        })(this));
-        this.wrapper.on('mousemove', (function(_this) {
-          return function(e) {
-            var cur_offset;
-            if (drag.state) {
-              delta.x = e.pageX - drag.x;
-              delta.y = e.pageY - drag.y;
-              cur_offset = _this.container.offset();
-              _this.container.offset({
-                left: cur_offset.left + delta.x,
-                top: cur_offset.top + delta.y
-              });
-              drag.x = e.pageX;
-              return drag.y = e.pageY;
-            }
-          };
-        })(this));
-        this.wrapper.on('mouseup', (function(_this) {
-          return function(e) {
-            if (!_this.scope.settings.engine.container.movable) {
-              return;
-            }
-            if (drag.state) {
-              return drag.state = false;
-            }
-          };
-        })(this));
-        this.wrapper.on('contextmenu', function(e) {
-          return false;
-        });
-        this.wrapper.on('mouseleave', function(e) {
-          if (drag.state) {
-            return drag.state = false;
-          }
-        });
-        return this.wrapper.on('mousewheel', (function(_this) {
-          return function(e) {
-            if (!_this.scope.settings.engine.container.zoom) {
-              return;
-            }
-            e.preventDefault();
-            _this.scope.zoom += 0.1 * e.deltaY;
-            _this.scope.zoom = parseFloat(_this.scope.zoom.toFixed(1));
-            if (_this.scope.zoom < 0.1) {
-              _this.scope.zoom = 0.1;
-            } else if (_this.scope.zoom > 2) {
-              _this.scope.zoom = 2;
-            }
-            _this.scope.instance.setZoom(_this.scope.zoom);
-            _this.scope.instance.repaintEverything(_this.scope.zoom);
-            $timeout(function() {
-              return _this.scope.$apply(_this.scope.zoom);
-            }, 0);
-            return _this.container.css({
-              '-webkit-transform': _this.scope.zoom,
-              '-moz-transform': 'scale(' + _this.scope.zoom + ')',
-              '-ms-transform': 'scale(' + _this.scope.zoom + ')',
-              '-o-transform': 'scale(' + _this.scope.zoom + ')',
-              'transform': 'scale(' + _this.scope.zoom + ')'
-            });
-          };
-        })(this));
-      };
-
       bpmnScheme.prototype.objectsUpdate = function() {
         return angular.forEach(this.scope.intScheme.objects, function(object) {
           return object.templateUpdate();
@@ -2375,7 +2377,9 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.instart = function(resolve) {
         var ref;
-        this.panning();
+        if (!this.panning) {
+          this.panning = new bpmnPanning(this.container, this.scope, this.wrapper);
+        }
         this.loadStyle();
         if (!this.scope.instance) {
           this.scope.instance = jsPlumb.getInstance($.extend(true, this.scope.settings.instance, {
@@ -2431,11 +2435,10 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         if (this.schemeWatch) {
           this.schemeWatch();
         }
-        this.wrapper.off('mousedown');
-        this.wrapper.off('mousemove');
-        this.wrapper.off('mouseup');
-        this.wrapper.off('contextmenu');
-        this.wrapper.off('mousewheel');
+        if (this.panning) {
+          this.panning.destroy();
+        }
+        this.panning = null;
         if (this.minimap) {
           this.minimap.destroy();
         }
@@ -2470,7 +2473,7 @@ angular.module('angular-bpmn').factory('bpmnSettings', function() {
     container: {
       resizable: true,
       zoom: true,
-      movable: false,
+      movable: true,
       minimap: false
     }
   };
