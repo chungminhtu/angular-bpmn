@@ -262,140 +262,140 @@
   top: 50px;
   left: -23px;
 }
-.bpmn-wrapper.orange .bpmn .task #base,
-.bpmn-wrapper.orange .bpmn .task #transaction,
+.bpmn-wrapper.orange .bpmn .task .base,
+.bpmn-wrapper.orange .bpmn .task .transaction,
 .bpmn-wrapper.orange .bpmn .task .cause_actions,
-.bpmn-wrapper.orange .bpmn .task #subprocess rect,
-.bpmn-wrapper.orange .bpmn .task #user path,
-.bpmn-wrapper.orange .bpmn .task #manual path,
+.bpmn-wrapper.orange .bpmn .task .subprocess rect,
+.bpmn-wrapper.orange .bpmn .task .user path,
+.bpmn-wrapper.orange .bpmn .task .manual path,
 .bpmn-wrapper.orange .bpmn .task #service path,
-.bpmn-wrapper.orange .bpmn .task #script path,
-.bpmn-wrapper.orange .bpmn .task #parallel-mi path,
-.bpmn-wrapper.orange .bpmn .task #sequential-mi path,
-.bpmn-wrapper.orange .bpmn .task #business_rule path,
-.bpmn-wrapper.orange .bpmn .task #receive path,
-.bpmn-wrapper.orange .bpmn .task #cycle path {
+.bpmn-wrapper.orange .bpmn .task .script path,
+.bpmn-wrapper.orange .bpmn .task .parallel-mi path,
+.bpmn-wrapper.orange .bpmn .task .sequential-mi path,
+.bpmn-wrapper.orange .bpmn .task .business_rule path,
+.bpmn-wrapper.orange .bpmn .task .receive path,
+.bpmn-wrapper.orange .bpmn .task .cycle path {
   stroke: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .task #base.dashed {
+.bpmn-wrapper.orange .bpmn .task .base.dashed {
   stroke-dasharray: 6,3;
   stroke-dashoffset: 0;
 }
-.bpmn-wrapper.orange .bpmn .task #send path {
+.bpmn-wrapper.orange .bpmn .task .send path {
   stroke: #fff;
   fill: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .task.active #base,
-.bpmn-wrapper.orange .bpmn .task.active #transaction,
+.bpmn-wrapper.orange .bpmn .task.active .base,
+.bpmn-wrapper.orange .bpmn .task.active .transaction,
 .bpmn-wrapper.orange .bpmn .task.active .cause_actions,
-.bpmn-wrapper.orange .bpmn .task.active #subprocess rect,
-.bpmn-wrapper.orange .bpmn .task.active #user path,
-.bpmn-wrapper.orange .bpmn .task.active #manual path,
+.bpmn-wrapper.orange .bpmn .task.active .subprocess rect,
+.bpmn-wrapper.orange .bpmn .task.active .user path,
+.bpmn-wrapper.orange .bpmn .task.active .manual path,
 .bpmn-wrapper.orange .bpmn .task.active #service path,
-.bpmn-wrapper.orange .bpmn .task.active #script path,
-.bpmn-wrapper.orange .bpmn .task.active #parallel-mi path,
-.bpmn-wrapper.orange .bpmn .task.active #sequential-mi path,
-.bpmn-wrapper.orange .bpmn .task.active #business_rule path,
-.bpmn-wrapper.orange .bpmn .task.active #receive path,
-.bpmn-wrapper.orange .bpmn .task.active #cycle path {
+.bpmn-wrapper.orange .bpmn .task.active .script path,
+.bpmn-wrapper.orange .bpmn .task.active .parallel-mi path,
+.bpmn-wrapper.orange .bpmn .task.active .sequential-mi path,
+.bpmn-wrapper.orange .bpmn .task.active .business_rule path,
+.bpmn-wrapper.orange .bpmn .task.active .receive path,
+.bpmn-wrapper.orange .bpmn .task.active .cycle path {
   stroke: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .task.active #send path {
+.bpmn-wrapper.orange .bpmn .task.active .send path {
   stroke: #fff;
   fill: #ff4200;
 }
-.bpmn-wrapper.orange .bpmn .task.active #base,
+.bpmn-wrapper.orange .bpmn .task.active .base,
 .bpmn-wrapper.orange .bpmn .task.active .cause_actions,
-.bpmn-wrapper.orange .bpmn .task.active #transaction #rect48 {
+.bpmn-wrapper.orange .bpmn .task.active .transaction .rect48 {
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .task.done #base,
-.bpmn-wrapper.orange .bpmn .task.disabled #base,
-.bpmn-wrapper.orange .bpmn .task.done #transaction,
-.bpmn-wrapper.orange .bpmn .task.disabled #transaction,
+.bpmn-wrapper.orange .bpmn .task.done .base,
+.bpmn-wrapper.orange .bpmn .task.disabled .base,
+.bpmn-wrapper.orange .bpmn .task.done .transaction,
+.bpmn-wrapper.orange .bpmn .task.disabled .transaction,
 .bpmn-wrapper.orange .bpmn .task.done .cause_actions,
 .bpmn-wrapper.orange .bpmn .task.disabled .cause_actions,
-.bpmn-wrapper.orange .bpmn .task.done #subprocess rect,
-.bpmn-wrapper.orange .bpmn .task.disabled #subprocess rect,
-.bpmn-wrapper.orange .bpmn .task.done #user path,
-.bpmn-wrapper.orange .bpmn .task.disabled #user path,
-.bpmn-wrapper.orange .bpmn .task.done #manual path,
-.bpmn-wrapper.orange .bpmn .task.disabled #manual path,
+.bpmn-wrapper.orange .bpmn .task.done .subprocess rect,
+.bpmn-wrapper.orange .bpmn .task.disabled .subprocess rect,
+.bpmn-wrapper.orange .bpmn .task.done .user path,
+.bpmn-wrapper.orange .bpmn .task.disabled .user path,
+.bpmn-wrapper.orange .bpmn .task.done .manual path,
+.bpmn-wrapper.orange .bpmn .task.disabled .manual path,
 .bpmn-wrapper.orange .bpmn .task.done #service path,
 .bpmn-wrapper.orange .bpmn .task.disabled #service path,
-.bpmn-wrapper.orange .bpmn .task.done #script path,
-.bpmn-wrapper.orange .bpmn .task.disabled #script path,
-.bpmn-wrapper.orange .bpmn .task.done #parallel-mi path,
-.bpmn-wrapper.orange .bpmn .task.disabled #parallel-mi path,
-.bpmn-wrapper.orange .bpmn .task.done #sequential-mi path,
-.bpmn-wrapper.orange .bpmn .task.disabled #sequential-mi path,
-.bpmn-wrapper.orange .bpmn .task.done #business_rule path,
-.bpmn-wrapper.orange .bpmn .task.disabled #business_rule path,
-.bpmn-wrapper.orange .bpmn .task.done #receive path,
-.bpmn-wrapper.orange .bpmn .task.disabled #receive path,
-.bpmn-wrapper.orange .bpmn .task.done #cycle path,
-.bpmn-wrapper.orange .bpmn .task.disabled #cycle path {
+.bpmn-wrapper.orange .bpmn .task.done .script path,
+.bpmn-wrapper.orange .bpmn .task.disabled .script path,
+.bpmn-wrapper.orange .bpmn .task.done .parallel-mi path,
+.bpmn-wrapper.orange .bpmn .task.disabled .parallel-mi path,
+.bpmn-wrapper.orange .bpmn .task.done .sequential-mi path,
+.bpmn-wrapper.orange .bpmn .task.disabled .sequential-mi path,
+.bpmn-wrapper.orange .bpmn .task.done .business_rule path,
+.bpmn-wrapper.orange .bpmn .task.disabled .business_rule path,
+.bpmn-wrapper.orange .bpmn .task.done .receive path,
+.bpmn-wrapper.orange .bpmn .task.disabled .receive path,
+.bpmn-wrapper.orange .bpmn .task.done .cycle path,
+.bpmn-wrapper.orange .bpmn .task.disabled .cycle path {
   stroke: rgba(255, 66, 0, 0.5);
 }
-.bpmn-wrapper.orange .bpmn .task.done #send path,
-.bpmn-wrapper.orange .bpmn .task.disabled #send path {
+.bpmn-wrapper.orange .bpmn .task.done .send path,
+.bpmn-wrapper.orange .bpmn .task.disabled .send path {
   stroke: #fff;
   fill: rgba(255, 66, 0, 0.5);
 }
-.bpmn-wrapper.orange .bpmn .task.done #base,
-.bpmn-wrapper.orange .bpmn .task.disabled #base,
+.bpmn-wrapper.orange .bpmn .task.done .base,
+.bpmn-wrapper.orange .bpmn .task.disabled .base,
 .bpmn-wrapper.orange .bpmn .task.done .cause_actions,
 .bpmn-wrapper.orange .bpmn .task.disabled .cause_actions,
-.bpmn-wrapper.orange .bpmn .task.done #transaction #rect48,
-.bpmn-wrapper.orange .bpmn .task.disabled #transaction #rect48 {
+.bpmn-wrapper.orange .bpmn .task.done .transaction .rect48,
+.bpmn-wrapper.orange .bpmn .task.disabled .transaction .rect48 {
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .task.selected #base,
-.bpmn-wrapper.orange .bpmn .task.selected #transaction,
+.bpmn-wrapper.orange .bpmn .task.selected .base,
+.bpmn-wrapper.orange .bpmn .task.selected .transaction,
 .bpmn-wrapper.orange .bpmn .task.selected .cause_actions,
-.bpmn-wrapper.orange .bpmn .task.selected #subprocess rect,
-.bpmn-wrapper.orange .bpmn .task.selected #user path,
-.bpmn-wrapper.orange .bpmn .task.selected #manual path,
-.bpmn-wrapper.orange .bpmn .task.selected #service path,
-.bpmn-wrapper.orange .bpmn .task.selected #script path,
-.bpmn-wrapper.orange .bpmn .task.selected #parallel-mi path,
-.bpmn-wrapper.orange .bpmn .task.selected #sequential-mi path,
-.bpmn-wrapper.orange .bpmn .task.selected #business_rule path,
-.bpmn-wrapper.orange .bpmn .task.selected #receive path,
-.bpmn-wrapper.orange .bpmn .task.selected #cycle path {
+.bpmn-wrapper.orange .bpmn .task.selected .subprocess rect,
+.bpmn-wrapper.orange .bpmn .task.selected .user path,
+.bpmn-wrapper.orange .bpmn .task.selected .manual path,
+.bpmn-wrapper.orange .bpmn .task.selected .service path,
+.bpmn-wrapper.orange .bpmn .task.selected .script path,
+.bpmn-wrapper.orange .bpmn .task.selected .parallel-mi path,
+.bpmn-wrapper.orange .bpmn .task.selected .sequential-mi path,
+.bpmn-wrapper.orange .bpmn .task.selected .business_rule path,
+.bpmn-wrapper.orange .bpmn .task.selected .receive path,
+.bpmn-wrapper.orange .bpmn .task.selected .cycle path {
   stroke: #ff7248;
 }
-.bpmn-wrapper.orange .bpmn .task.selected #send path {
+.bpmn-wrapper.orange .bpmn .task.selected .send path {
   stroke: #fff;
   fill: #ff7248;
 }
-.bpmn-wrapper.orange .bpmn .task.selected #base,
+.bpmn-wrapper.orange .bpmn .task.selected .base,
 .bpmn-wrapper.orange .bpmn .task.selected .cause_actions,
-.bpmn-wrapper.orange .bpmn .task.selected #transaction #rect48 {
+.bpmn-wrapper.orange .bpmn .task.selected .transaction .rect48 {
   fill: 'none';
 }
-.bpmn-wrapper.orange .bpmn .task:hover #base,
-.bpmn-wrapper.orange .bpmn .task:hover #transaction,
+.bpmn-wrapper.orange .bpmn .task:hover .base,
+.bpmn-wrapper.orange .bpmn .task:hover .transaction,
 .bpmn-wrapper.orange .bpmn .task:hover .cause_actions,
-.bpmn-wrapper.orange .bpmn .task:hover #subprocess rect,
-.bpmn-wrapper.orange .bpmn .task:hover #user path,
-.bpmn-wrapper.orange .bpmn .task:hover #manual path,
-.bpmn-wrapper.orange .bpmn .task:hover #service path,
-.bpmn-wrapper.orange .bpmn .task:hover #script path,
-.bpmn-wrapper.orange .bpmn .task:hover #parallel-mi path,
-.bpmn-wrapper.orange .bpmn .task:hover #sequential-mi path,
-.bpmn-wrapper.orange .bpmn .task:hover #business_rule path,
-.bpmn-wrapper.orange .bpmn .task:hover #receive path,
-.bpmn-wrapper.orange .bpmn .task:hover #cycle path {
+.bpmn-wrapper.orange .bpmn .task:hover .subprocess rect,
+.bpmn-wrapper.orange .bpmn .task:hover .user path,
+.bpmn-wrapper.orange .bpmn .task:hover .manual path,
+.bpmn-wrapper.orange .bpmn .task:hover .service path,
+.bpmn-wrapper.orange .bpmn .task:hover .script path,
+.bpmn-wrapper.orange .bpmn .task:hover .parallel-mi path,
+.bpmn-wrapper.orange .bpmn .task:hover .sequential-mi path,
+.bpmn-wrapper.orange .bpmn .task:hover .business_rule path,
+.bpmn-wrapper.orange .bpmn .task:hover .receive path,
+.bpmn-wrapper.orange .bpmn .task:hover .cycle path {
   stroke: #ff6528;
 }
-.bpmn-wrapper.orange .bpmn .task:hover #send path {
+.bpmn-wrapper.orange .bpmn .task:hover .send path {
   stroke: #fff;
   fill: #ff6528;
 }
-.bpmn-wrapper.orange .bpmn .task:hover #base,
+.bpmn-wrapper.orange .bpmn .task:hover .base,
 .bpmn-wrapper.orange .bpmn .task:hover .cause_actions,
-.bpmn-wrapper.orange .bpmn .task:hover #transaction #rect48 {
+.bpmn-wrapper.orange .bpmn .task:hover .transaction .rect48 {
   fill: 'none';
 }
 .bpmn-wrapper.orange .bpmn .task .inner {

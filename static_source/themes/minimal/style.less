@@ -317,138 +317,138 @@
 
       // base color
       // ------------------------
-      #base,
-      #transaction,
-      #cause_actions,
-      #subprocess rect,
+      .base,
+      .transaction,
+      .cause_actions,
+      .subprocess rect,
 
-      #user path,
-      #manual path,
+      .user path,
+      .manual path,
       #service path,
-      #script path,
-      #parallel-mi path,
-      #sequential-mi path,
-      #business_rule path,
-      #receive path,
-      #cycle path {
+      .script path,
+      .parallel-mi path,
+      .sequential-mi path,
+      .business_rule path,
+      .receive path,
+      .cycle path {
         stroke: @base;
       }
-      #base.dashed {
+      .base.dashed {
         stroke-dasharray: 6,3;
         stroke-dashoffset: 0;
       }
-      #send path {
+      .send path {
         stroke: #fff;
         fill: @base;
       }
 
       // ------------------------
       &.active {
-        #base,
-        #transaction,
-        #cause_actions,
-        #subprocess rect,
+        .base,
+        .transaction,
+        .cause_actions,
+        .subprocess rect,
 
-        #user path,
-        #manual path,
+        .user path,
+        .manual path,
         #service path,
-        #script path,
-        #parallel-mi path,
-        #sequential-mi path,
-        #business_rule path,
-        #receive path,
-        #cycle path {
+        .script path,
+        .parallel-mi path,
+        .sequential-mi path,
+        .business_rule path,
+        .receive path,
+        .cycle path {
           stroke: @active;
         }
-        #send path {
+        .send path {
           stroke: #fff;
           fill: @active;
         }
-        #base,
-        #cause_actions,
-        #transaction #rect48 {
+        .base,
+        .cause_actions,
+        .transaction .rect48 {
           fill: 'none';
         }
       }
       &.done,
       &.disabled {
-        #base,
-        #transaction,
-        #cause_actions,
-        #subprocess rect,
+        .base,
+        .transaction,
+        .cause_actions,
+        .subprocess rect,
 
-        #user path,
-        #manual path,
+        .user path,
+        .manual path,
         #service path,
-        #script path,
-        #parallel-mi path,
-        #sequential-mi path,
-        #business_rule path,
-        #receive path,
-        #cycle path {
+        .script path,
+        .parallel-mi path,
+        .sequential-mi path,
+        .business_rule path,
+        .receive path,
+        .cycle path {
           stroke: @disbled;
         }
-        #send path {
+        .send path {
           stroke: #fff;
           fill: @disbled;
         }
-        #base,
-        #cause_actions,
-        #transaction #rect48 {
+        .base,
+        .cause_actions,
+        .transaction .rect48 {
           fill: 'none';
         }
       }
       &.selected {
-        #base,
-        #transaction,
-        #cause_actions,
-        #subprocess rect,
+        .base,
+        .transaction,
+        .cause_actions,
+        .subprocess rect,
 
-        #user path,
-        #manual path,
-        #service path,
-        #script path,
-        #parallel-mi path,
-        #sequential-mi path,
-        #business_rule path,
-        #receive path,
-        #cycle path {
+        .user path,
+        .manual path,
+        .service path,
+        .script path,
+        .parallel-mi path,
+        .sequential-mi path,
+        .business_rule path,
+        .receive path,
+        .cycle path {
           stroke: @selected;
         }
-        #send path {
+        .send path {
           stroke: #fff;
           fill: @selected;
         }
-        #base,
-        #cause_actions,
-        #transaction #rect48 {
+        .base,
+        .cause_actions,
+        .transaction .rect48 {
           fill: 'none';
         }
       }
       &:hover {
-        #base,
-        #transaction,
-        #cause_actions,
-        #subprocess rect,
+        .base,
+        .transaction,
+        .cause_actions,
+        .subprocess rect,
 
-        #user path,
-        #manual path,
-        #service path,
-        #script path,
-        #parallel-mi path,
-        #sequential-mi path,
-        #business_rule path,
-        #receive path,
-        #cycle path {
+        .user path,
+        .manual path,
+        .service path,
+        .script path,
+        .parallel-mi path,
+        .sequential-mi path,
+        .business_rule path,
+        .receive path,
+        .cycle path {
           stroke: @hover;
         }
-        #send path {
+        .send path {
           stroke: #fff;
           fill: @hover;
         }
-        #base,
-        #cause_actions,
-        #transaction #rect48 {
+        .base,
+        .cause_actions,
+        .transaction .rect48 {
           fill: 'none';
         }
       }
