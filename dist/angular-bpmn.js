@@ -33,32 +33,25 @@ angular.module('angular-bpmn').factory('bpmnMinimap', [
     minimap = (function() {
       minimap.prototype.container = null;
 
+      minimap.prototype.parent_container = null;
+
       minimap.prototype.scope = null;
-
-      minimap.prototype.navigator = null;
-
-      minimap.prototype.forceDom = false;
 
       minimap.prototype.$viewport = null;
 
-      minimap.prototype.ctx = null;
-
-      minimap.prototype.$elem = null;
+      minimap.prototype.scheme_class = 'scheme';
 
       minimap.prototype.minimap_class = 'minimap';
 
       minimap.prototype.viewport_class = 'viewport';
 
       function minimap(container) {
-        var navigator;
-        log.debug('minimap constructor');
-        this.container = container;
+        this.parent_container = container;
         this.scope = $rootScope.$new();
-        navigator = $compile('<div class="' + this.minimap_class + '"><div class="' + this.viewport_class + '"></div></div>')(this.scope);
-        this.container.append(navigator);
-        this.$navigator = $(this.container).find('.' + this.minimap_class);
-        this.$elem = $(this.container).find('.scheme');
-        this.$viewport = this.$navigator.find('.' + this.viewport_class);
+        this.parent_container.append($compile('<div class="' + this.minimap_class + '"><div class="' + this.viewport_class + '"></div></div>')(this.scope));
+        this.$minimap = $(this.parent_container).find('.' + this.minimap_class);
+        this.$scheme = $(this.parent_container).find('.' + this.scheme_class);
+        this.$viewport = this.$minimap.find('.' + this.viewport_class);
         this.ratio = 0.1;
         this.bindings();
         this.updateViewport();
@@ -67,40 +60,34 @@ angular.module('angular-bpmn').factory('bpmnMinimap', [
 
       minimap.prototype.updateViewport = function() {
         var g, h, i, j;
-        log.debug('minimap update viewport');
-        g = this.$elem.height();
-        h = this.$elem.width();
-        j = this.$elem.scrollTop();
-        i = this.$elem.scrollLeft();
+        g = this.parent_container.height();
+        h = this.parent_container.width();
+        j = this.$scheme.scrollTop();
+        i = this.$scheme.scrollLeft();
         return this.$viewport.css({
           left: i * this.ratio,
           top: j * this.ratio
         }).width(h * this.ratio).height(g * this.ratio);
       };
 
-      minimap.prototype.onresize = function() {};
-
-      minimap.prototype.scrolled = function(h) {
-        return this.$elem.offset({
-          left: -h.left / this.ratio,
-          top: -h.top / this.ratio
-        });
+      minimap.prototype.onresize = function() {
+        return this.updateViewport();
       };
 
       minimap.prototype.bindings = function() {
         this.scrolling = false;
-        this.container.off('resize').on('resize', (function(_this) {
+        this.parent_container.on('resize', (function(_this) {
           return function() {
             return _this.onresize();
           };
         })(this));
-        this.$navigator.click((function(_this) {
+        this.$minimap.click((function(_this) {
           return function(i) {
             var h, j, k, l;
             l = i.pageX - ($(i.target).offset().left) - (_this.$viewport.width() / 2);
             k = i.pageY - ($(i.target).offset().top) - (_this.$viewport.height() / 2);
-            h = _this.$navigator.width() - _this.$viewport.width();
-            j = _this.$navigator.height() - _this.$viewport.height();
+            h = _this.$minimap.width() - _this.$viewport.width();
+            j = _this.$minimap.height() - _this.$viewport.height();
             if (l < 0) {
               l = 0;
             }
@@ -139,20 +126,28 @@ angular.module('angular-bpmn').factory('bpmnMinimap', [
             };
           })(this)
         });
-        return this.$elem.scroll(function() {
+        return this.$scheme.scroll(function() {
           return log.debug('element scrolling');
+        });
+      };
+
+      minimap.prototype.scrolled = function(h) {
+        return this.$scheme.css({
+          left: -h.left / this.ratio,
+          top: -h.top / this.ratio
         });
       };
 
       minimap.prototype.renderScheme = function() {
         var svgElements;
-        svgElements = this.$elem.find('.draggable svg, svg.jsplumb-connector');
-        log.debug(svgElements);
-        return svgElements.each(function() {});
+        svgElements = this.$scheme.find('.task, .event, .group, .gateway');
+        return svgElements.each(function(k, v) {
+          return log.debug(v);
+        });
       };
 
       minimap.prototype.destroy = function() {
-        return this.container.off('resize');
+        return this.parent_container.off('resize');
       };
 
       return minimap;
@@ -1996,7 +1991,7 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
 
 'use strict';
 angular.module('angular-bpmn').factory('bpmnPanning', [
-  'log', '$compile', '$rootScope', function(log, $compile, $rootScope) {
+  'log', '$compile', '$timeout', function(log, $compile, $timeout) {
     var bpmnPanning;
     bpmnPanning = (function() {
       bpmnPanning.prototype.container = null;
@@ -2009,11 +2004,12 @@ angular.module('angular-bpmn').factory('bpmnPanning', [
         this.container = container;
         this.scope = scope;
         this.wrapper = wrapper;
+        this.init();
       }
 
       bpmnPanning.prototype.init = function() {
         var delta, drag, template;
-        template = $compile('<div class="panning-cross"> <svg> <g id="layer1" transform="translate(-291.18256,-337.29837)"> <path id="path3006" stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2.01302433"/> <path id="path3008" stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/> </g> </svg> </div>')(this.scope);
+        template = $compile('<div class="panning-cross"> <svg> <g id="layer1" transform="translate(-291.18256,-337.29837)"> <path stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#7B7B7B" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/> <path stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#7B7B7B" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/> </g> </svg> </div>')(this.scope);
         this.container.append(template);
         $(template).css({
           position: 'absolute',
@@ -2035,7 +2031,7 @@ angular.module('angular-bpmn').factory('bpmnPanning', [
             if (!_this.scope.settings.engine.container.movable) {
               return;
             }
-            if ($(e.target).hasClass('ui-resizable-handle')) {
+            if ($(e.target).hasClass('ui-resizable-handle') || $(e.target).hasClass('viewport') || $(e.target).hasClass('minimap')) {
               return;
             }
             if (!drag.state && e.which === LEFT_MB) {
@@ -2113,7 +2109,10 @@ angular.module('angular-bpmn').factory('bpmnPanning', [
         this.wrapper.off('mousemove');
         this.wrapper.off('mouseup');
         this.wrapper.off('contextmenu');
-        return this.wrapper.off('mousewheel');
+        this.wrapper.off('mousewheel');
+        this.container = null;
+        this.scope = null;
+        return this.wrapper = null;
       };
 
       return bpmnPanning;
@@ -2204,7 +2203,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         if (settings == null) {
           settings = {};
         }
-        this.scope.settings = $.extend(true, bpmnSettings, angular.copy(settings));
+        this.scope.settings = $.extend(true, angular.copy(bpmnSettings), angular.copy(settings));
         this.loadStyle();
         this.cacheTemplates();
         return this.objectsUpdate();
@@ -2280,9 +2279,6 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
             _this.connectPackageObjects();
             _this.isStarted = true;
             _this.wrapper.find(".page-loader").fadeOut("slow");
-            if (!_this.minimap) {
-              _this.minimap = new bpmnMinimap(_this.wrapper);
-            }
             return resolve();
           };
         })(this));

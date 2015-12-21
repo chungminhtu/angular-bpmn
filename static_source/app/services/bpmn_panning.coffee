@@ -130,8 +130,4 @@ angular
         @wrapper = null
 
     bpmnPanning
-<<<<<<< HEAD
   ]
-=======
-]
->>>>>>> dev
