@@ -170,7 +170,7 @@ angular
             containment: parentId
             drag: (event, ui)=>
 #              $log.debug 'child dragging'
-#              instance.repaintEverything()
+#              @parentScope.instance.repaintEverything()
             stop: (event, ui)=>
 
               # update position info
@@ -202,7 +202,7 @@ angular
           .removeClass("etc")
 
         #------------------------
-        if (parent.data.draggable? && parent.data.draggable) || !parent.data.draggable?
+        if (parent.data.draggable? && parent.data.draggable) || parent.data.draggable?
           @parentScope.instance.draggable(parent_element, $.extend({}, @settings.draggable, {
             drag: (event, ui)=>
               @parentScope.instance.repaintEverything()
@@ -215,6 +215,8 @@ angular
 
               @parentScope.instance.repaintEverything()
           }))
+
+        parent_element
 
       removeParent: ()->
         #TODO add remove parent
