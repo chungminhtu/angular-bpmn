@@ -21,8 +21,8 @@ angular
         template = $compile('<div class="panning-cross">
 <svg>
  <g id="layer1" transform="translate(-291.18256,-337.29837)">
-   <path id="path3006" stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2.01302433"/>
-   <path id="path3008" stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/>
+   <path stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#7B7B7B" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/>
+   <path stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#7B7B7B" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/>
  </g>
 </svg>
 </div>')(@scope)
@@ -130,4 +130,8 @@ angular
         @wrapper = null
 
     bpmnPanning
+<<<<<<< HEAD
   ]
+=======
+]
+>>>>>>> dev

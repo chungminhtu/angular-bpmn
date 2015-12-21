@@ -6,11 +6,12 @@ angular
   ($scope, bpmnScheme, $log, bpmnSettings, bpmnMock) ->
 
     vm = this
-    vm.theme = 'minimal'
+    vm.theme = 'orange'
     vm.themes = bpmnSettings.theme.list
     scheme3 = bpmnMock.scheme4
     settings =
       engine:
+        theme: vm.theme
         status: 'viewer'
 
     instance = new bpmnScheme($('#scheme3'))

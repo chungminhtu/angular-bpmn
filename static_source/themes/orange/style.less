@@ -17,6 +17,24 @@
 
     } //poster
 
+    .jsplumb-connector {
+      path {
+        stroke: @base;
+        &:last-child {
+          fill: @base;
+        }
+      }
+
+      &.jsplumb-hover {
+        path {
+          stroke: @selected;
+          &:last-child {
+            fill: @selected;
+          }
+        }
+      }
+    }// jsplumb-connector
+
     .event {
       svg {
         position: absolute;
@@ -26,15 +44,15 @@
 
       // base color
       // ------------------------
-      circle#end {
+      circle.end {
         stroke: @base;
         fill: 'none';
       }
-      g#intermediate {
+      g.intermediate {
         stroke-width: 2px;
         circle {
           stroke: @base;
-          &#circle56 {
+          &.circle56 {
             fill: 'none';
           }
         }
@@ -45,7 +63,7 @@
           }
         }
       }
-      g#start {
+      g.start {
         circle {
           stroke-width: 2px;
           stroke: @base;
@@ -59,52 +77,52 @@
         }
       }
 
-      #message_inverted {
+      .message_inverted {
         fill: @base;
       }
-      #timer,
-      #escalation {
+      .timer,
+      .escalation {
         stroke-width: 2px;
         stroke: @base;
       }
-      #conditional,
-      #compensation,
-      #signal,
-      #message,
-      #cancel,
-      #error,
-      #compound,
-      #parallel,
-      #link {
+      .conditional,
+      .compensation,
+      .signal,
+      .message,
+      .cancel,
+      .error,
+      .compound,
+      .parallel,
+      .link {
         stroke: @base;
       }
-      #compensation_invert,
-      #cancel_invert,
-      #error_invert,
-      #link_invert,
-      #signal_invert,
-      #compound_invert,
-      #stop,
-      #escalation_invert {
+      .compensation_invert,
+      .cancel_invert,
+      .error_invert,
+      .link_invert,
+      .signal_invert,
+      .compound_invert,
+      .stop,
+      .escalation_invert {
         stroke: @base;
-        fill: 'none';
+        fill: @base;
       }
 
       // ------------------------
       &.active {
-        circle#end {
+        circle.end {
           stroke: @active;
           fill: 'none';
         }
-        g#intermediate {
+        g.intermediate {
           circle {
             stroke: @active;
-            &#circle56 {
+            &.circle56 {
               fill: 'none';
             }
           }
         }
-        g#start {
+        g.start {
           circle {
             stroke: @active;
             fill: 'none';
@@ -112,33 +130,33 @@
         }
 
 
-        #message_inverted {
+        .message_inverted {
           fill: @active;
         }
-        #timer,
-        #conditional,
-        #link,
-        #cancel,
-        #signal,
-        #compensation
-        #compound
-        #parallel
-        #message {
+        .timer,
+        .conditional,
+        .link,
+        .cancel,
+        .signal,
+        .compensation
+        .compound
+        .parallel
+        .message {
           stroke: @active;
         }
-        #escalation {
+        .escalation {
           stroke-width: 2px;
           stroke: @active;
         }
-        #escalation_invert,
-        #cancel_invert,
-        #error,
-        #compensation_invert,
-        #error_invert,
-        #signal_invert,
-        #stop,
-        #compound_invert,
-        #link_invert {
+        .escalation_invert,
+        .cancel_invert,
+        .error,
+        .compensation_invert,
+        .error_invert,
+        .signal_invert,
+        .stop,
+        .compound_invert,
+        .link_invert {
           stroke: @active;
           fill: @active;
         }
@@ -146,160 +164,160 @@
       &.done,
       &.disabled {
 
-        circle#end {
+        circle.end {
           stroke: @disbled;
           fill: 'none';
         }
 
-        g#intermediate {
+        g.intermediate {
           circle {
             stroke: @disbled;
-            &#circle56 {
+            &.circle56 {
               fill: 'none';
             }
           }
         }
-        g#start {
+        g.start {
           circle {
             stroke: @disbled;
             fill: 'none';
           }
         }
 
-        #message_inverted {
+        .message_inverted {
           fill: @disbled;
         }
-        #escalation {
+        .escalation {
           stroke-width: 2px;
           stroke: @disbled;
         }
-        #escalation_invert,
-        #error_invert,
-        #compensation_invert,
-        #cancel_invert,
-        #signal_invert,
-        #stop,
-        #compound_invert,
-        #link_invert {
+        .escalation_invert,
+        .error_invert,
+        .compensation_invert,
+        .cancel_invert,
+        .signal_invert,
+        .stop,
+        .compound_invert,
+        .link_invert {
           stroke: @disbled;
           fill: @disbled;
         }
-        #conditional,
-        #link,
-        #error,
-        #compensation,
-        #cancel,
-        #timer,
-        #signal,
-        #parallel,
-        #compound,
-        #message {
+        .conditional,
+        .link,
+        .error,
+        .compensation,
+        .cancel,
+        .timer,
+        .signal,
+        .parallel,
+        .compound,
+        .message {
           stroke: @disbled;
         }
       } //disabled
       &.selected {
-        circle#end {
+        circle.end {
           stroke: @selected;
           fill: 'none';
         }
-        g#intermediate {
+        g.intermediate {
           circle {
             stroke: @selected;
-            &#circle56 {
+            &.circle56 {
               fill: 'none';
             }
           }
         }
-        g#start {
+        g.start {
           circle {
             stroke: @selected;
             fill: 'none';
           }
         }
-        #message_inverted {
+        .message_inverted {
           fill: @selected;
         }
-        #timer,
-        #link,
-        #compensation,
-        #cancel,
-        #error,
-        #conditional,
-        #signal,
-        #parallel,
-        #compound,
-        #message {
+        .timer,
+        .link,
+        .compensation,
+        .cancel,
+        .error,
+        .conditional,
+        .signal,
+        .parallel,
+        .compound,
+        .message {
           stroke: @selected;
         }
 
-        #escalation {
+        .escalation {
           stroke-width: 2px;
           stroke: @selected;
         }
 
-        #compensation_invert,
-        #cancel_invert,
-        #error_invert,
-        #escalation_invert,
-        #signal_invert,
-        #stop,
-        #compound_invert,
-        #link_invert {
+        .compensation_invert,
+        .cancel_invert,
+        .error_invert,
+        .escalation_invert,
+        .signal_invert,
+        .stop,
+        .compound_invert,
+        .link_invert {
           stroke: @selected;
           fill: @selected;
         }
       } //selected
       &:hover {
 
-        circle#end {
+        circle.end {
           stroke: @hover;
           fill: 'none';
         }
 
-        g#intermediate {
+        g.intermediate {
           circle {
             stroke: @hover;
-            &#circle56 {
+            &.circle56 {
               fill: 'none';
             }
           }
         }
-        g#start {
+        g.start {
           circle {
             stroke: @hover;
             fill: 'none';
           }
         }
 
-        #message_inverted {
+        .message_inverted {
           fill: @hover;
         }
 
-        #escalation {
+        .escalation {
           stroke-width: 2px;
           stroke: @hover;
         }
-        #error_invert,
-        #link_invert,
-        #escalation_invert,
-        #cancel_invert,
-        #compound_invert,
-        #signal_invert,
-        #stop,
-        #compensation_invert {
+        .error_invert,
+        .link_invert,
+        .escalation_invert,
+        .cancel_invert,
+        .compound_invert,
+        .signal_invert,
+        .stop,
+        .compensation_invert {
           stroke: @hover;
           fill: @hover;
         }
-        #conditional,
-        #message,
-        #cancel,
-        #error,
-        #signal,
-        #parallel,
-        #link,
-        #compound,
-        #compensation,
-        #timer {
+        .conditional,
+        .message,
+        .cancel,
+        .error,
+        .signal,
+        .parallel,
+        .link,
+        .compound,
+        .compensation,
+        .timer {
           stroke: @hover;
         }
       } //hover
@@ -317,138 +335,138 @@
 
       // base color
       // ------------------------
-      #base,
-      #transaction,
-      #cause_actions,
-      #subprocess rect,
+      .base,
+      .transaction,
+      .cause_actions,
+      .subprocess rect,
 
-      #user path,
-      #manual path,
+      .user path,
+      .manual path,
       #service path,
-      #script path,
-      #parallel-mi path,
-      #sequential-mi path,
-      #business_rule path,
-      #receive path,
-      #cycle path {
+      .script path,
+      .parallel-mi path,
+      .sequential-mi path,
+      .business_rule path,
+      .receive path,
+      .cycle path {
         stroke: @base;
       }
-      #base.dashed {
+      .base.dashed {
         stroke-dasharray: 6,3;
         stroke-dashoffset: 0;
       }
-      #send path {
+      .send path {
         stroke: #fff;
         fill: @base;
       }
 
       // ------------------------
       &.active {
-        #base,
-        #transaction,
-        #cause_actions,
-        #subprocess rect,
+        .base,
+        .transaction,
+        .cause_actions,
+        .subprocess rect,
 
-        #user path,
-        #manual path,
+        .user path,
+        .manual path,
         #service path,
-        #script path,
-        #parallel-mi path,
-        #sequential-mi path,
-        #business_rule path,
-        #receive path,
-        #cycle path {
+        .script path,
+        .parallel-mi path,
+        .sequential-mi path,
+        .business_rule path,
+        .receive path,
+        .cycle path {
           stroke: @active;
         }
-        #send path {
+        .send path {
           stroke: #fff;
           fill: @active;
         }
-        #base,
-        #cause_actions,
-        #transaction #rect48 {
+        .base,
+        .cause_actions,
+        .transaction .rect48 {
           fill: 'none';
         }
       }
       &.done,
       &.disabled {
-        #base,
-        #transaction,
-        #cause_actions,
-        #subprocess rect,
+        .base,
+        .transaction,
+        .cause_actions,
+        .subprocess rect,
 
-        #user path,
-        #manual path,
+        .user path,
+        .manual path,
         #service path,
-        #script path,
-        #parallel-mi path,
-        #sequential-mi path,
-        #business_rule path,
-        #receive path,
-        #cycle path {
+        .script path,
+        .parallel-mi path,
+        .sequential-mi path,
+        .business_rule path,
+        .receive path,
+        .cycle path {
           stroke: @disbled;
         }
-        #send path {
+        .send path {
           stroke: #fff;
           fill: @disbled;
         }
-        #base,
-        #cause_actions,
-        #transaction #rect48 {
+        .base,
+        .cause_actions,
+        .transaction .rect48 {
           fill: 'none';
         }
       }
       &.selected {
-        #base,
-        #transaction,
-        #cause_actions,
-        #subprocess rect,
+        .base,
+        .transaction,
+        .cause_actions,
+        .subprocess rect,
 
-        #user path,
-        #manual path,
-        #service path,
-        #script path,
-        #parallel-mi path,
-        #sequential-mi path,
-        #business_rule path,
-        #receive path,
-        #cycle path {
+        .user path,
+        .manual path,
+        .service path,
+        .script path,
+        .parallel-mi path,
+        .sequential-mi path,
+        .business_rule path,
+        .receive path,
+        .cycle path {
           stroke: @selected;
         }
-        #send path {
+        .send path {
           stroke: #fff;
           fill: @selected;
         }
-        #base,
-        #cause_actions,
-        #transaction #rect48 {
+        .base,
+        .cause_actions,
+        .transaction .rect48 {
           fill: 'none';
         }
       }
       &:hover {
-        #base,
-        #transaction,
-        #cause_actions,
-        #subprocess rect,
+        .base,
+        .transaction,
+        .cause_actions,
+        .subprocess rect,
 
-        #user path,
-        #manual path,
-        #service path,
-        #script path,
-        #parallel-mi path,
-        #sequential-mi path,
-        #business_rule path,
-        #receive path,
-        #cycle path {
+        .user path,
+        .manual path,
+        .service path,
+        .script path,
+        .parallel-mi path,
+        .sequential-mi path,
+        .business_rule path,
+        .receive path,
+        .cycle path {
           stroke: @hover;
         }
-        #send path {
+        .send path {
           stroke: #fff;
           fill: @hover;
         }
-        #base,
-        #cause_actions,
-        #transaction #rect48 {
+        .base,
+        .cause_actions,
+        .transaction .rect48 {
           fill: 'none';
         }
       }
