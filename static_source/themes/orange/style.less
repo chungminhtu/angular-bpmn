@@ -17,6 +17,24 @@
 
     } //poster
 
+    .jsplumb-connector {
+      path {
+        stroke: @base;
+        &:last-child {
+          fill: @base;
+        }
+      }
+
+      &.jsplumb-hover {
+        path {
+          stroke: @selected;
+          &:last-child {
+            fill: @selected;
+          }
+        }
+      }
+    }// jsplumb-connector
+
     .event {
       svg {
         position: absolute;

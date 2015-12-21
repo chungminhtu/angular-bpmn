@@ -1,4 +1,16 @@
 /* ------------------------ main ----------------------------*/
+.bpmn-wrapper.orange .bpmn .jsplumb-connector path {
+  stroke: #ff4200;
+}
+.bpmn-wrapper.orange .bpmn .jsplumb-connector path:last-child {
+  fill: #ff4200;
+}
+.bpmn-wrapper.orange .bpmn .jsplumb-connector.jsplumb-hover path {
+  stroke: #ff7248;
+}
+.bpmn-wrapper.orange .bpmn .jsplumb-connector.jsplumb-hover path:last-child {
+  fill: #ff7248;
+}
 .bpmn-wrapper.orange .bpmn .event svg {
   position: absolute;
   right: 3px;
