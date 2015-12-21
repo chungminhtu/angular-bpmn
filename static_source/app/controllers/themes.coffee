@@ -8,14 +8,14 @@ angular
     vm = this
     vm.theme = 'orange'
     vm.themes = bpmnSettings.theme.list
-    scheme3 = bpmnMock.scheme4
+    scheme4 = bpmnMock.scheme4
     settings =
       engine:
         theme: vm.theme
         status: 'viewer'
 
     instance = new bpmnScheme($('#scheme3'))
-    instance.setScheme(scheme3)
+    instance.setScheme(scheme4)
     instance.setSettings(settings)
     instance.start()
 

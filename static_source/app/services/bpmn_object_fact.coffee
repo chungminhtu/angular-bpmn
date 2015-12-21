@@ -26,6 +26,7 @@ angular
         top: 0
         left: 0
       isParent: false
+      childsAABB: null
 
       constructor: (data, parentScope)->
         log.debug 'object construct'
@@ -164,18 +165,19 @@ angular
 
         parentId = @setParent(parent)
         #------------------------
-        if (@data.draggable? && @data.draggable) || !@data.draggable?
-
+        if (@data.draggable? && @data.draggable) || @data.draggable?
           @parentScope.instance.draggable(@element, $.extend({}, @settings.draggable, {
             containment: parentId
-            drag: (event, ui)->
+            drag: (event, ui)=>
 #              $log.debug 'child dragging'
 #              instance.repaintEverything()
-            stop: (event, ui)->
+            stop: (event, ui)=>
 
               # update position info
               @position.left = event.pos[0]
               @position.top = event.pos[1]
+
+              parent.updateChildsAABB()
 
               @parentScope.instance.repaintEverything()
           }))
@@ -226,6 +228,58 @@ angular
             childs = childs.concat(tch)
 
         return childs
+
+      getChildsAABB: ()->
+        if !@childsAABB
+          childs = @getAllChilds()
+          @childsAABB = @getAABB(childs)
+        return @childsAABB
+
+      updateChildsAABB: ()->
+        childs = @getAllChilds()
+        @childsAABB = @getAABB(childs)
+
+      getAABB: (objects)->
+
+        l_min = 9999
+        t_min = 9999
+
+        l_max = 0
+        t_max = 0
+
+        angular.forEach objects, (object)=>
+
+          w = object.size.width
+          if object.size.width == 'auto'
+            w = $(object.element).width()
+
+          h = object.size.height
+          if object.size.height == 'auto'
+            h = $(object.element).height()
+
+          # min
+          if object.position.left < l_min
+            l_min = object.position.left
+
+          if object.position.top < t_min
+            t_min = object.position.top
+
+          # max
+          l = object.position.left + w
+          t = object.position.top + h
+
+          if l > l_max
+            l_max = l
+
+          if t > t_max
+            t_max = t
+
+        {
+          l_min: l_min
+          t_min: t_min
+          l_max: l_max
+          t_max: t_max
+        }
 
       remove: ()->
         id = @getId()

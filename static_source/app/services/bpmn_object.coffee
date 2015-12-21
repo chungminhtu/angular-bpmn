@@ -9,7 +9,7 @@ angular
     controller: ["$scope", "$element", ($scope, $element)->
 
       container = $($element)
-      childs = []
+      childsAABB = {}
 
       switch $scope.data.type.name
         when 'poster'
@@ -22,21 +22,18 @@ angular
             grid: 10
             handles: "all"
             start: (event, ui)->
-              childs = $scope.object.getAllChilds()
+              childsAABB = $scope.object.getChildsAABB()
+
             stop: (event, ui)->
               $scope.instance.repaintEverything()
             resize: (event, ui)->
               # во время изменения размера контейнера
               # контролирует нахлёст родительского блока с дочерними
-              angular.forEach childs, (child, ch_key)->
-                h = child.position.left + child.size.width
-                v = child.position.top + child.size.height
+              if container.width() <= childsAABB['l_max'] + 20
+                container.css('width', childsAABB['l_max'] + 20)
 
-                if container.width() <= h + 20
-                  container.css('width', h + 20)
-
-                if container.height() <= v + 20
-                  container.css('height', v + 20)
+              if container.height() <= childsAABB['t_max'] + 20
+                container.css('height', childsAABB['t_max'] + 20)
 
               $scope.instance.repaintEverything()
         when 'swimlane'
@@ -46,17 +43,14 @@ angular
             grid: 10
             handles: 'e'
             start: ()->
-              childs = $scope.object.getAllChilds()
+              childsAABB = $scope.object.getChildsAABB()
               $scope.instance.repaintEverything()
+
             resize: ()->
               # во время изменения размера контейнера
               # контролирует нахлёст родительского блока с дочерними по левой стороне
-              angular.forEach childs, (child)->
-                if child.data.type == 'swimlane-row'
-                  return
-                h = child.position.left + child.size.width
-                if container.width() <= h + 20
-                  container.css('width', h + 20)
+              if container.width() <= childsAABB['l_max'] + 20
+                container.css('width', childsAABB['l_max'] + 20)
               $scope.instance.repaintEverything()
         when 'swimlane-row'
           container.resizable
@@ -65,15 +59,12 @@ angular
             grid: 10
             handles: 's'
             start: ()->
-              childs = $scope.object.getAllChilds()
+              childsAABB = $scope.object.getChildsAABB()
               $scope.instance.repaintEverything()
 
             resize: ()->
-              angular.forEach childs, (child)->
-                v = child.position.top + child.size.height
-                if container.height() <= v + 20
-                  container.css('height', v + 20)
-
+              if container.width() <= childsAABB['t_max'] + 20
+                container.css('width', childsAABB['t_max'] + 20)
               $scope.instance.repaintEverything()
 
       updateStyle = ()->

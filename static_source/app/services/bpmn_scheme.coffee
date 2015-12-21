@@ -25,6 +25,7 @@ angular
       stopListen: null
       minimap: null
       panning: null
+      AABB: null
 
       constructor: (container, settings)->
 #        set unique id
@@ -229,6 +230,9 @@ angular
 
         if !@panning
           @panning = new bpmnPanning(@container, @scope, @wrapper)
+
+        if !@minimap
+          @minimap = new bpmnMinimap(@wrapper)
 
         @loadStyle()
 
