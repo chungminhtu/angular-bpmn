@@ -1859,6 +1859,139 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
 ]);
 
 'use strict';
+angular.module('angular-bpmn').factory('bpmnPanning', [
+  'log', '$compile', '$timeout', function(log, $compile, $timeout) {
+    var bpmnPanning;
+    bpmnPanning = (function() {
+      bpmnPanning.prototype.container = null;
+
+      bpmnPanning.prototype.scope = null;
+
+      bpmnPanning.prototype.wrapper = null;
+
+      function bpmnPanning(container, scope, wrapper) {
+        this.container = container;
+        this.scope = scope;
+        this.wrapper = wrapper;
+        this.init();
+      }
+
+      bpmnPanning.prototype.init = function() {
+        var delta, drag, template;
+        template = $compile('<div class="panning-cross"> <svg> <g id="layer1" transform="translate(-291.18256,-337.29837)"> <path stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#7B7B7B" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/> <path stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#7B7B7B" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/> </g> </svg> </div>')(this.scope);
+        this.container.append(template);
+        $(template).css({
+          position: 'absolute',
+          top: -23,
+          left: -45
+        });
+        this.wrapper.append($compile('<div class="zoom-info">x{{zoom}}</div>')(this.scope));
+        drag = {
+          x: 0,
+          y: 0,
+          state: false
+        };
+        delta = {
+          x: 0,
+          y: 0
+        };
+        this.wrapper.on('mousedown', (function(_this) {
+          return function(e) {
+            if (!_this.scope.settings.engine.container.movable) {
+              return;
+            }
+            if ($(e.target).hasClass('ui-resizable-handle') || $(e.target).hasClass('viewport') || $(e.target).hasClass('minimap')) {
+              return;
+            }
+            if (!drag.state && e.which === LEFT_MB) {
+              drag.x = e.pageX;
+              drag.y = e.pageY;
+              return drag.state = true;
+            }
+          };
+        })(this));
+        this.wrapper.on('mousemove', (function(_this) {
+          return function(e) {
+            var cur_offset;
+            if (drag.state) {
+              delta.x = e.pageX - drag.x;
+              delta.y = e.pageY - drag.y;
+              cur_offset = _this.container.offset();
+              _this.container.offset({
+                left: cur_offset.left + delta.x,
+                top: cur_offset.top + delta.y
+              });
+              drag.x = e.pageX;
+              return drag.y = e.pageY;
+            }
+          };
+        })(this));
+        this.wrapper.on('mouseup', (function(_this) {
+          return function(e) {
+            if (!_this.scope.settings.engine.container.movable) {
+              return;
+            }
+            if (drag.state) {
+              return drag.state = false;
+            }
+          };
+        })(this));
+        this.wrapper.on('contextmenu', function(e) {
+          return false;
+        });
+        this.wrapper.on('mouseleave', function(e) {
+          if (drag.state) {
+            return drag.state = false;
+          }
+        });
+        return this.wrapper.on('mousewheel', (function(_this) {
+          return function(e) {
+            if (!_this.scope.settings.engine.container.zoom) {
+              return;
+            }
+            e.preventDefault();
+            _this.scope.zoom += 0.1 * e.deltaY;
+            _this.scope.zoom = parseFloat(_this.scope.zoom.toFixed(1));
+            if (_this.scope.zoom < 0.1) {
+              _this.scope.zoom = 0.1;
+            } else if (_this.scope.zoom > 2) {
+              _this.scope.zoom = 2;
+            }
+            _this.scope.instance.setZoom(_this.scope.zoom);
+            _this.scope.instance.repaintEverything(_this.scope.zoom);
+            $timeout(function() {
+              return _this.scope.$apply(_this.scope.zoom);
+            }, 0);
+            return _this.container.css({
+              '-webkit-transform': _this.scope.zoom,
+              '-moz-transform': 'scale(' + _this.scope.zoom + ')',
+              '-ms-transform': 'scale(' + _this.scope.zoom + ')',
+              '-o-transform': 'scale(' + _this.scope.zoom + ')',
+              'transform': 'scale(' + _this.scope.zoom + ')'
+            });
+          };
+        })(this));
+      };
+
+      bpmnPanning.prototype.destroy = function() {
+        this.wrapper.off('mousedown');
+        this.wrapper.off('mousemove');
+        this.wrapper.off('mouseup');
+        this.wrapper.off('contextmenu');
+        this.wrapper.off('mousewheel');
+        this.container = null;
+        this.scope = null;
+        return this.wrapper = null;
+      };
+
+      return bpmnPanning;
+
+    })();
+    return bpmnPanning;
+  }
+]);
+
+'use strict';
 var LEFT_MB, MIDDLE_MB, RIGHT_MB;
 
 LEFT_MB = 1;
@@ -1868,7 +2001,7 @@ MIDDLE_MB = 2;
 RIGHT_MB = 3;
 
 angular.module('angular-bpmn').factory('bpmnScheme', [
-  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', function($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact) {
+  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', 'bpmnPanning', function($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact, bpmnPanning) {
     var bpmnScheme;
     bpmnScheme = (function() {
       bpmnScheme.prototype.isDebug = true;
@@ -1892,6 +2025,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
       bpmnScheme.prototype.schemeWatch = null;
 
       bpmnScheme.prototype.stopListen = null;
+
+      bpmnScheme.prototype.panning = null;
 
       function bpmnScheme(container, settings) {
         var wrapper;
@@ -1935,7 +2070,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         if (settings == null) {
           settings = {};
         }
-        this.scope.settings = $.extend(true, bpmnSettings, angular.copy(settings));
+        this.scope.settings = $.extend(true, angular.copy(bpmnSettings), angular.copy(settings));
         this.loadStyle();
         this.cacheTemplates();
         return this.objectsUpdate();
@@ -2088,103 +2223,6 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         });
       };
 
-      bpmnScheme.prototype.panning = function() {
-        var delta, drag, template;
-        template = $compile('<div class="panning-cross"> <svg> <g id="layer1" transform="translate(-291.18256,-337.29837)"> <path id="path3006" stroke-linejoin="miter" d="m331.14063,340.36763,0,29.99702" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2.01302433"/> <path id="path3008" stroke-linejoin="miter" d="m316.11461,355.29379,30.24144,0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="2"/> </g> </svg> </div>')(this.scope);
-        this.container.append(template);
-        $(template).css({
-          position: 'absolute',
-          top: -23,
-          left: -45
-        });
-        this.wrapper.append($compile('<div class="zoom-info">x{{zoom}}</div>')(this.scope));
-        drag = {
-          x: 0,
-          y: 0,
-          state: false
-        };
-        delta = {
-          x: 0,
-          y: 0
-        };
-        this.wrapper.on('mousedown', (function(_this) {
-          return function(e) {
-            if (!_this.scope.settings.engine.container.movable) {
-              return;
-            }
-            if ($(e.target).hasClass('ui-resizable-handle')) {
-              return;
-            }
-            if (!drag.state && e.which === LEFT_MB) {
-              drag.x = e.pageX;
-              drag.y = e.pageY;
-              return drag.state = true;
-            }
-          };
-        })(this));
-        this.wrapper.on('mousemove', (function(_this) {
-          return function(e) {
-            var cur_offset;
-            if (drag.state) {
-              delta.x = e.pageX - drag.x;
-              delta.y = e.pageY - drag.y;
-              cur_offset = _this.container.offset();
-              _this.container.offset({
-                left: cur_offset.left + delta.x,
-                top: cur_offset.top + delta.y
-              });
-              drag.x = e.pageX;
-              return drag.y = e.pageY;
-            }
-          };
-        })(this));
-        this.wrapper.on('mouseup', (function(_this) {
-          return function(e) {
-            if (!_this.scope.settings.engine.container.movable) {
-              return;
-            }
-            if (drag.state) {
-              return drag.state = false;
-            }
-          };
-        })(this));
-        this.wrapper.on('contextmenu', function(e) {
-          return false;
-        });
-        this.wrapper.on('mouseleave', function(e) {
-          if (drag.state) {
-            return drag.state = false;
-          }
-        });
-        return this.wrapper.on('mousewheel', (function(_this) {
-          return function(e) {
-            if (!_this.scope.settings.engine.container.zoom) {
-              return;
-            }
-            e.preventDefault();
-            _this.scope.zoom += 0.1 * e.deltaY;
-            _this.scope.zoom = parseFloat(_this.scope.zoom.toFixed(1));
-            if (_this.scope.zoom < 0.1) {
-              _this.scope.zoom = 0.1;
-            } else if (_this.scope.zoom > 2) {
-              _this.scope.zoom = 2;
-            }
-            _this.scope.instance.setZoom(_this.scope.zoom);
-            _this.scope.instance.repaintEverything(_this.scope.zoom);
-            $timeout(function() {
-              return _this.scope.$apply(_this.scope.zoom);
-            }, 0);
-            return _this.container.css({
-              '-webkit-transform': _this.scope.zoom,
-              '-moz-transform': 'scale(' + _this.scope.zoom + ')',
-              '-ms-transform': 'scale(' + _this.scope.zoom + ')',
-              '-o-transform': 'scale(' + _this.scope.zoom + ')',
-              'transform': 'scale(' + _this.scope.zoom + ')'
-            });
-          };
-        })(this));
-      };
-
       bpmnScheme.prototype.objectsUpdate = function() {
         return angular.forEach(this.scope.intScheme.objects, function(object) {
           return object.templateUpdate();
@@ -2202,7 +2240,9 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.instart = function(resolve) {
         var ref;
-        this.panning();
+        if (!this.panning) {
+          this.panning = new bpmnPanning(this.container, this.scope, this.wrapper);
+        }
         this.loadStyle();
         if (!this.scope.instance) {
           this.scope.instance = jsPlumb.getInstance($.extend(true, this.scope.settings.instance, {
@@ -2258,11 +2298,10 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         if (this.schemeWatch) {
           this.schemeWatch();
         }
-        this.wrapper.off('mousedown');
-        this.wrapper.off('mousemove');
-        this.wrapper.off('mouseup');
-        this.wrapper.off('contextmenu');
-        return this.wrapper.off('mousewheel');
+        if (this.panning) {
+          this.panning.destroy();
+        }
+        return this.panning = null;
       };
 
       bpmnScheme.prototype.restart = function() {
