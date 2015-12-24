@@ -150,6 +150,14 @@ angular
 
         # Проверим конфиг, если указаны родители, подключимся к ним
         if !@data.parent? || @data.parent == ''
+          if @data.draggable? && @data.draggable
+            @parentScope.instance.draggable(@element, $.extend({}, @settings.draggable, {
+              stop: (event, ui)->
+                # update position info
+                @position.left = event.pos[0]
+                @position.top = event.pos[1]
+            }))
+
           return
 
         parent = null
@@ -164,7 +172,7 @@ angular
 
         parentId = @setParent(parent)
         #------------------------
-        if (@data.draggable? && @data.draggable) || !@data.draggable?
+        if @data.draggable? && @data.draggable
 
           @parentScope.instance.draggable(@element, $.extend({}, @settings.draggable, {
             containment: parentId
@@ -200,7 +208,7 @@ angular
           .removeClass("etc")
 
         #------------------------
-        if (parent.data.draggable? && parent.data.draggable) || !parent.data.draggable?
+        if @data.draggable? && @data.draggable
           @parentScope.instance.draggable(parent_element, $.extend({}, @settings.draggable, {
             drag: (event, ui)=>
               @parentScope.instance.repaintEverything()
