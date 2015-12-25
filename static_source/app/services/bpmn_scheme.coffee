@@ -154,10 +154,6 @@ angular
         @scope.instance.batch ()=>
           log.debug 'instance batch'
 
-          # все элементы внутри контейнера буду подвижны
-          if @scope.settings.engine.status == 'editor'
-            @scope.instance.draggable(@container.find(".etc"), @scope.settings.draggable)
-
       connectPackageObjects: ()->
         if !@scope.extScheme?.connectors?
           return

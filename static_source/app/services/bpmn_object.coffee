@@ -16,6 +16,9 @@ angular
           container.find('img').on 'dragstart', (e)->
             e.preventDefault()
         when 'group'
+          if !($scope.data.resizable? && $scope.data.resizable)
+            break
+
           container.resizable
             minHeight: 100
             minWidth: 100
@@ -40,6 +43,9 @@ angular
 
               $scope.instance.repaintEverything()
         when 'swimlane'
+          if !($scope.data.resizable? && $scope.data.resizable)
+            break
+
           container.resizable
             minHeight: 200
             minWidth: 400
@@ -59,6 +65,9 @@ angular
                   container.css('width', h + 20)
               $scope.instance.repaintEverything()
         when 'swimlane-row'
+          if !($scope.data.resizable? && $scope.data.resizable)
+            break
+
           container.resizable
             minHeight: 200
             minWidth: 400
