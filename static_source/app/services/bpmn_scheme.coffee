@@ -59,6 +59,7 @@ angular
 
       setStatus: ()->
         if @scope.settings.engine.status == 'editor'
+          @initEditor()
           @container.addClass('editor')
         else
           @container.addClass('viewer')
@@ -69,6 +70,8 @@ angular
 
         @scope.extScheme = scheme
 
+      # настройки, тема оформеления, объекты
+      #------------------------------------------------------------------------------
       setSettings: (settings)->
         if !settings?
           settings = {}
@@ -79,8 +82,6 @@ angular
         @cacheTemplates()
         @objectsUpdate()
 
-      # load style
-      #------------------------------------------------------------------------------
       loadStyle: ()->
         theme_name = @scope.settings.engine.theme
         file = @scope.settings.theme.root_path + '/' + theme_name + '/style.css'
@@ -100,8 +101,6 @@ angular
         @wrapper.removeClass()
         @wrapper.addClass(@wrap_class + ' ' + theme_name)
 
-      # template caching
-      #------------------------------------------------------------------------------
       cacheTemplates: ()->
         if !@cache
           @cache = []
@@ -119,6 +118,8 @@ angular
               log.debug 'load template file:', templateUrl
               $templateCache.put(templateUrl, result)
 
+      # пакетная обработка объектов
+      #------------------------------------------------------------------------------
       makePackageObjects: (resolve)->
         # Создадим все объекты, сохраним указатели в массиве
         # потому как возможны перекрёстные ссылки
@@ -208,7 +209,23 @@ angular
 
           @scope.intScheme.connectors.push(@scope.instance.connect(points, @scope.settings.connector))
 
-      addObject: (object)->
+      addObjects: (objects)->
+        promise = []
+        newObjects = {}
+        angular.forEach objects, (object)=>
+          obj = new bpmnObjectFact(object, @scope)
+          if !@scope.intScheme.objects[object.id]
+            @scope.intScheme.objects[object.id] = obj
+            newObjects[object.id] = obj
+          promise.push(obj.elementPromise)
+
+        # Ждём когда прогрузятся все шаблоны
+        $q.all(promise).then ()=>
+          # проходим по массиву ранее созданных объектов,
+          # и добавляем в дом
+          angular.forEach newObjects, (object)=>
+            # добавляем объект в контейнер
+            object.appendTo(@container, @scope.settings.point)
 
       removeObject: (object)->
 
@@ -297,13 +314,31 @@ angular
 
       # editor
       #------------------------------------------------------------------------------
+      initEditor: ()->
+        @droppableInit()
+
       droppableInit: ()->
         @wrapper.droppable({
-          drop: (event, ui)->
+          drop: (event, ui)=>
             offset = @wrapper.offset()
             position =
               left: ui.position.left - offset.left - @container.position().left
               top: ui.position.top - offset.top - @container.position().top
+
+            type = $(ui.draggable).attr('entry-type')
+            if !type || type == ''
+              return
+
+            id = bpmnUuid.gen()
+            objects = []
+            if type == 'swimlane'
+
+            else if type == 'group'
+
+            else
+              objects.push($.extend(true, @scope.settings.baseObject, {id: id, type: {name: type}, draggable: true, position: position}))
+
+            @addObjects(objects)
         })
 
     bpmnScheme

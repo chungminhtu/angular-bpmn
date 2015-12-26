@@ -2,16 +2,13 @@
 
 angular
 .module('appControllers')
-.controller 'editorCtrl', ['$scope', 'bpmnScheme', '$log', 'bpmnSettings', 'bpmnMock'
-  ($scope, bpmnScheme, $log, bpmnSettings, bpmnMock) ->
+.controller 'editorCtrl', ['$scope', 'bpmnScheme', 'bpmnSettings', 'bpmnMock'
+  ($scope, bpmnScheme, bpmnSettings, bpmnMock) ->
 
     vm = this
-    vm.theme = 'orange'
-    vm.themes = bpmnSettings.theme.list
-    scheme = {}
+    scheme = bpmnMock.scheme1
     settings =
       engine:
-        theme: vm.theme
         status: 'editor'
 
     vm.palette =
@@ -110,16 +107,12 @@ angular
           ]
         }
       ]
-      settings: angular.extend({}, bpmnSettings, settings)
+      settings: $.extend(true, bpmnSettings, settings)
 
     instance = new bpmnScheme($('#scheme'))
     instance.setScheme(scheme)
     instance.setSettings(settings)
     instance.start()
-
-    $scope.themeChanged = ()->
-      settings.engine.theme = vm.theme
-      instance.setSettings(settings)
 
     vm
 ]

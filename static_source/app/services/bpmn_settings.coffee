@@ -189,6 +189,18 @@ angular
         width: 50
         height: 50
 
+  baseObject =
+    id: 0
+    type:
+      name: ''
+    position:
+      top: 0
+      left: 0
+    status: ''
+    error: ''
+    title: ''
+    description: ''
+
   template = (id)->
     if templates[id]?
       return templates[id]
@@ -206,4 +218,5 @@ angular
     target: targetSettings
     template: template
     templates: templates
+    baseObject: baseObject
   }

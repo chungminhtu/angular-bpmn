@@ -9,6 +9,6 @@ angular
     scope:
       bpmnPalette: '='
     template: '<div class="group" ng-repeat="group in bpmnPalette.groups" data-group="{{::group.name}}">
-<div class="entry" ng-repeat="entry in group.items" ng-class="[entry.class]" bpmn-palette-draggable="entry" settings="bpmnPalette.settings"></div>'
+<div class="entry" ng-repeat="entry in group.items" ng-class="[entry.class]" bpmn-palette-draggable="entry" entry-type="{{entry.type.name}}" settings="bpmnPalette.settings"></div>'
     link: ($scope, element, attrs) ->
   ]

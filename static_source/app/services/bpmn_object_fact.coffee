@@ -150,10 +150,9 @@ angular
 
         # Проверим конфиг, если указаны родители, подключимся к ним
         if !@data.parent? || @data.parent == ''
-          if @data.draggable? && @data.draggable
+          if @data.draggable? && @data.draggable || @settings.engine.status == 'editor'
             @parentScope.instance.draggable(@element, $.extend({}, @settings.draggable, {
-              stop: (event, ui)->
-                # update position info
+              stop: (event)=>
                 @position.left = event.pos[0]
                 @position.top = event.pos[1]
             }))
@@ -172,16 +171,10 @@ angular
 
         parentId = @setParent(parent)
         #------------------------
-        if @data.draggable? && @data.draggable
-
+        if @data.draggable? && @data.draggable || @settings.engine.status == 'editor'
           @parentScope.instance.draggable(@element, $.extend({}, @settings.draggable, {
             containment: parentId
-            drag: (event, ui)->
-#              $log.debug 'child dragging'
-#              instance.repaintEverything()
-            stop: (event, ui)->
-
-              # update position info
+            stop: (event)=>
               @position.left = event.pos[0]
               @position.top = event.pos[1]
 
@@ -208,14 +201,11 @@ angular
           .removeClass("etc")
 
         #------------------------
-        if @data.draggable? && @data.draggable
+        if @data.draggable? && @data.draggable || @settings.engine.status == 'editor'
           @parentScope.instance.draggable(parent_element, $.extend({}, @settings.draggable, {
             drag: (event, ui)=>
               @parentScope.instance.repaintEverything()
-#            $log.debug 'parent dragging'
-
-            stop: (event, ui)=>
-              # update position info
+            stop: (event)=>
               @position.left = event.pos[0]
               @position.top = event.pos[1]
 
