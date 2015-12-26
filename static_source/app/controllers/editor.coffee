@@ -87,8 +87,8 @@ angular
               type:
                 name: 'group'
               title: 'group'
-              class: 'bpmn-icon-task-none'
-              tooltip: 'Create task'
+              class: 'bpmn-icon-subprocess-expanded'
+              tooltip: 'Create group'
               shape: bpmnSettings.template('group')
             }
           ]

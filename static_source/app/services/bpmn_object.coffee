@@ -16,7 +16,7 @@ angular
           container.find('img').on 'dragstart', (e)->
             e.preventDefault()
         when 'group'
-          if !($scope.data.resizable? && $scope.data.resizable)
+          if !($scope.data.resizable? && $scope.data.resizable) && $scope.object.settings.engine.status != 'editor'
             break
 
           container.resizable
@@ -43,7 +43,7 @@ angular
 
               $scope.instance.repaintEverything()
         when 'swimlane'
-          if !($scope.data.resizable? && $scope.data.resizable)
+          if !($scope.data.resizable? && $scope.data.resizable) && $scope.object.settings.engine.status != 'editor'
             break
 
           container.resizable
@@ -65,7 +65,7 @@ angular
                   container.css('width', h + 20)
               $scope.instance.repaintEverything()
         when 'swimlane-row'
-          if !($scope.data.resizable? && $scope.data.resizable)
+          if !($scope.data.resizable? && $scope.data.resizable) && $scope.object.settings.engine.status != 'editor'
             break
 
           container.resizable

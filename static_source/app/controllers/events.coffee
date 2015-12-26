@@ -231,6 +231,7 @@ angular
           left += 49
       top += 50
 
+    log.debug $scope.scheme
     instance = new bpmnScheme($('#events'))
     instance.setScheme($scope.scheme)
     instance.setSettings(settings)

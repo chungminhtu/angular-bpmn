@@ -210,6 +210,9 @@ angular
           @scope.intScheme.connectors.push(@scope.instance.connect(points, @scope.settings.connector))
 
       addObjects: (objects)->
+        if !objects || objects == ''
+          return
+
         promise = []
         newObjects = {}
         angular.forEach objects, (object)=>
@@ -325,18 +328,19 @@ angular
               left: ui.position.left - offset.left - @container.position().left
               top: ui.position.top - offset.top - @container.position().top
 
+            # type update
+            #----------------
             type = $(ui.draggable).attr('entry-type')
+            data_group = $(ui.draggable).parent().attr('data-group')
             if !type || type == ''
               return
 
             id = bpmnUuid.gen()
             objects = []
-            if type == 'swimlane'
-
-            else if type == 'group'
+            if data_group == 'swimlane'
 
             else
-              objects.push($.extend(true, @scope.settings.baseObject, {id: id, type: {name: type}, draggable: true, position: position}))
+              objects.push($.extend(true, angular.copy(@scope.settings.baseObject), {id: id, type: JSON.parse(type), draggable: true, position: position}))
 
             @addObjects(objects)
         })

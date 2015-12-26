@@ -14,9 +14,10 @@ angular
       data = $scope.bpmnPaletteDraggable
       template = {}
 
-      helper = data.shape.helper || data.shape.templateUrl
-      if helper
-        elementPromise = $templateRequest($scope.settings.theme.root_path + '/' + $scope.settings.engine.theme + '/' + helper)
+      if data.shape.helper
+        template = $compile(data.shape.helper)($scope)
+      else if data.shape.templateUrl
+        elementPromise = $templateRequest($scope.settings.theme.root_path + '/' + $scope.settings.engine.theme + '/' + data.shape.templateUrl)
         elementPromise.then (result)->
           template = $compile('<div ng-class="[bpmnPaletteDraggable.type.name]">'+result+'</div>')($scope)
 

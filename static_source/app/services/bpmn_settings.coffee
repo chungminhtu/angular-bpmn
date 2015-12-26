@@ -139,7 +139,7 @@ angular
         width: 52
         height: 52
     group:
-      template: '<div bpmn-object class="group etc draggable" ng-style="{width: data.width, height: data.height}" ng-class="{ dashed : data.style == \'dashed\', solid : data.style == \'solid\' }">
+      template: '<div bpmn-object class="group solid etc draggable" ng-style="{width: data.width, height: data.height}" ng-class="{ dashed : data.style == \'dashed\', solid : data.style == \'solid\' }">
           <div class="title">{{data.title}}</div>
         </div>'
       anchor: []
@@ -148,6 +148,7 @@ angular
       size:
         width: 'auto'
         height: 'auto'
+      helper: '<div class="bpmn-icon-subprocess-expanded" style="font-size: 33px"></div>'
     swimlane:
       template: '<div bpmn-object class="swimlane etc draggable" ng-style="{ width: data.width }"></div>'
       anchor: []
@@ -156,6 +157,7 @@ angular
       size:
         width: 'auto'
         height: 'auto'
+      helper: '<div class="bpmn-icon-participant" style="font-size: 33px"></div>'
     'swimlane-row':
       template: '<div bpmn-object class="swimlane-row" ng-style="{width: \'100%\', height: data.height }">
           <div class="header"><div class="text">{{data.title}}</div></div>
