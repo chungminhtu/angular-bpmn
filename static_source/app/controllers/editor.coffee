@@ -60,9 +60,9 @@ angular
                 start:
                   0:
                     0: true
-              title: 'xor'
+              title: 'gateway'
               class: 'bpmn-icon-gateway-xor'
-              tooltip: 'Create xor gateway'
+              tooltip: 'Create gateway'
               shape: bpmnSettings.template('gateway')
             }
           ]

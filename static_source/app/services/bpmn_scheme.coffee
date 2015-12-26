@@ -338,7 +338,20 @@ angular
             id = bpmnUuid.gen()
             objects = []
             if data_group == 'swimlane'
-
+              objects.push($.extend(true, angular.copy(@scope.settings.baseObject), {
+                id: id
+                type:
+                  name: 'swimlane'
+                draggable: false
+                position: position
+              }))
+              objects.push($.extend(true, angular.copy(@scope.settings.baseObject), {
+                id: bpmnUuid.gen()
+                parent: id
+                type:
+                  name: 'swimlane-row'
+                draggable: false
+              }))
             else
               objects.push($.extend(true, angular.copy(@scope.settings.baseObject), {id: id, type: JSON.parse(type), draggable: true, position: position}))
 
