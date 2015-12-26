@@ -1486,6 +1486,9 @@ angular.module('angular-bpmn').directive('bpmnObject', [
               });
               break;
             case 'group':
+              if (!(($scope.data.resizable != null) && $scope.data.resizable)) {
+                break;
+              }
               container.resizable({
                 minHeight: 100,
                 minWidth: 100,
@@ -1514,6 +1517,9 @@ angular.module('angular-bpmn').directive('bpmnObject', [
               });
               break;
             case 'swimlane':
+              if (!(($scope.data.resizable != null) && $scope.data.resizable)) {
+                break;
+              }
               container.resizable({
                 minHeight: 200,
                 minWidth: 400,
@@ -1539,6 +1545,9 @@ angular.module('angular-bpmn').directive('bpmnObject', [
               });
               break;
             case 'swimlane-row':
+              if (!(($scope.data.resizable != null) && $scope.data.resizable)) {
+                break;
+              }
               container.resizable({
                 minHeight: 200,
                 minWidth: 400,
@@ -1758,6 +1767,14 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
       schemeObject.prototype.checkParent = function() {
         var parent, parentId;
         if ((this.data.parent == null) || this.data.parent === '') {
+          if ((this.data.draggable != null) && this.data.draggable) {
+            this.parentScope.instance.draggable(this.element, $.extend({}, this.settings.draggable, {
+              stop: function(event, ui) {
+                this.position.left = event.pos[0];
+                return this.position.top = event.pos[1];
+              }
+            }));
+          }
           return;
         }
         parent = null;
@@ -1773,7 +1790,7 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
         }
         this.element.removeClass("etc");
         parentId = this.setParent(parent);
-        if (((this.data.draggable != null) && this.data.draggable) || (this.data.draggable == null)) {
+        if ((this.data.draggable != null) && this.data.draggable) {
           return this.parentScope.instance.draggable(this.element, $.extend({}, this.settings.draggable, {
             containment: parentId,
             drag: function(event, ui) {},
@@ -1802,7 +1819,7 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
           return id;
         }
         parent_element.addClass(id).removeClass("etc");
-        if (((parent.data.draggable != null) && parent.data.draggable) || (parent.data.draggable == null)) {
+        if ((this.data.draggable != null) && this.data.draggable) {
           return this.parentScope.instance.draggable(parent_element, $.extend({}, this.settings.draggable, {
             drag: (function(_this) {
               return function(event, ui) {
@@ -2154,10 +2171,7 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
       bpmnScheme.prototype.instanceBatch = function() {
         return this.scope.instance.batch((function(_this) {
           return function() {
-            log.debug('instance batch');
-            if (_this.scope.settings.engine.status === 'editor') {
-              return _this.scope.instance.draggable(_this.container.find(".etc"), _this.scope.settings.draggable);
-            }
+            return log.debug('instance batch');
           };
         })(this));
       };
@@ -2522,6 +2536,68 @@ angular.module('angular-bpmn').factory('bpmnSettings', function() {
     templates: templates
   };
 });
+
+'use strict';
+(function() {
+  'use strict';
+  window.lsTooltip = {
+    timeout: 0,
+    init: function() {
+      $(document).on('mouseover', '[data-help]', function() {
+        var el;
+        el = this;
+        lsTooltip.timeout = setTimeout((function() {
+          lsTooltip.open(el);
+        }), 400);
+      });
+      $(document).on('mouseout', '[data-help]', function() {
+        clearTimeout(lsTooltip.timeout);
+        lsTooltip.close();
+      });
+    },
+    destroy: function() {
+      $(document).off('mouseover', '[data-help]');
+      $(document).off('mouseout', '[data-help]');
+    },
+    open: function(el) {
+      var e_l, e_t, e_w, t_h, t_w, tooltip, v_w;
+      $('body').prepend($('<div>', {
+        'class': 'ls-tooltip'
+      }).append($('<div>', {
+        'class': 'inner'
+      })).append($('<span>')));
+      tooltip = $('.ls-tooltip');
+      tooltip.find('.inner').html($(el).data('help'));
+      v_w = $(window).width();
+      e_w = $(el).width();
+      e_l = $(el).offset().left;
+      e_t = $(el).offset().top;
+      t_w = tooltip.outerWidth();
+      t_h = tooltip.outerHeight();
+      tooltip.css({
+        top: e_t - t_h - 10,
+        left: e_l - ((t_w - e_w) / 2)
+      });
+      if (tooltip.offset().left + t_w > v_w) {
+        tooltip.css({
+          'left': 'auto',
+          'right': 10
+        });
+        tooltip.find('span').css({
+          left: 'auto',
+          right: v_w - ($(el).offset().left) - ($(el).outerWidth() / 2) - 17,
+          marginLeft: 'auto'
+        });
+      }
+    },
+    close: function() {
+      $('.ls-tooltip').remove();
+    }
+  };
+  $(document).ready(function() {
+    window.lsTooltip.init();
+  });
+})();
 
 'use strict';
 angular.module('angular-bpmn').factory('bpmnUuid', function() {

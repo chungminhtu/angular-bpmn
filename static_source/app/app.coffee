@@ -33,6 +33,7 @@ angular.module('app')
       .when '/update_scheme_data',                'base.update_scheme_data'
       .when '/process_monitor',                   'base.process_monitor'
       .when '/themes',                            'base.themes'
+      .when '/editor',                            'base.editor'
 
       .segment 'base',
         templateUrl: '/templates/base.html'
@@ -96,6 +97,11 @@ angular.module('app')
         templateUrl: '/templates/themes.html'
         controller: 'themesCtrl'
         controllerAs: 'ctrl'
+
+      .segment 'editor',
+        templateUrl: '/templates/editor.html'
+        controller: 'editorCtrl'
+        controllerAs: 'editor'
 
     $locationProvider.html5Mode
       enabled: true

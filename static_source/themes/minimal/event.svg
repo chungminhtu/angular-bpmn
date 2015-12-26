@@ -1,5 +1,10 @@
 <svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="40" width="40" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
 
+ <!--default value-->
+ <g ng-if="!data.type['end'] && !data.type['intermediate'] && !data.type['start']" class="default" transform="translate(2,2)">
+    <circle stroke-width="2px" d="M 36,18 C 36,27.941125 27.941125,36 18,36 8.0588745,36 0,27.941125 0,18 0,8.0588745 8.0588745,0 18,0 27.941125,0 36,8.0588745 36,18 z" cx="18" stroke="#000" cy="18" r="18" fill="#FFF"/>
+ </g>
+
  <!-- end -->
  <g ng-if="data.type['end']" transform="translate(2,2)" >
   <circle class="end" stroke-width="4px" d="M 36,18 C 36,27.941125 27.941125,36 18,36 8.0588745,36 0,27.941125 0,18 0,8.0588745 8.0588745,0 18,0 27.941125,0 36,8.0588745 36,18 z" cx="18" cy="18" stroke="#000" r="18" fill="#FFF"/>

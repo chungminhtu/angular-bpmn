@@ -1,0 +1,17 @@
+-#editor
+
+%h3
+  Themes
+
+.bpmn-wrapper
+  .palette-entries.popup(bpmn-palette="editor.palette")
+  #scheme.scheme(style="height:400px;")
+
+%form.form-horizontal
+  .form-group
+    %label.control-label.col-lg-2
+      select theme:
+    .col-lg-10
+      %select.form-control(ng-model="editor.theme" ng-change="themeChanged()" style="width: auto;" data-help="select theme" )
+        %option(ng-repeat="them in editor.themes" value="{{them}}")
+          {{them}}

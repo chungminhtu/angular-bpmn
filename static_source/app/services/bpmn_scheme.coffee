@@ -285,5 +285,16 @@ angular
           @destroy()
         @start()
 
+      # editor
+      #------------------------------------------------------------------------------
+      droppableInit: ()->
+        @wrapper.droppable({
+          drop: (event, ui)->
+            offset = @wrapper.offset()
+            position =
+              left: ui.position.left - offset.left - @container.position().left
+              top: ui.position.top - offset.top - @container.position().top
+        })
+
     bpmnScheme
   ]
