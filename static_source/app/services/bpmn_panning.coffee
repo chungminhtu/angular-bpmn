@@ -33,7 +33,7 @@ angular
           left: -45
         })
 
-        @wrapper.append($compile('<div class="zoom-info">x{{zoom}}</div>')(@scope))
+        @wrapper.append($compile('<div class="zoom-info" data-help="zoom">x{{zoom}}</div>')(@scope))
 
         drag =
           x: 0

@@ -49,8 +49,13 @@ angular
         @scope.selected = []
         @scope.zoom = 1
         @setSettings(settings)
+        @scope.changeTheme = @changeTheme
 
         @wrapper.append('<div class="page-loader"><div class="spinner">loading...</div></div>')
+        @wrapper.append($compile('<div ng-if="settings.engine.container.theme_selector" class="theme-selector entry">
+<select class="form-control" ng-model="settings.engine.theme" ng-change="changeTheme()" style="width: auto;" data-help="select theme">
+<option ng-repeat="them in settings.theme.list" value="{{them}}">{{them}}</option></select>
+</div>')(@scope))
 
       setStatus: ()->
         if @scope.settings.engine.status == 'editor'
@@ -284,6 +289,11 @@ angular
         if @isStarted?
           @destroy()
         @start()
+
+      changeTheme: ()=>
+        @loadStyle()
+        @cacheTemplates()
+        @objectsUpdate()
 
       # editor
       #------------------------------------------------------------------------------

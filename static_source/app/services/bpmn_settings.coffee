@@ -17,6 +17,7 @@ angular
       zoom: true
       movable: true
       minimap: false
+      theme_selector: true
 
   instanceSettings =
     DragOptions:

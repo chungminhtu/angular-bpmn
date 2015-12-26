@@ -7,6 +7,7 @@
 @zLabel: 30;
 @zDraggable: 35;
 @zPageLoader: 40;
+@zControls: 50;
 
 @import 'tooltip';
 @import 'icons';
@@ -45,11 +46,20 @@
 
   .zoom-info {
     position: absolute;
+    z-index: @zControls;
     top: 10px;
     right: 25px;
     font-size: 25px;
     font-style: italic;
     color: #5d5d5d;
+    opacity: 0.3;
+  }
+
+  .theme-selector {
+    position: absolute;
+    z-index: @zControls;
+    top: 10px;
+    right: 90px;
     opacity: 0.3;
   }
 }

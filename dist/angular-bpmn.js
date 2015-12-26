@@ -1876,6 +1876,52 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
 ]);
 
 'use strict';
+angular.module('angular-bpmn').directive('bpmnPalette', [
+  'log', '$timeout', '$templateCache', '$compile', '$templateRequest', '$q', function(log, $timeout, $templateCache, $compile, $templateRequest, $q) {
+    return {
+      restrict: 'A',
+      scope: {
+        bpmnPalette: '='
+      },
+      template: '<div class="group" ng-repeat="group in bpmnPalette.groups" data-group="{{::group.name}}"> <div class="entry" ng-repeat="entry in group.items" ng-class="[entry.class]" bpmn-palette-draggable="entry" settings="bpmnPalette.settings"></div>',
+      link: function($scope, element, attrs) {}
+    };
+  }
+]);
+
+'use strict';
+angular.module('angular-bpmn').directive('bpmnPaletteDraggable', [
+  'log', '$timeout', '$templateCache', '$compile', '$templateRequest', function(log, $timeout, $templateCache, $compile, $templateRequest) {
+    return {
+      restrict: 'A',
+      scope: {
+        bpmnPaletteDraggable: '=',
+        settings: '=settings'
+      },
+      link: function($scope, element, attrs) {
+        var container, data, elementPromise, helper, template;
+        container = $(element);
+        data = $scope.bpmnPaletteDraggable;
+        template = {};
+        helper = data.shape.helper || data.shape.templateUrl;
+        if (helper) {
+          elementPromise = $templateRequest($scope.settings.theme.root_path + '/' + $scope.settings.engine.theme + '/' + helper);
+          elementPromise.then(function(result) {
+            return template = $compile('<div ng-class="[bpmnPaletteDraggable.type.name]">' + result + '</div>')($scope);
+          });
+        }
+        return container.draggable({
+          helper: function() {
+            return template;
+          },
+          appendTo: "body"
+        });
+      }
+    };
+  }
+]);
+
+'use strict';
 angular.module('angular-bpmn').factory('bpmnPanning', [
   'log', '$compile', '$timeout', function(log, $compile, $timeout) {
     var bpmnPanning;
@@ -1917,7 +1963,7 @@ angular.module('angular-bpmn').factory('bpmnPanning', [
             if (!_this.scope.settings.engine.container.movable) {
               return;
             }
-            if ($(e.target).hasClass('ui-resizable-handle') || $(e.target).hasClass('viewport') || $(e.target).hasClass('minimap')) {
+            if ($(e.target).hasClass('ui-resizable-handle') || $(e.target).hasClass('entry') || $(e.target).hasClass('viewport') || $(e.target).hasClass('minimap')) {
               return;
             }
             if (!drag.state && e.which === LEFT_MB) {
@@ -2324,6 +2370,19 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
           this.destroy();
         }
         return this.start();
+      };
+
+      bpmnScheme.prototype.droppableInit = function() {
+        return this.wrapper.droppable({
+          drop: function(event, ui) {
+            var offset, position;
+            offset = this.wrapper.offset();
+            return position = {
+              left: ui.position.left - offset.left - this.container.position().left,
+              top: ui.position.top - offset.top - this.container.position().top
+            };
+          }
+        });
       };
 
       return bpmnScheme;
