@@ -22,7 +22,7 @@
     "angular-resource": "~1.4.3",
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.5",
-    "jsPlumb": "sporritt/jsplumb#~2.0.4",
+    "jsPlumb": "sporritt/jsplumb#~2.0.5",
     "jquery-mousewheel": "~3.1.13",
     "jquery-ui": "~1.11.4",
     "animate.css": "daneden/animate.css#*"

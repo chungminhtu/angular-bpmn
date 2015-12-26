@@ -19,6 +19,6 @@
   "dependencies": {
     "angular": "~1.4.7",
     "jquery": "~2.1.4",
-    "jsPlumb": "sporritt/jsplumb#~2.0.4"
+    "jsPlumb": "sporritt/jsplumb#~2.0.5"
   }
 }
