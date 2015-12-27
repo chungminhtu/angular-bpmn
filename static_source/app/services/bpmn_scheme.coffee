@@ -29,6 +29,8 @@ angular
       fullscreen: null
 
       constructor: (container, settings)->
+        super
+
 #        set unique id
         @id = bpmnUuid.gen()
 
@@ -143,18 +145,6 @@ angular
             # добавляем объект в контейнер
             object.appendTo(@container, @scope.settings.point)
 
-            # left button click event
-            @scope.instance.off object.element
-            @scope.instance.on object.element, 'click', ()=>
-              @scope.selected = []
-              @scope.$apply(
-                @scope.selected.push(object.data.id)
-              )
-
-              @deselectAll()
-
-              object.select(true)
-
           @instanceBatch()
           @connectPackageObjects()
 
@@ -214,29 +204,6 @@ angular
             ]
 
           @scope.intScheme.connectors.push(@scope.instance.connect(points, @scope.settings.connector))
-
-      addObjects: (objects)->
-        if !objects || objects == ''
-          return
-
-        promise = []
-        newObjects = {}
-        angular.forEach objects, (object)=>
-          obj = new bpmnObjectFact(object, @scope)
-          if !@scope.intScheme.objects[object.id]
-            @scope.intScheme.objects[object.id] = obj
-            newObjects[object.id] = obj
-          promise.push(obj.elementPromise)
-
-        # Ждём когда прогрузятся все шаблоны
-        $q.all(promise).then ()=>
-          # проходим по массиву ранее созданных объектов,
-          # и добавляем в дом
-          angular.forEach newObjects, (object)=>
-            # добавляем объект в контейнер
-            object.appendTo(@container, @scope.settings.point)
-
-      removeObject: (object)->
 
       deselectAll: ()->
         angular.forEach @scope.intScheme.objects, (object)->

@@ -307,6 +307,11 @@ angular
       }
     ]
 
+  keyboardBinds =
+    'delete':
+      name: 'delete'
+      callback: 'removeObject'
+
   {
     theme: themeSettings
     engine: engineSettings
@@ -320,4 +325,5 @@ angular
     templates: templates
     baseObject: baseObject
     editorPallet: editorPallet
+    keyboard: keyboardBinds
   }

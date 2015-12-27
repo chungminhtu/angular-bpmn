@@ -27,7 +27,7 @@
     "jquery-ui": "~1.11.4",
     "animate.css": "daneden/animate.css#*",
     "jQuery-contextMenu": "~2.0.1",
-    "jquery.hotkeys": "*"
+    "keymaster": "~1.6.3"
   },
   "overrides": {
     "jquery": {

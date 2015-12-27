@@ -111,6 +111,26 @@ angular
         else
           log.error '@size is null, element:', @element
 
+        # bind select event
+        @parentScope.instance.off @element
+        @parentScope.instance.on @element, 'click', ()=>
+
+          shift = false
+          if key.getPressedKeyCodes().indexOf(16) > -1
+            shift = true
+
+          @parentScope.selected = [] if !shift
+          @parentScope.$apply(
+            @parentScope.selected.push(@data.id)
+          )
+
+          # deselect all
+          if !shift
+            angular.forEach @parentScope.intScheme.objects, (object)->
+              object.select(false)
+
+          @select(true)
+
         @checkParent()
 
         # генерируем точки соединений для нового объекта
@@ -123,6 +143,17 @@ angular
           $(@element).addClass("selected")
         else
           $(@element).removeClass("selected")
+
+      elementOffset: ()->
+        p = $(@element).position()
+        top = p.top
+        left = p.left
+        return {
+          top: top
+          left: left
+          right: top + @size.width
+          bottom: left + @size.height
+        }
 
       getId: ()->
         if !@id?
