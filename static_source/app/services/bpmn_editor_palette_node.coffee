@@ -22,6 +22,7 @@ angular
           template = $compile('<div class="helper" ng-class="[bpmnEditorPaletteNode.type.name]">'+result+'</div>')($scope)
 
       container.draggable({
+        grid: $scope.settings.draggable.grid
         helper: ()->
           template
 #        appendTo: "body"

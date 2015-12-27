@@ -284,7 +284,7 @@ angular
           @wrapper.resizable
             minHeight: 200
             minWidth: 400
-            grid: 10
+            grid: @scope.settings.draggable.grid
             handles: 's'
 
         @stopListen = @scope.$on '$routeChangeSuccess', ()=>
