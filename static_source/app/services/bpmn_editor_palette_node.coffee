@@ -13,6 +13,7 @@ angular
       container = $(element)
       data = $scope.bpmnEditorPaletteNode
       template = {}
+      zoom = 1
 
       if data.shape.helper
         template = $compile('<div class="helper">'+data.shape.helper+'</div>')($scope)
@@ -21,10 +22,20 @@ angular
         elementPromise.then (result)->
           template = $compile('<div class="helper" ng-class="[bpmnEditorPaletteNode.type.name]">'+result+'</div>')($scope)
 
+      #TODO update zoom
       container.draggable({
         grid: $scope.settings.draggable.grid
         helper: ()->
-          template
+          template.css({
+            '-webkit-transform':zoom
+            '-moz-transform':'scale('+zoom+')'
+            '-ms-transform':'scale('+zoom+')'
+            '-o-transform':'scale('+zoom+')'
+            'transform':'scale('+zoom+')'
+          })
 #        appendTo: "body"
       })
+
+      $scope.$parent.$parent.$parent.$parent.$watch 'zoom', (val, old_val)->
+        zoom = val
 ]

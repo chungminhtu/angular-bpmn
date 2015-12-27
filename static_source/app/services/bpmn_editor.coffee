@@ -29,8 +29,8 @@ angular
           drop: (event, ui)=>
             offset = @wrapper.offset()
             position =
-              left: ui.position.left - @container.position().left + 20
-              top: ui.position.top - @container.position().top + 20
+              left: (ui.offset.left - offset.left - @container.position().left) / @scope.zoom
+              top: (ui.offset.top - offset.top - @container.position().top) / @scope.zoom
 
             # type update
             #----------------

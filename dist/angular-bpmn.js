@@ -10,6 +10,8 @@ angular.module('angular-bpmn').run([
 ]);
 
 'use strict';
+var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
 angular.module('angular-bpmn').factory('bpmnEditor', [
   'log', 'bpmnUuid', '$compile', 'bpmnObjectFact', '$q', function(log, bpmnUuid, $compile, bpmnObjectFact, $q) {
     var bpmnEditor;
@@ -24,7 +26,9 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
 
       bpmnEditor.prototype.mouseover = null;
 
-      function bpmnEditor(container, settings) {}
+      function bpmnEditor(container, settings) {
+        this.removeObject = bind(this.removeObject, this);
+      }
 
       bpmnEditor.prototype.initEditor = function() {
         if (!this.pallet) {
@@ -32,7 +36,12 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
           this.pallet = this.wrapper.find('.palette-entries');
         }
         this.droppableInit();
-        return this.keyboardBindings();
+        this.keyboardBindings();
+        return this.wrapper.on('mousedown', (function(_this) {
+          return function() {
+            return _this.deselectAll();
+          };
+        })(this));
       };
 
       bpmnEditor.prototype.droppableInit = function() {
@@ -41,9 +50,10 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
             return function(event, ui) {
               var data_group, id, objects, offset, position, type;
               offset = _this.wrapper.offset();
+              log.debug(ui);
               position = {
-                left: ui.position.left - _this.container.position().left + 20,
-                top: ui.position.top - _this.container.position().top + 20
+                left: (ui.offset.left - offset.left - _this.container.position().left) / _this.scope.zoom,
+                top: (ui.offset.top - offset.top - _this.container.position().top) / _this.scope.zoom
               };
               type = $(ui.draggable).attr('entry-type');
               data_group = $(ui.draggable).parent().attr('data-group');
@@ -104,21 +114,13 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
         return $q.all(promise).then((function(_this) {
           return function() {
             return angular.forEach(newObjects, function(object) {
-              object.appendTo(_this.container, _this.scope.settings.point);
-              _this.scope.instance.off(object.element);
-              return _this.scope.instance.on(object.element, 'click', function() {
-                _this.scope.selected = [];
-                _this.scope.$apply(_this.scope.selected.push(object.data.id));
-                _this.deselectAll();
-                return object.select(true);
-              });
+              return object.appendTo(_this.container, _this.scope.settings.point);
             });
           };
         })(this));
       };
 
       bpmnEditor.prototype.removeObject = function(scope) {
-        log.debug('remove elements ');
         if (!scope || !scope.selected) {
           return;
         }
@@ -131,7 +133,8 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
             });
           };
         })(this));
-        return scope.selected = [];
+        scope.selected = [];
+        return this.serialise(scope);
       };
 
       bpmnEditor.prototype.keyboardBindings = function() {
@@ -156,13 +159,68 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
             if (typeof fn !== 'function') {
               return;
             }
-            return key(key_id, function(e) {
-              if (this.mouseover) {
-                return fn.apply(null, [this.scope]);
+            return key(key_id, function(event, handler) {
+              if (_this.mouseover) {
+                event.preventDefault();
+                return fn.apply(null, [_this.scope]);
               }
             });
           };
         })(this));
+      };
+
+      bpmnEditor.prototype.selectElementByAabb = function(t, l, w, h) {
+        this.scope.selected = [];
+        angular.forEach(this.scope.intScheme.objects, function(object) {
+          var itemOffset;
+          itemOffset = object.elementOffset();
+          if (itemOffset.top >= t && itemOffset.left >= l && itemOffset.right < l + w && itemOffset.bottom < t + h) {
+            this.scope.selected.push(object.data.id);
+            object.select(true);
+            return object.group('select');
+          } else {
+            return object.select(false);
+          }
+        });
+        return this.scope.$apply();
+      };
+
+      bpmnEditor.prototype.selectElementByPoint = function(t, l) {
+        var itemOffset, object, results;
+        this.scope.selected = [];
+        results = [];
+        for (object in this.scope.intScheme.objects) {
+          itemOffset = object.elementOffset();
+          if (itemOffset.top <= t && itemOffset.left <= l && itemOffset.right >= l && itemOffset.bottom >= t) {
+            this.scope.selected.push(object.data.id);
+            break;
+          } else {
+            results.push(void 0);
+          }
+        }
+        return results;
+      };
+
+      bpmnEditor.prototype.serialise = function(scope) {
+        var objects;
+        objects = [];
+        angular.forEach(scope.intScheme.objects, function(obj) {
+          return objects.push({
+            id: obj.data.id,
+            type: obj.data.type,
+            position: obj.position,
+            status: '',
+            error: '',
+            title: obj.data.title,
+            description: obj.data.description
+          });
+        });
+        return this.scope.$apply(this.scope.extScheme.objects = objects);
+      };
+
+      bpmnEditor.prototype.getScheme = function() {
+        this.serialise(this.scope.intScheme.objects);
+        return this.scope.extScheme;
       };
 
       return bpmnEditor;
@@ -197,10 +255,11 @@ angular.module('angular-bpmn').directive('bpmnEditorPaletteNode', [
         settings: '=settings'
       },
       link: function($scope, element, attrs) {
-        var container, data, elementPromise, template;
+        var container, data, elementPromise, template, zoom;
         container = $(element);
         data = $scope.bpmnEditorPaletteNode;
         template = {};
+        zoom = 1;
         if (data.shape.helper) {
           template = $compile('<div class="helper">' + data.shape.helper + '</div>')($scope);
         } else if (data.shape.templateUrl) {
@@ -209,11 +268,20 @@ angular.module('angular-bpmn').directive('bpmnEditorPaletteNode', [
             return template = $compile('<div class="helper" ng-class="[bpmnEditorPaletteNode.type.name]">' + result + '</div>')($scope);
           });
         }
-        return container.draggable({
+        container.draggable({
           grid: $scope.settings.draggable.grid,
           helper: function() {
-            return template;
+            return template.css({
+              '-webkit-transform': zoom,
+              '-moz-transform': 'scale(' + zoom + ')',
+              '-ms-transform': 'scale(' + zoom + ')',
+              '-o-transform': 'scale(' + zoom + ')',
+              'transform': 'scale(' + zoom + ')'
+            });
           }
+        });
+        return $scope.$parent.$parent.$parent.$parent.$watch('zoom', function(val, old_val) {
+          return zoom = val;
         });
       }
     };
@@ -2011,6 +2079,26 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
         } else {
           log.error('@size is null, element:', this.element);
         }
+        this.parentScope.instance.off(this.element);
+        this.parentScope.instance.on(this.element, 'click', (function(_this) {
+          return function() {
+            var shift;
+            shift = false;
+            if (key.getPressedKeyCodes().indexOf(16) > -1) {
+              shift = true;
+            }
+            if (!shift) {
+              _this.parentScope.selected = [];
+            }
+            _this.parentScope.$apply(_this.parentScope.selected.push(_this.data.id));
+            if (!shift) {
+              angular.forEach(_this.parentScope.intScheme.objects, function(object) {
+                return object.select(false);
+              });
+            }
+            return _this.select(true);
+          };
+        })(this));
         this.checkParent();
         this.generateAnchor(options);
         return this.setDraggable(this.draggable);
@@ -2022,6 +2110,19 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
         } else {
           return $(this.element).removeClass("selected");
         }
+      };
+
+      schemeObject.prototype.elementOffset = function() {
+        var left, p, top;
+        p = $(this.element).position();
+        top = p.top;
+        left = p.left;
+        return {
+          top: top,
+          left: left,
+          right: top + this.size.width,
+          bottom: left + this.size.height
+        };
       };
 
       schemeObject.prototype.getId = function() {
@@ -2451,28 +2552,12 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         return $q.all(promise).then((function(_this) {
           return function() {
             angular.forEach(_this.scope.intScheme.objects, function(object) {
-              object.appendTo(_this.container, _this.scope.settings.point);
-              _this.scope.instance.off(object.element);
-              return _this.scope.instance.on(object.element, 'click', function() {
-                _this.scope.selected = [];
-                _this.scope.$apply(_this.scope.selected.push(object.data.id));
-                _this.deselectAll();
-                return object.select(true);
-              });
+              return object.appendTo(_this.container, _this.scope.settings.point);
             });
-            _this.instanceBatch();
             _this.connectPackageObjects();
             _this.isStarted = true;
             _this.wrapper.find(".page-loader").fadeOut("slow");
             return resolve();
-          };
-        })(this));
-      };
-
-      bpmnScheme.prototype.instanceBatch = function() {
-        return this.scope.instance.batch((function(_this) {
-          return function() {
-            return log.debug('instance batch');
           };
         })(this));
       };
@@ -2564,17 +2649,6 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         this.cacheTemplates();
         this.container.addClass('bpmn');
         this.setStatus();
-        if (this.schemeWatch) {
-          this.schemeWatch();
-        }
-        this.schemeWatch = this.scope.$watch('extScheme', (function(_this) {
-          return function(val, old_val) {
-            if (val === old_val) {
-              return;
-            }
-            return _this.restart();
-          };
-        })(this));
         $q.all(this.cache).then((function(_this) {
           return function() {
             return _this.makePackageObjects(resolve);
@@ -2951,7 +3025,7 @@ angular.module('angular-bpmn').factory('bpmnSettings', function() {
     ]
   };
   keyboardBinds = {
-    'del': {
+    'delete': {
       name: 'delete',
       callback: 'removeObject'
     }
