@@ -6,13 +6,13 @@ angular
   ($scope, bpmnScheme, bpmnSettings, bpmnMock) ->
 
     vm = this
-    scheme = bpmnMock.scheme1
+    vm.scheme = bpmnMock.scheme1
     settings =
       engine:
         status: 'editor'
 
     instance = new bpmnScheme($('#scheme'))
-    instance.setScheme(scheme)
+    instance.setScheme(vm.scheme)
     instance.setSettings(settings)
     instance.start()
 

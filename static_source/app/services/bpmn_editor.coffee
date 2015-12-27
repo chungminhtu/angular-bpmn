@@ -83,7 +83,7 @@ angular
             # добавляем объект в контейнер
             object.appendTo(@container, @scope.settings.point)
 
-      removeObject: (scope)->
+      removeObject: (scope)=>
         if !scope || !scope.selected
           return
 
@@ -92,6 +92,8 @@ angular
             object.remove() if object.data.id == id
 
         scope.selected = []
+
+        @serialise(scope)
 
       keyboardBindings: ()->
         if !@scope.settings.keyboard
@@ -138,6 +140,28 @@ angular
               itemOffset.right >= l && itemOffset.bottom >= t
             @scope.selected.push(object.data.id)
             break
+
+      serialise: (scope)->
+        objects = []
+        angular.forEach scope.intScheme.objects, (obj)->
+
+          objects.push({
+            id: obj.data.id
+            type: obj.data.type
+            position: obj.position
+            status: ''
+            error: ''
+            title: obj.data.title
+            description: obj.data.description
+          })
+
+        @scope.$apply(
+          @scope.extScheme.objects = objects
+        )
+
+      getScheme: ()->
+        @serialise(@scope.intScheme.objects)
+        @scope.extScheme
 
     bpmnEditor
 ]

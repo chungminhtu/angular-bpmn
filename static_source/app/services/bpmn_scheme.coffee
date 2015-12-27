@@ -145,16 +145,11 @@ angular
             # добавляем объект в контейнер
             object.appendTo(@container, @scope.settings.point)
 
-          @instanceBatch()
           @connectPackageObjects()
 
           @isStarted = true
           @wrapper.find(".page-loader").fadeOut("slow")
           resolve()
-
-      instanceBatch: ()->
-        @scope.instance.batch ()=>
-          log.debug 'instance batch'
 
       connectPackageObjects: ()->
         if !@scope.extScheme?.connectors?
@@ -234,12 +229,12 @@ angular
         @setStatus()
 
         # watchers
-        if @schemeWatch
-          @schemeWatch()
-        @schemeWatch = @scope.$watch 'extScheme', (val, old_val)=>
-          if val == old_val
-            return
-          @restart()
+#        if @schemeWatch
+#          @schemeWatch()
+#        @schemeWatch = @scope.$watch 'extScheme', (val, old_val)=>
+#          if val == old_val
+#            return
+#          @restart()
 
         # make objects
         $q.all(@cache).then ()=>
