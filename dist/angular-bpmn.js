@@ -10,10 +10,90 @@ angular.module('angular-bpmn').run([
 ]);
 
 'use strict';
+angular.module('angular-bpmn').factory('bpmnEditor', [
+  'log', 'bpmnUuid', function(log, bpmnUuid) {
+    var bpmnEditor;
+    bpmnEditor = (function() {
+      function bpmnEditor() {}
+
+      bpmnEditor.prototype.initEditor = function() {
+        return this.droppableInit();
+      };
+
+      bpmnEditor.prototype.droppableInit = function() {
+        return this.wrapper.droppable({
+          drop: (function(_this) {
+            return function(event, ui) {
+              var data_group, id, objects, offset, position, type;
+              offset = _this.wrapper.offset();
+              position = {
+                left: ui.position.left - _this.container.position().left + 20,
+                top: ui.position.top - _this.container.position().top + 20
+              };
+              type = $(ui.draggable).attr('entry-type');
+              data_group = $(ui.draggable).parent().attr('data-group');
+              if (!type || type === '') {
+                return;
+              }
+              id = bpmnUuid.gen();
+              objects = [];
+              if (data_group === 'swimlane') {
+                objects.push($.extend(true, angular.copy(_this.scope.settings.baseObject), {
+                  id: id,
+                  type: {
+                    name: 'swimlane'
+                  },
+                  draggable: false,
+                  position: position
+                }));
+                objects.push($.extend(true, angular.copy(_this.scope.settings.baseObject), {
+                  id: bpmnUuid.gen(),
+                  parent: id,
+                  type: {
+                    name: 'swimlane-row'
+                  },
+                  draggable: false
+                }));
+              } else {
+                objects.push($.extend(true, angular.copy(_this.scope.settings.baseObject), {
+                  id: id,
+                  type: JSON.parse(type),
+                  draggable: true,
+                  position: position
+                }));
+              }
+              return _this.addObjects(objects);
+            };
+          })(this)
+        });
+      };
+
+      return bpmnEditor;
+
+    })();
+    return bpmnEditor;
+  }
+]);
+
+'use strict';
+angular.module('angular-bpmn').directive('bpmnEditorPalette', [
+  'log', function(log) {
+    return {
+      restrict: 'A',
+      scope: {
+        bpmnEditorPalette: '='
+      },
+      template: '<div class="group" ng-repeat="group in bpmnEditorPalette.groups" data-group="{{::group.name}}"> <div class="entry" ng-repeat="entry in group.items" ng-class="[entry.class]" bpmn-palette-draggable="entry" entry-type="{{entry.type}}" settings="bpmnPalette.settings" data-help="{{entry.tooltip}}"></div>',
+      link: function($scope, element, attrs) {}
+    };
+  }
+]);
+
+'use strict';
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 angular.module('angular-bpmn').factory('bpmnFullscreen', [
-  'log', '$compile', '$timeout', '$document', function(log, $compile, $timeout, $document) {
+  'log', function(log) {
     var bpmnFullscreen;
     bpmnFullscreen = (function() {
       bpmnFullscreen.prototype.container = null;
@@ -33,7 +113,6 @@ angular.module('angular-bpmn').factory('bpmnFullscreen', [
         this.callback = callback;
         scope.resize = this.resize;
         this.init();
-        log.debug(this.status());
       }
 
       bpmnFullscreen.prototype.init = function() {
@@ -41,8 +120,8 @@ angular.module('angular-bpmn').factory('bpmnFullscreen', [
       };
 
       bpmnFullscreen.prototype.toFull = function() {
-        if (this.container[0].webkitRequestFullscreen) {
-          return this.container[0].webkitRequestFullscreen();
+        if (this.container[0].requestFullscreen) {
+          return this.container[0].requestFullscreen();
         } else if (this.container[0].webkitRequestFullscreen) {
           return this.container[0].webkitRequestFullscreen();
         } else if (this.container[0].mozRequestFullScreen) {
@@ -52,12 +131,26 @@ angular.module('angular-bpmn').factory('bpmnFullscreen', [
         }
       };
 
-      bpmnFullscreen.prototype.toMin = function() {};
+      bpmnFullscreen.prototype.toMin = function() {
+        if (document.cancelFullscreen) {
+          return document.cancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+          return document.webkitCancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+          return document.mozCancelFullScreen();
+        }
+      };
 
-      bpmnFullscreen.prototype.status = function() {};
+      bpmnFullscreen.prototype.status = function() {
+        return window.innerHeight === this.container.height();
+      };
 
       bpmnFullscreen.prototype.resize = function() {
-        return this.toFull();
+        if (this.status()) {
+          return this.toMin();
+        } else {
+          return this.toFull();
+        }
       };
 
       return bpmnFullscreen;
@@ -1937,20 +2030,6 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
 ]);
 
 'use strict';
-angular.module('angular-bpmn').directive('bpmnPalette', [
-  'log', '$timeout', '$templateCache', '$compile', '$templateRequest', '$q', function(log, $timeout, $templateCache, $compile, $templateRequest, $q) {
-    return {
-      restrict: 'A',
-      scope: {
-        bpmnPalette: '='
-      },
-      template: '<div class="group" ng-repeat="group in bpmnPalette.groups" data-group="{{::group.name}}"> <div class="entry" ng-repeat="entry in group.items" ng-class="[entry.class]" bpmn-palette-draggable="entry" entry-type="{{entry.type}}" settings="bpmnPalette.settings" data-help="{{entry.tooltip}}"></div>',
-      link: function($scope, element, attrs) {}
-    };
-  }
-]);
-
-'use strict';
 angular.module('angular-bpmn').directive('bpmnPaletteDraggable', [
   'log', '$timeout', '$templateCache', '$compile', '$templateRequest', function(log, $timeout, $templateCache, $compile, $templateRequest) {
     return {
@@ -1965,18 +2044,17 @@ angular.module('angular-bpmn').directive('bpmnPaletteDraggable', [
         data = $scope.bpmnPaletteDraggable;
         template = {};
         if (data.shape.helper) {
-          template = $compile(data.shape.helper)($scope);
+          template = $compile('<div class="helper">' + data.shape.helper + '</div>')($scope);
         } else if (data.shape.templateUrl) {
           elementPromise = $templateRequest($scope.settings.theme.root_path + '/' + $scope.settings.engine.theme + '/' + data.shape.templateUrl);
           elementPromise.then(function(result) {
-            return template = $compile('<div ng-class="[bpmnPaletteDraggable.type.name]">' + result + '</div>')($scope);
+            return template = $compile('<div class="helper" ng-class="[bpmnPaletteDraggable.type.name]">' + result + '</div>')($scope);
           });
         }
         return container.draggable({
           helper: function() {
             return template;
-          },
-          appendTo: "body"
+          }
         });
       }
     };
@@ -2118,7 +2196,9 @@ angular.module('angular-bpmn').factory('bpmnPanning', [
 
 'use strict';
 var LEFT_MB, MIDDLE_MB, RIGHT_MB,
-  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
 
 LEFT_MB = 1;
 
@@ -2127,9 +2207,11 @@ MIDDLE_MB = 2;
 RIGHT_MB = 3;
 
 angular.module('angular-bpmn').factory('bpmnScheme', [
-  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', 'bpmnPanning', 'bpmnFullscreen', function($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact, bpmnPanning, bpmnFullscreen) {
+  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', 'bpmnPanning', 'bpmnFullscreen', 'bpmnEditor', function($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact, bpmnPanning, bpmnFullscreen, bpmnEditor) {
     var bpmnScheme;
-    bpmnScheme = (function() {
+    bpmnScheme = (function(superClass) {
+      extend(bpmnScheme, superClass);
+
       bpmnScheme.prototype.isDebug = true;
 
       bpmnScheme.prototype.isStarted = false;
@@ -2181,10 +2263,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         this.wrapper.append('<div class="page-loader"><div class="spinner">loading...</div></div>');
         this.wrapper.append($compile('<div ng-if="settings.engine.container.theme_selector" class="theme-selector entry"> <select class="form-control" ng-model="settings.engine.theme" ng-change="changeTheme()" style="width: auto;" data-help="select theme"> <option ng-repeat="them in settings.theme.list" value="{{them}}">{{them}}</option></select> </div>')(this.scope));
         this.fullscreen = new bpmnFullscreen(this.wrapper, this.scope);
-        if (this.scope.settings.engine.status === 'editor') {
-          if (this.fullscreen.available) {
-            this.wrapper.append($compile('<div class="fullscreen entry" ng-click="resize()" data-help="resize editor window">full screen</div>')(this.scope));
-          }
+        if (this.fullscreen.available) {
+          this.wrapper.append($compile('<div ng-if="settings.engine.container.fullscreen" class="fullscreen entry" ng-click="resize()" data-help="resize editor window">full screen</div>')(this.scope));
         }
       }
 
@@ -2478,61 +2558,9 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         return this.objectsUpdate();
       };
 
-      bpmnScheme.prototype.initEditor = function() {
-        return this.droppableInit();
-      };
-
-      bpmnScheme.prototype.droppableInit = function() {
-        return this.wrapper.droppable({
-          drop: (function(_this) {
-            return function(event, ui) {
-              var data_group, id, objects, offset, position, type;
-              offset = _this.wrapper.offset();
-              position = {
-                left: ui.position.left - offset.left - _this.container.position().left,
-                top: ui.position.top - offset.top - _this.container.position().top
-              };
-              type = $(ui.draggable).attr('entry-type');
-              data_group = $(ui.draggable).parent().attr('data-group');
-              if (!type || type === '') {
-                return;
-              }
-              id = bpmnUuid.gen();
-              objects = [];
-              if (data_group === 'swimlane') {
-                objects.push($.extend(true, angular.copy(_this.scope.settings.baseObject), {
-                  id: id,
-                  type: {
-                    name: 'swimlane'
-                  },
-                  draggable: false,
-                  position: position
-                }));
-                objects.push($.extend(true, angular.copy(_this.scope.settings.baseObject), {
-                  id: bpmnUuid.gen(),
-                  parent: id,
-                  type: {
-                    name: 'swimlane-row'
-                  },
-                  draggable: false
-                }));
-              } else {
-                objects.push($.extend(true, angular.copy(_this.scope.settings.baseObject), {
-                  id: id,
-                  type: JSON.parse(type),
-                  draggable: true,
-                  position: position
-                }));
-              }
-              return _this.addObjects(objects);
-            };
-          })(this)
-        });
-      };
-
       return bpmnScheme;
 
-    })();
+    })(bpmnEditor);
     return bpmnScheme;
   }
 ]);
@@ -2552,7 +2580,8 @@ angular.module('angular-bpmn').factory('bpmnSettings', function() {
       zoom: true,
       movable: true,
       minimap: false,
-      theme_selector: true
+      theme_selector: true,
+      fullscreen: true
     }
   };
   instanceSettings = {

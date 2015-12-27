@@ -3,15 +3,15 @@
 
 angular
 .module('angular-bpmn')
-.directive 'bpmnPaletteDraggable', ['log', '$timeout', '$templateCache', '$compile', '$templateRequest'
+.directive 'bpmnEditorPaletteNode', ['log', '$timeout', '$templateCache', '$compile', '$templateRequest'
   (log, $timeout, $templateCache, $compile, $templateRequest) ->
     restrict: 'A'
     scope:
-      bpmnPaletteDraggable: '='
+      bpmnEditorPaletteNode: '='
       settings: '=settings'
     link: ($scope, element, attrs) ->
       container = $(element)
-      data = $scope.bpmnPaletteDraggable
+      data = $scope.bpmnEditorPaletteNode
       template = {}
 
       if data.shape.helper
@@ -19,7 +19,7 @@ angular
       else if data.shape.templateUrl
         elementPromise = $templateRequest($scope.settings.theme.root_path + '/' + $scope.settings.engine.theme + '/' + data.shape.templateUrl)
         elementPromise.then (result)->
-          template = $compile('<div class="helper" ng-class="[bpmnPaletteDraggable.type.name]">'+result+'</div>')($scope)
+          template = $compile('<div class="helper" ng-class="[bpmnEditorPaletteNode.type.name]">'+result+'</div>')($scope)
 
       container.draggable({
         helper: ()->

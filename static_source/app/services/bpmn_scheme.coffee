@@ -9,10 +9,10 @@ angular
 .module('angular-bpmn')
 .factory 'bpmnScheme', [
   '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout'
-  'bpmnObjectFact', 'bpmnPanning', 'bpmnFullscreen'
+  'bpmnObjectFact', 'bpmnPanning', 'bpmnFullscreen', 'bpmnEditor'
   ($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact
-   bpmnPanning, bpmnFullscreen) ->
-    class bpmnScheme
+   bpmnPanning, bpmnFullscreen, bpmnEditor) ->
+    class bpmnScheme extends bpmnEditor
 
       isDebug: true
       isStarted: false
@@ -61,8 +61,7 @@ angular
 </div>')(@scope))
 
         @fullscreen = new bpmnFullscreen(@wrapper, @scope)
-        if @scope.settings.engine.container.fullscreen? && @scope.settings.engine.container.fullscreen
-          @wrapper.append($compile('<div class="fullscreen entry" ng-click="resize()" data-help="resize editor window">full screen</div>')(@scope)) if @fullscreen.available
+        @wrapper.append($compile('<div ng-if="settings.engine.container.fullscreen" class="fullscreen entry" ng-click="resize()" data-help="resize editor window">full screen</div>')(@scope)) if @fullscreen.available
 
       setStatus: ()->
         if @scope.settings.engine.status == 'editor'
@@ -321,49 +320,6 @@ angular
         @loadStyle()
         @cacheTemplates()
         @objectsUpdate()
-
-      # editor
-      #------------------------------------------------------------------------------
-      initEditor: ()->
-        @droppableInit()
-
-      droppableInit: ()->
-        @wrapper.droppable({
-          drop: (event, ui)=>
-            #offset = @wrapper.offset()
-            position =
-              left: ui.position.left  - @container.position().left
-              top: ui.position.top  - @container.position().top
-
-            # type update
-            #----------------
-            type = $(ui.draggable).attr('entry-type')
-            data_group = $(ui.draggable).parent().attr('data-group')
-            if !type || type == ''
-              return
-
-            id = bpmnUuid.gen()
-            objects = []
-            if data_group == 'swimlane'
-              objects.push($.extend(true, angular.copy(@scope.settings.baseObject), {
-                id: id
-                type:
-                  name: 'swimlane'
-                draggable: false
-                position: position
-              }))
-              objects.push($.extend(true, angular.copy(@scope.settings.baseObject), {
-                id: bpmnUuid.gen()
-                parent: id
-                type:
-                  name: 'swimlane-row'
-                draggable: false
-              }))
-            else
-              objects.push($.extend(true, angular.copy(@scope.settings.baseObject), {id: id, type: JSON.parse(type), draggable: true, position: position}))
-
-            @addObjects(objects)
-        })
 
     bpmnScheme
   ]
