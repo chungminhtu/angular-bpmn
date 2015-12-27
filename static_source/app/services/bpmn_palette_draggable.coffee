@@ -15,15 +15,15 @@ angular
       template = {}
 
       if data.shape.helper
-        template = $compile(data.shape.helper)($scope)
+        template = $compile('<div class="helper">'+data.shape.helper+'</div>')($scope)
       else if data.shape.templateUrl
         elementPromise = $templateRequest($scope.settings.theme.root_path + '/' + $scope.settings.engine.theme + '/' + data.shape.templateUrl)
         elementPromise.then (result)->
-          template = $compile('<div ng-class="[bpmnPaletteDraggable.type.name]">'+result+'</div>')($scope)
+          template = $compile('<div class="helper" ng-class="[bpmnPaletteDraggable.type.name]">'+result+'</div>')($scope)
 
       container.draggable({
         helper: ()->
           template
-        appendTo: "body"
+#        appendTo: "body"
       })
 ]

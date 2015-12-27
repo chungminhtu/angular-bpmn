@@ -8,8 +8,10 @@ RIGHT_MB = 3
 angular
 .module('angular-bpmn')
 .factory 'bpmnScheme', [
-  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', 'bpmnPanning'
-  ($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact, bpmnPanning) ->
+  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout'
+  'bpmnObjectFact', 'bpmnPanning', 'bpmnFullscreen'
+  ($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact
+   bpmnPanning, bpmnFullscreen) ->
     class bpmnScheme
 
       isDebug: true
@@ -24,6 +26,7 @@ angular
       schemeWatch: null
       stopListen: null
       panning: null
+      fullscreen: null
 
       constructor: (container, settings)->
 #        set unique id
@@ -56,6 +59,10 @@ angular
 <select class="form-control" ng-model="settings.engine.theme" ng-change="changeTheme()" style="width: auto;" data-help="select theme">
 <option ng-repeat="them in settings.theme.list" value="{{them}}">{{them}}</option></select>
 </div>')(@scope))
+
+        @fullscreen = new bpmnFullscreen(@wrapper, @scope)
+        if @scope.settings.engine.container.fullscreen? && @scope.settings.engine.container.fullscreen
+          @wrapper.append($compile('<div class="fullscreen entry" ng-click="resize()" data-help="resize editor window">full screen</div>')(@scope)) if @fullscreen.available
 
       setStatus: ()->
         if @scope.settings.engine.status == 'editor'
@@ -323,10 +330,10 @@ angular
       droppableInit: ()->
         @wrapper.droppable({
           drop: (event, ui)=>
-            offset = @wrapper.offset()
+            #offset = @wrapper.offset()
             position =
-              left: ui.position.left - offset.left - @container.position().left
-              top: ui.position.top - offset.top - @container.position().top
+              left: ui.position.left  - @container.position().left
+              top: ui.position.top  - @container.position().top
 
             # type update
             #----------------

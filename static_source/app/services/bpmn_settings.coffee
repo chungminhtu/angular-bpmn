@@ -18,6 +18,7 @@ angular
       movable: true
       minimap: false
       theme_selector: true
+      fullscreen: true
 
   instanceSettings =
     DragOptions:

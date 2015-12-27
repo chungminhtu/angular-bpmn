@@ -10,6 +10,64 @@ angular.module('angular-bpmn').run([
 ]);
 
 'use strict';
+var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+angular.module('angular-bpmn').factory('bpmnFullscreen', [
+  'log', '$compile', '$timeout', '$document', function(log, $compile, $timeout, $document) {
+    var bpmnFullscreen;
+    bpmnFullscreen = (function() {
+      bpmnFullscreen.prototype.container = null;
+
+      bpmnFullscreen.prototype.scope = null;
+
+      bpmnFullscreen.prototype.available = false;
+
+      bpmnFullscreen.prototype.callback = null;
+
+      bpmnFullscreen.prototype.isFull = false;
+
+      function bpmnFullscreen(container, scope, callback) {
+        this.resize = bind(this.resize, this);
+        this.container = container;
+        this.scope = scope;
+        this.callback = callback;
+        scope.resize = this.resize;
+        this.init();
+        log.debug(this.status());
+      }
+
+      bpmnFullscreen.prototype.init = function() {
+        return this.available = document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled;
+      };
+
+      bpmnFullscreen.prototype.toFull = function() {
+        if (this.container[0].webkitRequestFullscreen) {
+          return this.container[0].webkitRequestFullscreen();
+        } else if (this.container[0].webkitRequestFullscreen) {
+          return this.container[0].webkitRequestFullscreen();
+        } else if (this.container[0].mozRequestFullScreen) {
+          return this.container[0].mozRequestFullScreen();
+        } else if (this.container[0].msRequestFullscreen) {
+          return this.container[0].msRequestFullscreen();
+        }
+      };
+
+      bpmnFullscreen.prototype.toMin = function() {};
+
+      bpmnFullscreen.prototype.status = function() {};
+
+      bpmnFullscreen.prototype.resize = function() {
+        return this.toFull();
+      };
+
+      return bpmnFullscreen;
+
+    })();
+    return bpmnFullscreen;
+  }
+]);
+
+'use strict';
 angular.module('angular-bpmn').service('log', [
   '$log', '$rootScope', function($log, $rootScope) {
     return {
@@ -2069,7 +2127,7 @@ MIDDLE_MB = 2;
 RIGHT_MB = 3;
 
 angular.module('angular-bpmn').factory('bpmnScheme', [
-  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', 'bpmnPanning', function($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact, bpmnPanning) {
+  '$rootScope', 'log', 'bpmnUuid', '$compile', 'bpmnSettings', '$templateCache', '$templateRequest', '$q', '$timeout', 'bpmnObjectFact', 'bpmnPanning', 'bpmnFullscreen', function($rootScope, log, bpmnUuid, $compile, bpmnSettings, $templateCache, $templateRequest, $q, $timeout, bpmnObjectFact, bpmnPanning, bpmnFullscreen) {
     var bpmnScheme;
     bpmnScheme = (function() {
       bpmnScheme.prototype.isDebug = true;
@@ -2096,6 +2154,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.panning = null;
 
+      bpmnScheme.prototype.fullscreen = null;
+
       function bpmnScheme(container, settings) {
         this.changeTheme = bind(this.changeTheme, this);
         var wrapper;
@@ -2120,6 +2180,12 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         this.scope.changeTheme = this.changeTheme;
         this.wrapper.append('<div class="page-loader"><div class="spinner">loading...</div></div>');
         this.wrapper.append($compile('<div ng-if="settings.engine.container.theme_selector" class="theme-selector entry"> <select class="form-control" ng-model="settings.engine.theme" ng-change="changeTheme()" style="width: auto;" data-help="select theme"> <option ng-repeat="them in settings.theme.list" value="{{them}}">{{them}}</option></select> </div>')(this.scope));
+        this.fullscreen = new bpmnFullscreen(this.wrapper, this.scope);
+        if (this.scope.settings.engine.status === 'editor') {
+          if (this.fullscreen.available) {
+            this.wrapper.append($compile('<div class="fullscreen entry" ng-click="resize()" data-help="resize editor window">full screen</div>')(this.scope));
+          }
+        }
       }
 
       bpmnScheme.prototype.setStatus = function() {

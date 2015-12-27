@@ -19,6 +19,8 @@
   "dependencies": {
     "angular": "~1.4.7",
     "jquery": "~2.1.4",
-    "jsPlumb": "sporritt/jsplumb#~2.0.5"
+    "jsPlumb": "sporritt/jsplumb#~2.0.5",
+    "jQuery-contextMenu": "~2.0.1",
+    "jquery.hotkeys": "*"
   }
 }
