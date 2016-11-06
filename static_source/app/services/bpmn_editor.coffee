@@ -32,6 +32,15 @@ angular
               left: (ui.offset.left - offset.left - @container.position().left) / @scope.zoom
               top: (ui.offset.top - offset.top - @container.position().top) / @scope.zoom
 
+            parent = @selectElementByPoint(position.top, position.left)[0]
+            log.debug parent
+            if parent
+              position =
+                left: $(parent.element).offset().left  - position.left
+                top: $(parent.element).offset().top  - position.top
+
+              log.debug position
+
             # type update
             #----------------
             type = $(ui.draggable).attr('entry-type')
@@ -57,7 +66,13 @@ angular
                 draggable: false
               }))
             else
-              objects.push($.extend(true, angular.copy(@scope.settings.baseObject), {id: id, type: JSON.parse(type), draggable: true, position: position}))
+              objects.push($.extend(true, angular.copy(@scope.settings.baseObject), {
+                id: id
+                type: JSON.parse(type)
+                parent: parent?.data?.id || ''
+                draggable: true
+                position: position
+              }))
 
             @addObjects(objects)
         })
@@ -87,9 +102,15 @@ angular
         if !scope || !scope.selected
           return
 
+        #TODO first remove child objects
         angular.forEach scope.selected, (id)=>
-          angular.forEach scope.intScheme.objects, (object)->
-            object.remove() if object.data.id == id
+          index = 0
+          for key, object of scope.intScheme.objects
+            if object.data.id == id
+              object.remove()
+              delete scope.intScheme.objects[key]
+              break
+            index++
 
         scope.selected = []
 
@@ -115,7 +136,7 @@ angular
               event.preventDefault()
               fn.apply(null, [@scope])
 
-      selectElementByAabb: (t, l, w, h)->
+      selectElementInAabb: (t, l, w, h)->
         @scope.selected = []
         angular.forEach @scope.intScheme.objects, (object)->
 
@@ -132,14 +153,34 @@ angular
 
         @scope.$apply()
 
-      selectElementByPoint: (t, l)->
+      selectElementOutPoint: (t, l, w, h)->
         @scope.selected = []
-        for object of @scope.intScheme.objects
+        for key, object of @scope.intScheme.objects
           itemOffset = object.elementOffset()
           if itemOffset.top <= t && itemOffset.left <= l &&
-              itemOffset.right >= l && itemOffset.bottom >= t
+              itemOffset.right >= l + w && itemOffset.bottom >= t + h
             @scope.selected.push(object.data.id)
             break
+
+      selectElementByPoint: (t, l)->
+        @scope.selected = []
+        log.debug 'check position:',t, l
+        for key, object of @scope.intScheme.objects
+          if !object.canAParent
+            continue
+
+          offset = @wrapper.offset()
+          itemOffset = object.elementOffset()
+          log.debug 'check:',object.data.type.name
+          if itemOffset.top - offset.top <= t && itemOffset.left - offset.left <= l &&
+              itemOffset.right - offset.left >= l && itemOffset.bottom - offset.top >= t
+            log.debug '===>',object.data.type.name
+            log.debug '===>',itemOffset.top, itemOffset.left, itemOffset.right, itemOffset.bottom
+            @scope.selected.push(object)
+          else
+            log.debug 'no:',itemOffset.top, itemOffset.left, itemOffset.right, itemOffset.bottom
+
+        @scope.selected
 
       serialise: (scope)->
         objects = []

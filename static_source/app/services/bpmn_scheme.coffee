@@ -41,7 +41,7 @@ angular
         wrapper = container.parent('.' + @wrap_class)
         if wrapper.length == 0
           container.wrap('<div class="' + @wrap_class + '"></div>')
-        @wrapper = container.parent('.' + @wrap_class)
+        @wrapper = container.parent('.' + @wrap_class).attr('id', @id)
         preventSelection(document)
 
 #        create scope
@@ -78,13 +78,25 @@ angular
 
         @scope.extScheme = scheme
 
-      # настройки, тема оформеления, объекты
+      # настройки, тема оформления, объекты
       #------------------------------------------------------------------------------
       setSettings: (settings)->
         if !settings?
           settings = {}
 
         @scope.settings = $.extend(true, angular.copy(bpmnSettings), angular.copy(settings))
+        @scope.settings = $.extend(true, @scope.settings,
+          point:
+            isSource: true
+            isTarget: true
+            endpoint: ["Rectangle", {width:15, height:15}]
+            paintStyle:
+#              strokeStyle: "blue"
+              outlineWidth: 1
+#            hoverPaintStyle:
+#              outlineColor: "blue"
+            maxConnections: -1
+        ) if @scope.settings.engine.status == 'editor'
 
         @loadStyle()
         @cacheTemplates()
@@ -146,6 +158,7 @@ angular
             object.appendTo(@container, @scope.settings.point)
 
           @connectPackageObjects()
+          @scope.instance.repaintEverything()
 
           @isStarted = true
           @wrapper.find(".page-loader").fadeOut("slow")
@@ -249,8 +262,28 @@ angular
             grid: @scope.settings.draggable.grid
             handles: 's'
 
+        # interceptors
+        #-------------------------------
+        @scope.instance.bind 'click', (e)=>
+
+          @scope.instance.select().each (c)->
+            c.removeClass('selected')
+          e.addClass('selected')
+
+          @scope.selected.push({
+            object: e
+            type: 'connector'
+          })
+
+        # disable loopback
+        @scope.instance.bind 'beforeDrop', (e)=>
+          e.sourceId != e.targetId
+
         @stopListen = @scope.$on '$routeChangeSuccess', ()=>
           @destroy()
+
+        @wrapper.on 'mousedown', (e)=>
+          log.debug '@mousedown'
 
       destroy: ()->
         log.debug 'destroy'
@@ -271,6 +304,8 @@ angular
         if @panning
           @panning.destroy()
         @panning = null
+
+        @wrapper.off 'mousedown'
 
       restart: ()->
         log.debug 'restart'

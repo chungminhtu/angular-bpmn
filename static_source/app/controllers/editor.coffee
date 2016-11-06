@@ -6,7 +6,7 @@ angular
   ($scope, bpmnScheme, bpmnSettings, bpmnMock) ->
 
     vm = this
-    vm.scheme = bpmnMock.scheme1
+    vm.scheme = angular.copy(bpmnMock.scheme1)
     settings =
       engine:
         status: 'editor'

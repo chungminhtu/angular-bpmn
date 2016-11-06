@@ -1,7 +1,7 @@
 
 @selected: #448dc8;
-@active: #757575;
-@hover: #4d4d4d;
+@active: @selected;
+@hover: @selected;
 @disbled: #a5a5a5;
 @base: #2b2b2b;
 @group_back: rgba(243, 243, 243, 0.23);
@@ -17,6 +17,18 @@
 
     } //poster
 
+    .jsplumb-endpoint {
+      rect {
+        stroke: @group_border;
+        stroke-width: 2px;
+      }
+      &.jsplumb-hover {
+        rect {
+          stroke: @hover;
+        }
+      }
+    }// jsplumb-endpoint
+
     .jsplumb-connector {
       path {
         stroke: @base;
@@ -25,11 +37,12 @@
         }
       }
 
+      &.selected,
       &.jsplumb-hover {
         path {
-          stroke: @selected;
+          stroke: @hover;
           &:last-child {
-            fill: @selected;
+            fill: @hover;
           }
         }
       }
@@ -267,7 +280,9 @@
           fill: @selected;
         }
       } //selected
-      &:hover {
+      &:hover,
+      &.jsplumb-source-hover,
+      &.jsplumb-target-hover {
 
         circle.end {
           stroke: @hover;
@@ -443,7 +458,9 @@
           fill: 'none';
         }
       }
-      &:hover {
+      &:hover,
+      &.jsplumb-source-hover,
+      &.jsplumb-target-hover {
         .base,
         .transaction,
         .cause_actions,
@@ -619,7 +636,9 @@
           fill: 'none';
         }
       }
-      &:hover {
+      &:hover,
+      &.jsplumb-source-hover,
+      &.jsplumb-target-hover {
         path {
           stroke: @hover;
           fill: @hover;

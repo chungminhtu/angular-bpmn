@@ -14,11 +14,19 @@ angular
     status: 'viewer'
     container:
       resizable: true
-      zoom: true
+      zoom: false
       movable: true
       minimap: false
       theme_selector: true
       fullscreen: true
+
+  connector = ["Flowchart", {
+    cornerRadius: 0
+    midpoint: 0.5
+    minStubLength: 10
+    stub:[30, 30]
+    gap:0
+  }]
 
   instanceSettings =
     DragOptions:
@@ -36,6 +44,7 @@ angular
       ]
     ]
     Container: 'container'
+    Connector: connector
 
   draggableSettings =
     filter: '.ui-resizable-handle'
@@ -58,14 +67,6 @@ angular
       outlineWidth: 1
     hoverPaintStyle: {}
     connectorStyle: connectorStyle
-
-  connector = ["Flowchart", {
-    cornerRadius: 0
-    midpoint: 0.5
-    minStubLength: 10
-    stub:[30, 30]
-    gap:0
-  }]
 
 #  свойства линии связи
   connectorSettings =
@@ -150,6 +151,7 @@ angular
         width: 'auto'
         height: 'auto'
       helper: '<div class="bpmn-icon-subprocess-expanded" style="font-size: 33px"></div>'
+      canAParent: true
     swimlane:
       template: '<div bpmn-object class="swimlane etc draggable" ng-style="{ width: data.width }"></div>'
       anchor: []
@@ -170,6 +172,7 @@ angular
       size:
         width: 'auto'
         height: 'auto'
+      canAParent: true
     poster:
       template: '<div bpmn-object class="poster draggable" ng-class="{ \'etc\' : data.draggable }"><img ng-src="{{data.url}}"></div>'
       anchor: []

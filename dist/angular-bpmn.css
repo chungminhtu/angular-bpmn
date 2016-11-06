@@ -551,4 +551,10 @@
 .bpmn .jsplumb-connector {
   z-index: 20;
 }
+.bpmn .jsplumb-endpoint {
+  z-index: 80;
+}
+.bpmn .jsplumb-overlay {
+  z-index: 90;
+}
 /* ------------------------ etc ----------------------------*/

@@ -10,6 +10,8 @@
 @zControls: 50;
 @zFullscreen: 60;
 @zHelper: 70;
+@zEndpoint: 80;
+@zOverlay: 90;
 
 @import 'tooltip';
 @import 'icons';
@@ -232,6 +234,14 @@
 
   .jsplumb-connector {
     z-index: @zConnector;
+  }
+
+  .jsplumb-endpoint {
+    z-index: @zEndpoint;
+  }
+
+  .jsplumb-overlay {
+    z-index: @zOverlay;
   }
 }
 /* ------------------------ etc ----------------------------*/

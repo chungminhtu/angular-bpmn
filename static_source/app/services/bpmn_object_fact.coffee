@@ -26,6 +26,7 @@ angular
         top: 0
         left: 0
       isParent: false
+      canAParent: null
 
       constructor: (data, parentScope)->
         log.debug 'object construct'
@@ -37,6 +38,7 @@ angular
         @anchor = tpl.anchor
         @size = tpl.size
         @make = tpl.make
+        @canAParent = tpl.canAParent || null
         @draggable = tpl.draggable
         @templateUrl = tpl.templateUrl || null
         @template = tpl.template || null
@@ -113,7 +115,7 @@ angular
 
         # bind select event
         @parentScope.instance.off @element
-        @parentScope.instance.on @element, 'click', ()=>
+        @parentScope.instance.on @element, 'click', (e)=>
 
           shift = false
           if key.getPressedKeyCodes().indexOf(16) > -1
@@ -131,6 +133,8 @@ angular
 
           @select(true)
 
+          e.stopPropagation()
+
         @checkParent()
 
         # генерируем точки соединений для нового объекта
@@ -145,14 +149,17 @@ angular
           $(@element).removeClass("selected")
 
       elementOffset: ()->
-        p = $(@element).position()
-        top = p.top
-        left = p.left
+        offset = $(@element).offset()
+        width = @size.width
+        height = @size.height
+        width = $(@element).width() if @size.width == 'auto' || !width
+        height = $(@element).height() if @size.height == 'auto' || !height
+
         return {
-          top: top
-          left: left
-          right: top + @size.width
-          bottom: left + @size.height
+          top: offset.top
+          left: offset.left
+          right: offset.left + width
+          bottom: offset.top + height
         }
 
       getId: ()->
@@ -182,7 +189,11 @@ angular
         # Проверим конфиг, если указаны родители, подключимся к ним
         if !@data.parent? || @data.parent == ''
           if @data.draggable? && @data.draggable || @settings.engine.status == 'editor'
-            @parentScope.instance.draggable(@element, $.extend({}, @settings.draggable, {
+            @parentScope.instance.draggable(@element, $.extend(true, @settings.draggable, {
+              drag: ()=>
+                if @childs.length
+                  @parentScope.instance.repaintEverything()
+
               stop: (event)=>
                 @position.left = event.pos[0]
                 @position.top = event.pos[1]
@@ -203,7 +214,7 @@ angular
         parentId = @setParent(parent)
         #------------------------
         if @data.draggable? && @data.draggable || @settings.engine.status == 'editor'
-          @parentScope.instance.draggable(@element, $.extend({}, @settings.draggable, {
+          @parentScope.instance.draggable(@element, $.extend(true, @settings.draggable, {
             containment: parentId
             stop: (event)=>
               @position.left = event.pos[0]
@@ -233,7 +244,7 @@ angular
 
         #------------------------
         if @data.draggable? && @data.draggable || @settings.engine.status == 'editor'
-          @parentScope.instance.draggable(parent_element, $.extend({}, @settings.draggable, {
+          @parentScope.instance.draggable(parent_element, $.extend(true, @settings.draggable, {
             drag: (event, ui)=>
               @parentScope.instance.repaintEverything()
             stop: (event)=>
