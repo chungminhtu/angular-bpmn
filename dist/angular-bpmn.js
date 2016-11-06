@@ -2825,7 +2825,7 @@ angular.module('angular-bpmn').factory('bpmnSettings', function() {
     status: 'viewer',
     container: {
       resizable: true,
-      zoom: true,
+      zoom: false,
       movable: true,
       minimap: false,
       theme_selector: true,
