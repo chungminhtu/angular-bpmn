@@ -6,6 +6,7 @@ function do_init() {
 	sudo npm install -g bower
 	npm install
 	bower install
+	ln -sr static_source/bower_components/bpmn-font/dist/font/ static_source/font
 	gulp
 }
 

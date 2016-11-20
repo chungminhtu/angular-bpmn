@@ -1,6 +1,3 @@
-
-'use strict'
-
 do ->
   'use strict'
   window.lsTooltip =

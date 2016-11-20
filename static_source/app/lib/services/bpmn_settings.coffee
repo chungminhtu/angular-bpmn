@@ -1,6 +1,3 @@
-
-'use strict'
-
 angular
 .module('angular-bpmn')
 .factory 'bpmnSettings', () ->

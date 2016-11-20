@@ -1,6 +1,3 @@
-
-'use strict'
-
 angular
 .module('angular-bpmn')
 .factory 'bpmnObjectFact', ['bpmnSettings', '$compile', '$rootScope', 'log', '$templateRequest', '$templateCache'
@@ -62,16 +59,17 @@ angular
 
         if @templateUrl? && @templateUrl != ''
           if !@element?
-            @element = $compile('<div bpmn-object class="'+@data.type.name+' draggable etc" ng-class="[data.status]"></div>')(childScope)
+            @element = $compile('<div bpmn-object class="'+@data.type.name+' draggable etc" ng-class="[data.status]" element-id="{{::data.id}}" ></div>')(childScope)
           templateUrl = @settings.theme.root_path + '/' + @settings.engine.theme + '/' + @templateUrl
           template = $templateCache.get(templateUrl)
-          if !template?
-            log.debug 'template not found', templateUrl
+          if template?.then?
+            log.debug 'load template'
             @elementPromise = $templateRequest(templateUrl)
             @elementPromise.then (result)->
               appendToElement($compile(result)(childScope))
               $templateCache.put(templateUrl, result)
           else
+            log.debug 'get template from cache'
             appendToElement($compile(template)(childScope))
         else
           if !@element?
@@ -86,10 +84,12 @@ angular
           return
 
         points = []
-        angular.forEach @anchor, (anchor)=>
+        angular.forEach @anchor, (anchor, id)=>
           point = @parentScope.instance.addEndpoint(@element, {
             anchor: anchor
             maxConnections: -1
+            parameters:
+              'anchor-id': id
           }, options)
 
           if points.indexOf(point) == -1

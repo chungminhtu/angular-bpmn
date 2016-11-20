@@ -1,6 +1,3 @@
-
-'use strict'
-
 LEFT_MB = 1
 MIDDLE_MB = 2
 RIGHT_MB = 3
@@ -53,7 +50,7 @@ angular
         @scope.settings = {}
         @scope.selected = []
         @scope.zoom = 1
-        @setSettings(settings)
+#        @setSettings(settings)
         @scope.changeTheme = @changeTheme
 
         @wrapper.append('<div class="page-loader"><div class="spinner">loading...</div></div>')
@@ -67,10 +64,12 @@ angular
 
       setStatus: ()->
         if @scope.settings.engine.status == 'editor'
-          @initEditor()
+          @reloadEditor()
           @container.addClass('editor')
+          @container.removeClass('viewer')
         else
           @container.addClass('viewer')
+          @container.removeClass('editor')
 
       setScheme: (scheme)->
         if !scheme?
@@ -85,6 +84,8 @@ angular
           settings = {}
 
         @scope.settings = $.extend(true, angular.copy(bpmnSettings), angular.copy(settings))
+        if settings?.editorPallet
+          @scope.settings.editorPallet = angular.copy(settings.editorPallet)
         @scope.settings = $.extend(true, @scope.settings,
           point:
             isSource: true
@@ -101,6 +102,7 @@ angular
         @loadStyle()
         @cacheTemplates()
         @objectsUpdate()
+        @setStatus()
 
       loadStyle: ()->
         theme_name = @scope.settings.engine.theme
@@ -141,6 +143,8 @@ angular
       # пакетная обработка объектов
       #------------------------------------------------------------------------------
       makePackageObjects: (resolve)->
+        @isStarted = false
+        log.debug 'make package objects'
         # Создадим все объекты, сохраним указатели в массиве
         # потому как возможны перекрёстные ссылки
         promise = []
@@ -203,6 +207,10 @@ angular
 
           # Привязка к конкретному якорю объекта
             targetEndpoint: target_obj_points[connector.end.point]
+
+            # параметры соединения: id ...
+            parameters:
+              'element-id': connector.id || bpmnUuid.gen()
           }
 
           # подпись для связи
@@ -239,7 +247,7 @@ angular
         @cache = []
         @cacheTemplates()
         @container.addClass('bpmn')
-        @setStatus()
+#        @setStatus()
 
         # watchers
 #        if @schemeWatch
@@ -287,6 +295,9 @@ angular
 
       destroy: ()->
         log.debug 'destroy'
+        log.debug 'total objects:', @scope.intScheme.objects
+        log.debug 'total connectors:', @scope.intScheme.connectors.length
+
         @wrapper.find(".page-loader").fadeIn("fast")
 
 #        if @scope.settings.engine.container?.resizable?
@@ -296,6 +307,7 @@ angular
           obj.remove()
 
         @scope.intScheme.objects = []
+        @scope.intScheme.connectors = []
         @scope.instance.empty(@container)
 
         if @schemeWatch
@@ -307,11 +319,13 @@ angular
 
         @wrapper.off 'mousedown'
 
+      #TODO fix restart
       restart: ()->
         log.debug 'restart'
-        if @isStarted?
-          @destroy()
-        @start()
+        $timeout ()=>
+          if @isStarted?
+            @destroy()
+          @start()
 
       changeTheme: ()=>
         @loadStyle()

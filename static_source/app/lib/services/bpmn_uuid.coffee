@@ -3,8 +3,6 @@
 # http://jsfiddle.net/briguy37/2mvfd/
 #
 
-'use strict'
-
 angular
 .module('angular-bpmn')
 .factory 'bpmnUuid', () ->
