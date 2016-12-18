@@ -15,11 +15,10 @@ module.exports = {
     build_coffee_js: {
         filename: 'app.min.js',
         source: [
-            source + "/app/app_bpmn.coffee",
-            source + "/app/app.coffee",
-            source + "/app/services/**/*.coffee",
-            source + "/app/directives/**/*.coffee",
-            source + "/app/controllers/**/*.coffee"
+            source + "/app/lib/app.coffee",
+            source + "/app/lib/**/*.coffee",
+            source + "/app/examples/app.coffee",
+            source + "/app/examples/**/*.coffee"
         ],
         watch: source + "/app/**/*.coffee",
         dest: source + '/js'
@@ -57,10 +56,10 @@ module.exports = {
         ]
     },
     build_haml: {
-        source: 'static_source/templates/**/*.haml',
+        source: 'static_source/app/examples/templates/**/*.haml',
         tmp: 'static_source/tmp/templates',
         watch: [
-            "static_source/templates/**/*.haml"
+            "static_source/app/examples/templates/**/*.haml"
         ]
     },
     build_templates: {
@@ -76,11 +75,9 @@ module.exports = {
         filename: 'angular-bpmn.js',
         min_filename: 'angular-bpmn.min.js',
         source: [
-            source + "/app/app_bpmn.coffee",
-            source + "/app/directives/**/*.coffee",
-            source + "/app/services/**/*.coffee",
-            "!" + source + "/app/services/prevent_selection.coffee",
-            "!" + source + "/app/services/scheme_service.coffee"
+            source + "/app/lib/app.coffee",
+            source + "/app/lib/**/*.coffee",
+            source + "/app/lib/services/prevent_selection.coffee"
         ],
         dest: './dist/'
     },

@@ -108,25 +108,34 @@ angular
             # добавляем объект в контейнер
             object.appendTo(@container, @scope.settings.point)
 
-      removeObject: (scope)=>
+      removeObject: (selected)=>
+        return if !selected
+
+        switch selected?.type
+          when "connector"
+            @scope.instance.select().each (c)=>
+              if c.id == selected.id
+                c.removeOverlay("myLabel")
+                @scope.instance.detach(c)
+          when "shape"
+            #TODO first remove child objects
+            index = 0
+            for key, object of @scope.intScheme.objects
+              if object.data.id == selected.id
+#                log.debug 'found', selected
+                object.remove()
+                delete @scope.intScheme.objects[key]
+                break
+              index++
+          else
+            log.error 'unknown object type'
+
+      removeSelected: (scope)=>
         if !scope || !scope.selected
           return
 
         angular.forEach scope.selected, (selected)=>
-          switch selected?.type
-            when "connector"
-              @scope.instance.detach(selected.object)
-            when "shape"
-              #TODO first remove child objects
-              index = 0
-              for key, object of scope.intScheme.objects
-                if object.data.id == selected.id
-                  object.remove()
-                  delete scope.intScheme.objects[key]
-                  break
-                index++
-            else
-              log.error 'unknown object type'
+          @removeObject(selected)
 
         scope.selected = []
 
@@ -151,6 +160,20 @@ angular
             if @mouseover
               event.preventDefault()
               fn.apply(null, [@scope])
+
+      setLabel: (conn, label)->
+        label = "" if !label
+        overlay = conn.getOverlay('myLabel')
+        if !overlay
+          overlay = [ "Label", { label: label, cssClass: "aLabel" }, id:"myLabel" ]
+          conn.addOverlay(overlay)
+        else
+          overlay.setLabel(label)
+
+
+      getLabel: (conn)->
+        return if !conn
+        return conn.getOverlay('myLabel')?.getLabel() || ''
 
       selectElementInAabb: (t, l, w, h)->
         @scope.selected = []
@@ -179,6 +202,7 @@ angular
             break
 
       getAllConnections: ()->
+        return [] if !@scope.instance
         @scope.instance.getAllConnections()
 
       selectElementByPoint: (t, l)->
@@ -212,6 +236,7 @@ angular
           id = params['element-id']
 
         id: id
+        direction: params['direction']
         start:
           object: $(connection.source).attr('element-id')
           point: connection.endpoints[0].getParameters()['anchor-id'] || 0
@@ -261,6 +286,9 @@ angular
             if start && end
               connectors.push angular.copy(con)
               break
+
+        $timeout ()=>
+          @scope.$apply()
 
         @scope.extScheme = {
           objects: objects

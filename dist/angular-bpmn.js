@@ -9,11 +9,188 @@ angular.module('angular-bpmn').run([
   })(this)
 ]);
 
-'use strict';
+angular.module('angular-bpmn').directive('bpmnEditorPalette', [
+  'log', function(log) {
+    return {
+      restrict: 'A',
+      scope: {
+        bpmnEditorPalette: '=',
+        settings: '='
+      },
+      template: '<div class="group" ng-repeat="group in bpmnEditorPalette.groups" data-group="{{::group.name}}"> <div class="entry" ng-repeat="entry in group.items" ng-class="[entry.class]" bpmn-editor-palette-node="entry" entry-type="{{entry.type}}" settings="settings" data-help="{{entry.tooltip}}"></div>',
+      link: function($scope, element, attrs) {}
+    };
+  }
+]);
+
+angular.module('angular-bpmn').directive('bpmnEditorPaletteNode', [
+  'log', '$timeout', '$templateCache', '$compile', '$templateRequest', function(log, $timeout, $templateCache, $compile, $templateRequest) {
+    return {
+      restrict: 'A',
+      scope: {
+        bpmnEditorPaletteNode: '=',
+        settings: '=settings'
+      },
+      link: function($scope, element, attrs) {
+        var container, data, elementPromise, template, zoom;
+        container = $(element);
+        data = $scope.bpmnEditorPaletteNode;
+        template = {};
+        zoom = 1;
+        if (data.shape.helper) {
+          template = $compile('<div class="helper">' + data.shape.helper + '</div>')($scope);
+        } else if (data.shape.templateUrl) {
+          elementPromise = $templateRequest($scope.settings.theme.root_path + '/' + $scope.settings.engine.theme + '/' + data.shape.templateUrl);
+          elementPromise.then(function(result) {
+            return template = $compile('<div class="helper" ng-class="[bpmnEditorPaletteNode.type.name]">' + result + '</div>')($scope);
+          });
+        }
+        container.draggable({
+          grid: $scope.settings.draggable.grid,
+          helper: function() {
+            return template.css({
+              '-webkit-transform': zoom,
+              '-moz-transform': 'scale(' + zoom + ')',
+              '-ms-transform': 'scale(' + zoom + ')',
+              '-o-transform': 'scale(' + zoom + ')',
+              'transform': 'scale(' + zoom + ')'
+            });
+          }
+        });
+        return $scope.$parent.$parent.$parent.$parent.$watch('zoom', function(val, old_val) {
+          return zoom = val;
+        });
+      }
+    };
+  }
+]);
+
+angular.module('angular-bpmn').directive('bpmnObject', [
+  'log', '$timeout', '$templateCache', '$compile', '$templateRequest', '$q', function(log, $timeout, $templateCache, $compile, $templateRequest, $q) {
+    return {
+      restrict: 'A',
+      controller: [
+        "$scope", "$element", function($scope, $element) {
+          var childs, container, updateStyle;
+          container = $($element);
+          childs = [];
+          switch ($scope.data.type.name) {
+            case 'poster':
+              container.find('img').on('dragstart', function(e) {
+                return e.preventDefault();
+              });
+              break;
+            case 'group':
+              if (!(($scope.data.resizable != null) && $scope.data.resizable) && $scope.object.settings.engine.status !== 'editor') {
+                break;
+              }
+              container.resizable({
+                minHeight: 100,
+                minWidth: 100,
+                grid: 10,
+                handles: "all",
+                start: function(event, ui) {
+                  return childs = $scope.object.getAllChilds();
+                },
+                stop: function(event, ui) {
+                  return $scope.instance.repaintEverything();
+                },
+                resize: function(event, ui) {
+                  angular.forEach(childs, function(child, ch_key) {
+                    var h, v;
+                    h = child.position.left + child.size.width;
+                    v = child.position.top + child.size.height;
+                    if (container.width() <= h + 20) {
+                      container.css('width', h + 20);
+                    }
+                    if (container.height() <= v + 20) {
+                      return container.css('height', v + 20);
+                    }
+                  });
+                  return $scope.instance.repaintEverything();
+                }
+              });
+              break;
+            case 'swimlane':
+              if (!(($scope.data.resizable != null) && $scope.data.resizable) && $scope.object.settings.engine.status !== 'editor') {
+                break;
+              }
+              container.resizable({
+                minHeight: 200,
+                minWidth: 400,
+                grid: 10,
+                handles: 'e',
+                start: function() {
+                  childs = $scope.object.getAllChilds();
+                  return $scope.instance.repaintEverything();
+                },
+                resize: function() {
+                  angular.forEach(childs, function(child) {
+                    var h;
+                    if (child.data.type === 'swimlane-row') {
+                      return;
+                    }
+                    h = child.position.left + child.size.width;
+                    if (container.width() <= h + 20) {
+                      return container.css('width', h + 20);
+                    }
+                  });
+                  return $scope.instance.repaintEverything();
+                }
+              });
+              break;
+            case 'swimlane-row':
+              if (!(($scope.data.resizable != null) && $scope.data.resizable) && $scope.object.settings.engine.status !== 'editor') {
+                break;
+              }
+              container.resizable({
+                minHeight: 200,
+                minWidth: 400,
+                grid: 10,
+                handles: 's',
+                start: function() {
+                  childs = $scope.object.getAllChilds();
+                  return $scope.instance.repaintEverything();
+                },
+                resize: function() {
+                  angular.forEach(childs, function(child) {
+                    var v;
+                    v = child.position.top + child.size.height;
+                    if (container.height() <= v + 20) {
+                      return container.css('height', v + 20);
+                    }
+                  });
+                  return $scope.instance.repaintEverything();
+                }
+              });
+          }
+          updateStyle = function() {
+            var style;
+            style = {
+              top: $scope.data.position.top,
+              left: $scope.data.position.left
+            };
+            container.css(style);
+            return $scope.instance.repaintEverything();
+          };
+          $scope.$watch('data.position', function(val, old_val) {
+            if (val === old_val) {
+              return;
+            }
+            return updateStyle();
+          });
+          return updateStyle();
+        }
+      ],
+      link: function($scope, element, attrs) {}
+    };
+  }
+]);
+
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 angular.module('angular-bpmn').factory('bpmnEditor', [
-  'log', 'bpmnUuid', '$compile', 'bpmnObjectFact', '$q', function(log, bpmnUuid, $compile, bpmnObjectFact, $q) {
+  'log', 'bpmnUuid', '$compile', 'bpmnObjectFact', '$q', '$timeout', function(log, bpmnUuid, $compile, bpmnObjectFact, $q, $timeout) {
     var bpmnEditor;
     bpmnEditor = (function() {
       bpmnEditor.prototype.wrapper = null;
@@ -27,10 +204,12 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
       bpmnEditor.prototype.mouseover = null;
 
       function bpmnEditor(container, settings) {
+        this.removeSelected = bind(this.removeSelected, this);
         this.removeObject = bind(this.removeObject, this);
       }
 
-      bpmnEditor.prototype.initEditor = function() {
+      bpmnEditor.prototype.loadEditor = function() {
+        log.debug('load editor');
         if (!this.pallet) {
           this.wrapper.append($compile('<div class="palette-entries popup" bpmn-editor-palette="settings.editorPallet" settings="settings"></div>')(this.scope));
           this.pallet = this.wrapper.find('.palette-entries');
@@ -42,6 +221,20 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
             return _this.deselectAll();
           };
         })(this));
+      };
+
+      bpmnEditor.prototype.unloadEditor = function() {
+        if (!this.pallet) {
+          return;
+        }
+        log.debug('unload editor');
+        this.pallet.remove();
+        return this.pallet = null;
+      };
+
+      bpmnEditor.prototype.reloadEditor = function() {
+        this.unloadEditor();
+        return this.loadEditor();
       };
 
       bpmnEditor.prototype.droppableInit = function() {
@@ -129,26 +322,48 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
         })(this));
       };
 
-      bpmnEditor.prototype.removeObject = function(scope) {
-        if (!scope || !scope.selected) {
+      bpmnEditor.prototype.removeObject = function(selected) {
+        var index, key, object, ref, results;
+        if (!selected) {
           return;
         }
-        angular.forEach(scope.selected, (function(_this) {
-          return function(id) {
-            var index, key, object, ref, results;
+        switch (selected != null ? selected.type : void 0) {
+          case "connector":
+            return this.scope.instance.select().each((function(_this) {
+              return function(c) {
+                if (c.id === selected.id) {
+                  c.removeOverlay("myLabel");
+                  return _this.scope.instance.detach(c);
+                }
+              };
+            })(this));
+          case "shape":
             index = 0;
-            ref = scope.intScheme.objects;
+            ref = this.scope.intScheme.objects;
             results = [];
             for (key in ref) {
               object = ref[key];
-              if (object.data.id === id) {
+              if (object.data.id === selected.id) {
                 object.remove();
-                delete scope.intScheme.objects[key];
+                delete this.scope.intScheme.objects[key];
                 break;
               }
               results.push(index++);
             }
             return results;
+            break;
+          default:
+            return log.error('unknown object type');
+        }
+      };
+
+      bpmnEditor.prototype.removeSelected = function(scope) {
+        if (!scope || !scope.selected) {
+          return;
+        }
+        angular.forEach(scope.selected, (function(_this) {
+          return function(selected) {
+            return _this.removeObject(selected);
           };
         })(this));
         scope.selected = [];
@@ -187,6 +402,35 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
         })(this));
       };
 
+      bpmnEditor.prototype.setLabel = function(conn, label) {
+        var overlay;
+        if (!label) {
+          label = "";
+        }
+        overlay = conn.getOverlay('myLabel');
+        if (!overlay) {
+          overlay = [
+            "Label", {
+              label: label,
+              cssClass: "aLabel"
+            }, {
+              id: "myLabel"
+            }
+          ];
+          return conn.addOverlay(overlay);
+        } else {
+          return overlay.setLabel(label);
+        }
+      };
+
+      bpmnEditor.prototype.getLabel = function(conn) {
+        var ref;
+        if (!conn) {
+          return;
+        }
+        return ((ref = conn.getOverlay('myLabel')) != null ? ref.getLabel() : void 0) || '';
+      };
+
       bpmnEditor.prototype.selectElementInAabb = function(t, l, w, h) {
         this.scope.selected = [];
         angular.forEach(this.scope.intScheme.objects, function(object) {
@@ -221,6 +465,13 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
         return results;
       };
 
+      bpmnEditor.prototype.getAllConnections = function() {
+        if (!this.scope.instance) {
+          return [];
+        }
+        return this.scope.instance.getAllConnections();
+      };
+
       bpmnEditor.prototype.selectElementByPoint = function(t, l) {
         var itemOffset, key, object, offset, ref;
         this.scope.selected = [];
@@ -245,26 +496,95 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
         return this.scope.selected;
       };
 
+      bpmnEditor.prototype.serialiseConnection = function(connection) {
+        var id, params, ref;
+        params = connection.getParameters();
+        id = "";
+        if (!params['element-id']) {
+          id = bpmnUuid.gen();
+          connection.setParameter("element-id", id);
+        } else {
+          id = params['element-id'];
+        }
+        return {
+          id: id,
+          direction: params['direction'],
+          start: {
+            object: $(connection.source).attr('element-id'),
+            point: connection.endpoints[0].getParameters()['anchor-id'] || 0
+          },
+          end: {
+            object: $(connection.target).attr('element-id'),
+            point: connection.endpoints[1].getParameters()['anchor-id'] || 0
+          },
+          title: ((ref = connection.getOverlay('myLabel')) != null ? ref.getLabel() : void 0) || ''
+        };
+      };
+
       bpmnEditor.prototype.serialise = function(scope) {
-        var objects;
+        var connections, connectors, objects;
         objects = [];
+        connectors = [];
         angular.forEach(scope.intScheme.objects, function(obj) {
+          var draggable, ref, ref1, ref2, type;
+          draggable = true;
+          type = obj.data['type'];
+          if (type === 'swimlane' || type === 'swimlane-row') {
+            draggable = false;
+          }
           return objects.push({
-            id: obj.data.id,
-            type: obj.data.type,
+            id: ((ref = obj.data) != null ? ref.id : void 0) || bpmnUuid.gen(),
+            type: obj.data.type || 'default',
+            width: obj.data.width || 'auto',
+            height: obj.data.height || 'auto',
+            draggable: draggable,
             position: obj.position,
-            status: '',
+            status: obj.data.status || 'enabled',
             error: '',
-            title: obj.data.title,
-            description: obj.data.description
+            title: obj != null ? (ref1 = obj.data) != null ? ref1.title : void 0 : void 0,
+            description: (obj != null ? (ref2 = obj.data) != null ? ref2.description : void 0 : void 0) || ''
           });
         });
-        return this.scope.$apply(this.scope.extScheme.objects = objects);
+        connections = this.getAllConnections();
+        angular.forEach(connections, (function(_this) {
+          return function(connection) {
+            var con, end, id, obj, ref, results, start;
+            end = false;
+            start = false;
+            con = _this.serialiseConnection(connection);
+            ref = scope.intScheme.objects;
+            results = [];
+            for (id in ref) {
+              obj = ref[id];
+              if (id === con.start.object) {
+                start = true;
+              }
+              if (id === con.end.object) {
+                end = true;
+              }
+              if (start && end) {
+                connectors.push(angular.copy(con));
+                break;
+              } else {
+                results.push(void 0);
+              }
+            }
+            return results;
+          };
+        })(this));
+        $timeout((function(_this) {
+          return function() {
+            return _this.scope.$apply();
+          };
+        })(this));
+        return this.scope.extScheme = {
+          objects: objects,
+          connectors: connectors
+        };
       };
 
       bpmnEditor.prototype.getScheme = function() {
-        this.serialise(this.scope.intScheme.objects);
-        return this.scope.extScheme;
+        return this.serialise(this.scope);
       };
 
       return bpmnEditor;
@@ -274,65 +594,6 @@ angular.module('angular-bpmn').factory('bpmnEditor', [
   }
 ]);
 
-'use strict';
-angular.module('angular-bpmn').directive('bpmnEditorPalette', [
-  'log', function(log) {
-    return {
-      restrict: 'A',
-      scope: {
-        bpmnEditorPalette: '=',
-        settings: '='
-      },
-      template: '<div class="group" ng-repeat="group in bpmnEditorPalette.groups" data-group="{{::group.name}}"> <div class="entry" ng-repeat="entry in group.items" ng-class="[entry.class]" bpmn-editor-palette-node="entry" entry-type="{{entry.type}}" settings="settings" data-help="{{entry.tooltip}}"></div>',
-      link: function($scope, element, attrs) {}
-    };
-  }
-]);
-
-'use strict';
-angular.module('angular-bpmn').directive('bpmnEditorPaletteNode', [
-  'log', '$timeout', '$templateCache', '$compile', '$templateRequest', function(log, $timeout, $templateCache, $compile, $templateRequest) {
-    return {
-      restrict: 'A',
-      scope: {
-        bpmnEditorPaletteNode: '=',
-        settings: '=settings'
-      },
-      link: function($scope, element, attrs) {
-        var container, data, elementPromise, template, zoom;
-        container = $(element);
-        data = $scope.bpmnEditorPaletteNode;
-        template = {};
-        zoom = 1;
-        if (data.shape.helper) {
-          template = $compile('<div class="helper">' + data.shape.helper + '</div>')($scope);
-        } else if (data.shape.templateUrl) {
-          elementPromise = $templateRequest($scope.settings.theme.root_path + '/' + $scope.settings.engine.theme + '/' + data.shape.templateUrl);
-          elementPromise.then(function(result) {
-            return template = $compile('<div class="helper" ng-class="[bpmnEditorPaletteNode.type.name]">' + result + '</div>')($scope);
-          });
-        }
-        container.draggable({
-          grid: $scope.settings.draggable.grid,
-          helper: function() {
-            return template.css({
-              '-webkit-transform': zoom,
-              '-moz-transform': 'scale(' + zoom + ')',
-              '-ms-transform': 'scale(' + zoom + ')',
-              '-o-transform': 'scale(' + zoom + ')',
-              'transform': 'scale(' + zoom + ')'
-            });
-          }
-        });
-        return $scope.$parent.$parent.$parent.$parent.$watch('zoom', function(val, old_val) {
-          return zoom = val;
-        });
-      }
-    };
-  }
-]);
-
-'use strict';
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 angular.module('angular-bpmn').factory('bpmnFullscreen', [
@@ -403,7 +664,6 @@ angular.module('angular-bpmn').factory('bpmnFullscreen', [
   }
 ]);
 
-'use strict';
 angular.module('angular-bpmn').service('log', [
   '$log', '$rootScope', function($log, $rootScope) {
     return {
@@ -420,7 +680,6 @@ angular.module('angular-bpmn').service('log', [
   }
 ]);
 
-'use strict';
 angular.module('angular-bpmn').service('bpmnMock', function() {
   return {
     scheme1: {
@@ -1863,130 +2122,6 @@ angular.module('angular-bpmn').service('bpmnMock', function() {
   };
 });
 
-'use strict';
-angular.module('angular-bpmn').directive('bpmnObject', [
-  'log', '$timeout', '$templateCache', '$compile', '$templateRequest', '$q', function(log, $timeout, $templateCache, $compile, $templateRequest, $q) {
-    return {
-      restrict: 'A',
-      controller: [
-        "$scope", "$element", function($scope, $element) {
-          var childs, container, updateStyle;
-          container = $($element);
-          childs = [];
-          switch ($scope.data.type.name) {
-            case 'poster':
-              container.find('img').on('dragstart', function(e) {
-                return e.preventDefault();
-              });
-              break;
-            case 'group':
-              if (!(($scope.data.resizable != null) && $scope.data.resizable) && $scope.object.settings.engine.status !== 'editor') {
-                break;
-              }
-              container.resizable({
-                minHeight: 100,
-                minWidth: 100,
-                grid: 10,
-                handles: "all",
-                start: function(event, ui) {
-                  return childs = $scope.object.getAllChilds();
-                },
-                stop: function(event, ui) {
-                  return $scope.instance.repaintEverything();
-                },
-                resize: function(event, ui) {
-                  angular.forEach(childs, function(child, ch_key) {
-                    var h, v;
-                    h = child.position.left + child.size.width;
-                    v = child.position.top + child.size.height;
-                    if (container.width() <= h + 20) {
-                      container.css('width', h + 20);
-                    }
-                    if (container.height() <= v + 20) {
-                      return container.css('height', v + 20);
-                    }
-                  });
-                  return $scope.instance.repaintEverything();
-                }
-              });
-              break;
-            case 'swimlane':
-              if (!(($scope.data.resizable != null) && $scope.data.resizable) && $scope.object.settings.engine.status !== 'editor') {
-                break;
-              }
-              container.resizable({
-                minHeight: 200,
-                minWidth: 400,
-                grid: 10,
-                handles: 'e',
-                start: function() {
-                  childs = $scope.object.getAllChilds();
-                  return $scope.instance.repaintEverything();
-                },
-                resize: function() {
-                  angular.forEach(childs, function(child) {
-                    var h;
-                    if (child.data.type === 'swimlane-row') {
-                      return;
-                    }
-                    h = child.position.left + child.size.width;
-                    if (container.width() <= h + 20) {
-                      return container.css('width', h + 20);
-                    }
-                  });
-                  return $scope.instance.repaintEverything();
-                }
-              });
-              break;
-            case 'swimlane-row':
-              if (!(($scope.data.resizable != null) && $scope.data.resizable) && $scope.object.settings.engine.status !== 'editor') {
-                break;
-              }
-              container.resizable({
-                minHeight: 200,
-                minWidth: 400,
-                grid: 10,
-                handles: 's',
-                start: function() {
-                  childs = $scope.object.getAllChilds();
-                  return $scope.instance.repaintEverything();
-                },
-                resize: function() {
-                  angular.forEach(childs, function(child) {
-                    var v;
-                    v = child.position.top + child.size.height;
-                    if (container.height() <= v + 20) {
-                      return container.css('height', v + 20);
-                    }
-                  });
-                  return $scope.instance.repaintEverything();
-                }
-              });
-          }
-          updateStyle = function() {
-            var style;
-            style = {
-              top: $scope.data.position.top,
-              left: $scope.data.position.left
-            };
-            container.css(style);
-            return $scope.instance.repaintEverything();
-          };
-          $scope.$watch('data.position', function(val, old_val) {
-            if (val === old_val) {
-              return;
-            }
-            return updateStyle();
-          });
-          return updateStyle();
-        }
-      ],
-      link: function($scope, element, attrs) {}
-    };
-  }
-]);
-
-'use strict';
 angular.module('angular-bpmn').factory('bpmnObjectFact', [
   'bpmnSettings', '$compile', '$rootScope', 'log', '$templateRequest', '$templateCache', function(bpmnSettings, $compile, $rootScope, log, $templateRequest, $templateCache) {
     var schemeObject;
@@ -2065,18 +2200,19 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
         })(this);
         if ((this.templateUrl != null) && this.templateUrl !== '') {
           if (this.element == null) {
-            this.element = $compile('<div bpmn-object class="' + this.data.type.name + ' draggable etc" ng-class="[data.status]"></div>')(childScope);
+            this.element = $compile('<div bpmn-object class="' + this.data.type.name + ' draggable etc" ng-class="[data.status]" element-id="{{::data.id}}" ></div>')(childScope);
           }
           templateUrl = this.settings.theme.root_path + '/' + this.settings.engine.theme + '/' + this.templateUrl;
           template = $templateCache.get(templateUrl);
-          if (template == null) {
-            log.debug('template not found', templateUrl);
+          if ((template != null ? template.then : void 0) != null) {
+            log.debug('load template');
             this.elementPromise = $templateRequest(templateUrl);
             return this.elementPromise.then(function(result) {
               appendToElement($compile(result)(childScope));
               return $templateCache.put(templateUrl, result);
             });
           } else {
+            log.debug('get template from cache');
             return appendToElement($compile(template)(childScope));
           }
         } else {
@@ -2097,11 +2233,14 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
         }
         points = [];
         angular.forEach(this.anchor, (function(_this) {
-          return function(anchor) {
+          return function(anchor, id) {
             var point;
             point = _this.parentScope.instance.addEndpoint(_this.element, {
               anchor: anchor,
-              maxConnections: -1
+              maxConnections: -1,
+              parameters: {
+                'anchor-id': id
+              }
             }, options);
             if (points.indexOf(point) === -1) {
               return points.push(point);
@@ -2129,15 +2268,16 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
         this.parentScope.instance.off(this.element);
         this.parentScope.instance.on(this.element, 'click', (function(_this) {
           return function(e) {
-            var shift;
-            shift = false;
-            if (key.getPressedKeyCodes().indexOf(16) > -1) {
-              shift = true;
-            }
+            var ref, ref1, shift;
+            shift = key.getPressedKeyCodes().indexOf(16) > -1;
             if (!shift) {
               _this.parentScope.selected = [];
             }
-            _this.parentScope.$apply(_this.parentScope.selected.push(_this.data.id));
+            _this.parentScope.$apply(_this.parentScope.selected.push({
+              id: _this.data.id,
+              type: 'shape',
+              prototype: ((ref = _this.data) != null ? (ref1 = ref.type) != null ? ref1.name : void 0 : void 0) || ''
+            }));
             if (!shift) {
               angular.forEach(_this.parentScope.intScheme.objects, function(object) {
                 return object.select(false);
@@ -2322,7 +2462,6 @@ angular.module('angular-bpmn').factory('bpmnObjectFact', [
   }
 ]);
 
-'use strict';
 angular.module('angular-bpmn').factory('bpmnPanning', [
   'log', '$compile', '$timeout', function(log, $compile, $timeout) {
     var bpmnPanning;
@@ -2455,7 +2594,6 @@ angular.module('angular-bpmn').factory('bpmnPanning', [
   }
 ]);
 
-'use strict';
 var LEFT_MB, MIDDLE_MB, RIGHT_MB,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -2520,7 +2658,6 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         this.scope.settings = {};
         this.scope.selected = [];
         this.scope.zoom = 1;
-        this.setSettings(settings);
         this.scope.changeTheme = this.changeTheme;
         this.wrapper.append('<div class="page-loader"><div class="spinner">loading...</div></div>');
         this.wrapper.append($compile('<div ng-if="settings.engine.container.theme_selector" class="theme-selector entry"> <select class="form-control" ng-model="settings.engine.theme" ng-change="changeTheme()" style="width: auto;" data-help="select theme"> <option ng-repeat="them in settings.theme.list" value="{{them}}">{{them}}</option></select> </div>')(this.scope));
@@ -2532,10 +2669,12 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.setStatus = function() {
         if (this.scope.settings.engine.status === 'editor') {
-          this.initEditor();
-          return this.container.addClass('editor');
+          this.reloadEditor();
+          this.container.addClass('editor');
+          return this.container.removeClass('viewer');
         } else {
-          return this.container.addClass('viewer');
+          this.container.addClass('viewer');
+          return this.container.removeClass('editor');
         }
       };
 
@@ -2551,6 +2690,9 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
           settings = {};
         }
         this.scope.settings = $.extend(true, angular.copy(bpmnSettings), angular.copy(settings));
+        if (settings != null ? settings.editorPallet : void 0) {
+          this.scope.settings.editorPallet = angular.copy(settings.editorPallet);
+        }
         if (this.scope.settings.engine.status === 'editor') {
           this.scope.settings = $.extend(true, this.scope.settings, {
             point: {
@@ -2571,7 +2713,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         }
         this.loadStyle();
         this.cacheTemplates();
-        return this.objectsUpdate();
+        this.objectsUpdate();
+        return this.setStatus();
       };
 
       bpmnScheme.prototype.loadStyle = function() {
@@ -2619,6 +2762,8 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.makePackageObjects = function(resolve) {
         var promise;
+        this.isStarted = false;
+        log.debug('make package objects');
         promise = [];
         angular.forEach(this.scope.extScheme.objects, (function(_this) {
           return function(object) {
@@ -2674,7 +2819,11 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
             }
             points = {
               sourceEndpoint: source_obj_points[connector.start.point],
-              targetEndpoint: target_obj_points[connector.end.point]
+              targetEndpoint: target_obj_points[connector.end.point],
+              parameters: {
+                'element-id': connector.id || bpmnUuid.gen(),
+                'direction': connector.direction || ''
+              }
             };
             if (connector.title && connector.title !== "") {
               points['overlays'] = [
@@ -2694,9 +2843,13 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
       };
 
       bpmnScheme.prototype.deselectAll = function() {
-        return angular.forEach(this.scope.intScheme.objects, function(object) {
+        angular.forEach(this.scope.intScheme.objects, function(object) {
           return object.select(false);
         });
+        this.scope.instance.select().each(function(c) {
+          return c.removeClass('selected');
+        });
+        return this.scope.selected = [];
       };
 
       bpmnScheme.prototype.objectsUpdate = function() {
@@ -2728,7 +2881,6 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         this.cache = [];
         this.cacheTemplates();
         this.container.addClass('bpmn');
-        this.setStatus();
         $q.all(this.cache).then((function(_this) {
           return function() {
             return _this.makePackageObjects(resolve);
@@ -2747,14 +2899,17 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
         }
         this.scope.instance.bind('click', (function(_this) {
           return function(e) {
-            _this.scope.instance.select().each(function(c) {
-              return c.removeClass('selected');
-            });
+            var shift;
+            shift = key.getPressedKeyCodes().indexOf(16) > -1;
+            if (!shift) {
+              _this.deselectAll();
+            }
             e.addClass('selected');
-            return _this.scope.selected.push({
-              object: e,
+            _this.scope.selected.push({
+              id: e.id,
               type: 'connector'
             });
+            return _this.scope.$apply();
           };
         })(this));
         this.scope.instance.bind('beforeDrop', (function(_this) {
@@ -2762,25 +2917,27 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
             return e.sourceId !== e.targetId;
           };
         })(this));
-        this.stopListen = this.scope.$on('$routeChangeSuccess', (function(_this) {
+        this.stopListen = this.scope.$on('$stateChangeSuccess', (function(_this) {
           return function() {
             return _this.destroy();
           };
         })(this));
         return this.wrapper.on('mousedown', (function(_this) {
           return function(e) {
-            return log.debug('@mousedown');
+            return _this.deselectAll();
           };
         })(this));
       };
 
       bpmnScheme.prototype.destroy = function() {
         log.debug('destroy');
+        log.debug('total connectors:', this.scope.intScheme.connectors.length);
         this.wrapper.find(".page-loader").fadeIn("fast");
         angular.forEach(this.scope.intScheme.objects, function(obj) {
           return obj.remove();
         });
         this.scope.intScheme.objects = [];
+        this.scope.intScheme.connectors = [];
         this.scope.instance.empty(this.container);
         if (this.schemeWatch) {
           this.schemeWatch();
@@ -2794,10 +2951,14 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
 
       bpmnScheme.prototype.restart = function() {
         log.debug('restart');
-        if (this.isStarted != null) {
-          this.destroy();
-        }
-        return this.start();
+        return $timeout((function(_this) {
+          return function() {
+            if (_this.isStarted != null) {
+              _this.destroy();
+            }
+            return _this.start();
+          };
+        })(this));
       };
 
       bpmnScheme.prototype.changeTheme = function() {
@@ -2813,7 +2974,6 @@ angular.module('angular-bpmn').factory('bpmnScheme', [
   }
 ]);
 
-'use strict';
 angular.module('angular-bpmn').factory('bpmnSettings', function() {
   var baseObject, connector, connectorSettings, connectorStyle, draggableSettings, editorPallet, engineSettings, instanceSettings, keyboardBinds, pointSettings, sourceSettings, targetSettings, template, templates, themeSettings;
   themeSettings = {
@@ -2930,6 +3090,16 @@ angular.module('angular-bpmn').factory('bpmnSettings', function() {
     },
     task: {
       templateUrl: 'task.svg',
+      anchor: [[0.25, 0.04, 0, -1, 0, 2], [0.5, 0.04, 0, -1, 0, 2], [0.75, 0.04, 0, -1, 0, 2], [0.97, 0.25, 1, 0, -2, 0], [0.97, 0.5, 1, 0, -2, 0], [0.97, 0.75, 1, 0, -2, 0], [0.75, 0.97, 0, 1, 0, -2], [0.5, 0.97, 0, 1, 0, -2], [0.25, 0.97, 0, 1, 0, -2], [0.04, 0.75, -1, 0, 2, 0], [0.04, 0.5, -1, 0, 2, 0], [0.04, 0.25, -1, 0, 2, 0]],
+      make: ['source', 'target'],
+      draggable: true,
+      size: {
+        width: 112,
+        height: 92
+      }
+    },
+    flow: {
+      templateUrl: 'flow.svg',
       anchor: [[0.25, 0.04, 0, -1, 0, 2], [0.5, 0.04, 0, -1, 0, 2], [0.75, 0.04, 0, -1, 0, 2], [0.97, 0.25, 1, 0, -2, 0], [0.97, 0.5, 1, 0, -2, 0], [0.97, 0.75, 1, 0, -2, 0], [0.75, 0.97, 0, 1, 0, -2], [0.5, 0.97, 0, 1, 0, -2], [0.25, 0.97, 0, 1, 0, -2], [0.04, 0.75, -1, 0, 2, 0], [0.04, 0.5, -1, 0, 2, 0], [0.04, 0.25, -1, 0, 2, 0]],
       make: ['source', 'target'],
       draggable: true,
@@ -3133,7 +3303,7 @@ angular.module('angular-bpmn').factory('bpmnSettings', function() {
   keyboardBinds = {
     'delete': {
       name: 'delete',
-      callback: 'removeObject'
+      callback: 'removeSelected'
     }
   };
   return {
@@ -3153,7 +3323,6 @@ angular.module('angular-bpmn').factory('bpmnSettings', function() {
   };
 });
 
-'use strict';
 (function() {
   'use strict';
   window.lsTooltip = {
@@ -3215,7 +3384,6 @@ angular.module('angular-bpmn').factory('bpmnSettings', function() {
   });
 })();
 
-'use strict';
 angular.module('angular-bpmn').factory('bpmnUuid', function() {
   var uuid;
   uuid = (function() {
@@ -3246,3 +3414,63 @@ angular.module('angular-bpmn').factory('bpmnUuid', function() {
   })();
   return uuid;
 });
+
+var preventSelection;
+
+preventSelection = function(element) {
+  var preventSelection;
+  var addHandler, killCtrlA, removeSelection;
+  preventSelection = false;
+  addHandler = function(element, event, handler) {
+    if (element.attachEvent) {
+      element.attachEvent('on' + event, handler);
+    } else if (element.addEventListener) {
+      element.addEventListener(event, handler, false);
+    }
+  };
+  removeSelection = function() {
+    if (window.getSelection) {
+      window.getSelection().removeAllRanges();
+    } else if (document.selection && document.selection.clear) {
+      document.selection.clear();
+    }
+  };
+  killCtrlA = function(event) {
+    var event;
+    var key, sender;
+    event = event || window.event;
+    sender = event.target || event.srcElement;
+    if (sender.tagName.match(/INPUT|TEXTAREA/i)) {
+      return;
+    }
+    key = event.keyCode || event.which;
+    if (event.ctrlKey && key === 'A'.charCodeAt(0)) {
+      removeSelection();
+      if (event.preventDefault) {
+        event.preventDefault();
+      } else {
+        event.returnValue = false;
+      }
+    }
+  };
+  addHandler(element, 'mousemove', function() {
+    if (preventSelection) {
+      removeSelection();
+    }
+  });
+  addHandler(element, 'mousedown', function(event) {
+    var event;
+    var sender;
+    event = event || window.event;
+    sender = event.target || event.srcElement;
+    preventSelection = !sender.tagName.match(/INPUT|TEXTAREA/i);
+  });
+  addHandler(element, 'mouseup', function() {
+    if (preventSelection) {
+      removeSelection();
+    }
+    preventSelection = false;
+  });
+  addHandler(element, 'keydown', killCtrlA);
+  addHandler(element, 'keyup', killCtrlA);
+};

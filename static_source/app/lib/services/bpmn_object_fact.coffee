@@ -117,13 +117,11 @@ angular
         @parentScope.instance.off @element
         @parentScope.instance.on @element, 'click', (e)=>
 
-          shift = false
-          if key.getPressedKeyCodes().indexOf(16) > -1
-            shift = true
-
+          shift = key.getPressedKeyCodes().indexOf(16) > -1
           @parentScope.selected = [] if !shift
+          #TODO fix, unstable state!
           @parentScope.$apply(
-            @parentScope.selected.push({id: @data.id, type: 'shape'})
+            @parentScope.selected.push({id: @data.id, type: 'shape', prototype: @data?.type?.name || '' })
           )
 
           # deselect all

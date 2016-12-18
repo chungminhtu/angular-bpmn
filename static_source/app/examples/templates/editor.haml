@@ -1,0 +1,13 @@
+-#editor
+
+%h3
+  Themes
+
+#scheme.scheme(style="height:400px;")
+
+.form-group.clearfix
+  .btn.btn-primary.pull-right(ng-click="editor.serialize()")
+    serialize scheme
+
+%pre
+  {{editor.scheme | json}}

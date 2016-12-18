@@ -211,6 +211,7 @@ angular
             # параметры соединения: id ...
             parameters:
               'element-id': connector.id || bpmnUuid.gen()
+              'direction': connector.direction || ''
           }
 
           # подпись для связи
@@ -224,6 +225,11 @@ angular
       deselectAll: ()->
         angular.forEach @scope.intScheme.objects, (object)->
           object.select(false)
+
+        @scope.instance.select().each (c)->
+          c.removeClass('selected')
+
+        @scope.selected = []
 
       objectsUpdate: ()->
         angular.forEach @scope.intScheme.objects, (object)->
@@ -274,28 +280,34 @@ angular
         #-------------------------------
         @scope.instance.bind 'click', (e)=>
 
-          @scope.instance.select().each (c)->
-            c.removeClass('selected')
+          shift = key.getPressedKeyCodes().indexOf(16) > -1
+          @deselectAll() if !shift
+
           e.addClass('selected')
 
+          #TODO fix, circular dependencies
           @scope.selected.push({
-            object: e
+            id: e.id
+            #object: e
             type: 'connector'
           })
+
+          @scope.$apply()
 
         # disable loopback
         @scope.instance.bind 'beforeDrop', (e)=>
           e.sourceId != e.targetId
 
-        @stopListen = @scope.$on '$routeChangeSuccess', ()=>
+        @stopListen = @scope.$on '$stateChangeSuccess', ()=>
           @destroy()
 
         @wrapper.on 'mousedown', (e)=>
-          log.debug '@mousedown'
+#          log.debug '@mousedown'
+          @deselectAll()
 
       destroy: ()->
         log.debug 'destroy'
-        log.debug 'total objects:', @scope.intScheme.objects
+#        log.debug 'total objects:', @scope.intScheme.objects
         log.debug 'total connectors:', @scope.intScheme.connectors.length
 
         @wrapper.find(".page-loader").fadeIn("fast")
